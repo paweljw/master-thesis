@@ -15,18 +15,19 @@ ENDIF()
 
 # Need: OpenCL, _maybe_ boost
 set(CMAKE_INCLUDE_PATH ${CMAKE_INCLUDE_PATH} "C:/SharedLibraries/boost_1_55_0")
+
 set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} "C:/SharedLibraries/boost_1_55_0/stage/lib")
+set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} "C:/SharedLibraries/zlib/lib")
 
 # set(CMAKE_INCLUDE_PATH ${CMAKE_INCLUDE_PATH} "/usr/include")
 # set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} "/usr/lib")
 
-# W tej chwili znajduje x32 :<
 SET(OPENCL_VENDOR "NVIDIA")
 FIND_PACKAGE(OpenCL REQUIRED)
 INCLUDE_DIRECTORIES(${OPENCL_INCLUDE_DIR})
 
 SET(Boost_USE_STATIC_LIBS ON)
-FIND_PACKAGE(Boost 1.55.0 COMPONENTS system thread date_time filesystem timer chrono log REQUIRED)
+FIND_PACKAGE(Boost 1.55.0 COMPONENTS iostreams system thread date_time filesystem timer chrono log REQUIRED)
 
 IF (Boost_FOUND)
     INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIR})
@@ -36,9 +37,6 @@ IF (Boost_FOUND)
     add_definitions(-DBOOST_DATE_TIME_NO_LIB)
     ADD_DEFINITIONS (-DBOOST_CHRONO_INLINED )
     ADD_DEFINITIONS (-DBOOST_CHRONO_HEADER_ONLY )
-	
-	message(STATUS ${Boost_SYSTEM_LIBRARY})
-	message(STATUS ${Boost_LIBRARIES})
 ENDIF()
 
 find_package(OpenMP)
@@ -53,3 +51,6 @@ IF(MSVC)
 	# Enable catching C++ exception
 	SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /EHsc")
 ENDIF()
+
+add_executable(splitter src/splitter.cpp)
+target_link_libraries(splitter ${OPENCL_LIBRARIES} ${Boost_LIBRARIES})
