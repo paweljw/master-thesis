@@ -17,7 +17,6 @@ ENDIF()
 set(CMAKE_INCLUDE_PATH ${CMAKE_INCLUDE_PATH} "C:/SharedLibraries/boost_1_55_0")
 
 set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} "C:/SharedLibraries/boost_1_55_0/stage/lib")
-set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} "C:/SharedLibraries/zlib/lib")
 
 # set(CMAKE_INCLUDE_PATH ${CMAKE_INCLUDE_PATH} "/usr/include")
 # set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} "/usr/lib")
@@ -45,6 +44,12 @@ if (OPENMP_FOUND)
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
 endif()
 
+
+find_package(SQLITE3 REQUIRED)
+if(SQLITE3_FOUND)
+	INCLUDE_DIRECTORIES(${SQLITE3_INCLUDE_DIR})
+endif()
+
 include_directories("src/")
 
 IF(MSVC)
@@ -53,4 +58,4 @@ IF(MSVC)
 ENDIF()
 
 add_executable(splitter src/splitter.cpp)
-target_link_libraries(splitter ${OPENCL_LIBRARIES} ${Boost_LIBRARIES})
+target_link_libraries(splitter ${OPENCL_LIBRARIES} ${Boost_LIBRARIES} ${SQLITE3_LIBRARY})
