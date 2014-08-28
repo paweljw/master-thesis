@@ -69,7 +69,9 @@ ELSEIF(OPENCL_VENDOR MATCHES "NVIDIA")
 	ELSE()
 		FIND_LIBRARY(OPENCL_LIBRARY NAMES OpenCL
 			IF(PLATFORM EQUAL 64)
-				PATHS $ENV{CUDA_PATH}/lib/x64
+				PATHS 
+					$ENV{CUDA_PATH}/lib/x64
+					C:/SharedLibraries/CUDA/lib/x64
 			ELSE()
 				PATHS $ENV{CUDA_PATH}/lib/Win32
 			ENDIF()
@@ -80,6 +82,7 @@ ELSEIF(OPENCL_VENDOR MATCHES "NVIDIA")
 		OPENCL_INCLUDE_DIR
 		NAMES CL/cl.h
 		PATHS $ENV{CUDA_PATH}/include
+		C:/SharedLibraries/CUDA/include
 		NO_CMAKE_SYSTEM_PATH
     	)
 	
@@ -117,7 +120,9 @@ ELSEIF(OPENCL_VENDOR MATCHES "IBM")
   FIND_PATH(
     OPENCL_INCLUDE_DIR
     NAMES CL/cl.h
-    PATHS /data/blades/chassis_1/blade14/root/usr/include
+    PATHS 
+    /data/blades/chassis_1/blade14/root/usr/include
+    C:/SharedLibraries/CUDA/include
     )
 ENDIF(OPENCL_VENDOR MATCHES "AMD")
 

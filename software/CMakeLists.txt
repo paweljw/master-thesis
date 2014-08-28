@@ -59,3 +59,5 @@ ENDIF()
 
 add_executable(splitter src/splitter.cpp)
 target_link_libraries(splitter ${OPENCL_LIBRARIES} ${Boost_LIBRARIES} ${SQLITE3_LIBRARY})
+
+add_executable(dbctl src/dbctl.cpp)
