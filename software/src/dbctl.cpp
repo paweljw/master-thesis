@@ -44,11 +44,11 @@ int main(int argc, char** argv)
 	string database = argv[1];
 	string command = argv[2];
 
-	horizon::db::SQLiteDatabaseAccessor dao(database);
+	horizon::db::DatabaseAccessor* dao = new horizon::db::SQLiteDatabaseAccessor(database);
 
 	if(command == "create")
 	{
-		dao.CreateDatabase();
+		dao->CreateDatabase();
 	}
 
 	// check for db file

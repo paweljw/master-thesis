@@ -22,6 +22,7 @@ namespace horizon
 			std::string ConnectionString;
 
 		public:
+			virtual ~DatabaseAccessor() {}
 			virtual bool CreateDatabase() = 0;
 			virtual int RegisterSolution(horizon::models::Solution&) = 0;
 			virtual int RegisterWave(horizon::models::Wave&) = 0;
