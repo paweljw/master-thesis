@@ -17,6 +17,9 @@
 // UTILITIES
 #include "utilhead.hpp"
 
+#include "DatabaseAccessor.hpp"
+#include "SQLiteDatabaseAccessor.hpp"
+
 using namespace std;
 
 int main(int argc, char** argv)
@@ -27,10 +30,26 @@ int main(int argc, char** argv)
 		return 0;
 	}
 
-	loggerhead("splitter");
+	loggerhead("dbctl");
 
 	using namespace logging::trivial;
 	src::severity_logger< severity_level > lg;
+
+	if(argc < 3)
+	{
+		BOOST_LOG_SEV(lg, fatal) << "Not enough parameters";
+		return 1;
+	}
+
+	string database = argv[1];
+	string command = argv[2];
+
+	horizon::db::SQLiteDatabaseAccessor dao(database);
+
+	if(command == "create")
+	{
+		dao.CreateDatabase();
+	}
 
 	// check for db file
 

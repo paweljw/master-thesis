@@ -222,8 +222,4 @@ int main(int argc, char** argv)
 
 		/// TODO: Register packages here
 	}
-
-	// sqlite3 *database;
-	// sqlite3_open("test.db", &database);
-
 }

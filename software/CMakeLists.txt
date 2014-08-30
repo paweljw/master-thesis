@@ -51,13 +51,22 @@ if(SQLITE3_FOUND)
 endif()
 
 include_directories("src/")
+include_directories("src/models")
 
 IF(MSVC)
 	# Enable catching C++ exception
 	SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /EHsc")
 ENDIF()
 
-add_executable(splitter src/splitter.cpp)
-target_link_libraries(splitter ${OPENCL_LIBRARIES} ${Boost_LIBRARIES} ${SQLITE3_LIBRARY})
+add_executable(splitter 
+    src/utilhead.cpp
+    src/splitter.cpp)
+# target_link_libraries(splitter ${OPENCL_LIBRARIES} ${Boost_LIBRARIES} ${SQLITE3_LIBRARY})
+target_link_libraries(splitter ${Boost_LIBRARIES})
 
-add_executable(dbctl src/dbctl.cpp)
+add_executable(dbctl 
+    src/utilhead.cpp
+    src/SQLiteDatabaseAccessor.cpp 
+    src/dbctl.cpp)
+
+target_link_libraries(dbctl ${Boost_LIBRARIES} ${SQLITE3_LIBRARY})
