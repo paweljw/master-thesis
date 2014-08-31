@@ -11,9 +11,6 @@
 
 #include <boost/filesystem.hpp>
 
-// SQLITE3 BINDINGS
-#include <sqlite3.h>
-
 // UTILITIES
 #include "utilhead.hpp"
 

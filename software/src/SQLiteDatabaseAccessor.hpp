@@ -1,5 +1,7 @@
 #include <string.h>
 
+#include "lib\sqlite\sqlite3.h"
+
 #include "DatabaseAccessor.hpp"
 
 #include "models\Solution.hpp"
@@ -8,6 +10,7 @@
 
 #include "utilhead.hpp"
 
+#pragma once
 using namespace logging::trivial;
 
 

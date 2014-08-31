@@ -1,4 +1,4 @@
-#include <sqlite3.h>
+#include "lib\sqlite\sqlite3.h"
 #include <string.h>
 
 #include "SQLiteDBScheme.hpp"
@@ -9,7 +9,7 @@
 #include "models\Wave.hpp"
 #include "models\Task.hpp"
 
-#include <boost/filesystem.hpp>
+#include <boost\filesystem.hpp>
 
 namespace horizon
 {

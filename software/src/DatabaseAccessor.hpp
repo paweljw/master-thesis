@@ -2,12 +2,6 @@
 
 #include <string.h>
 
-// SQLITE3 BINDINGS
-#include <sqlite3.h>
-
-// UTILITIES
-#include "utilhead.hpp"
-
 #include "models/Solution.hpp"
 #include "models/Wave.hpp"
 #include "models/Task.hpp"
