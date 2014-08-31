@@ -8,7 +8,10 @@ const char * simulations = "CREATE TABLE [simulations] ("
 				"[id] INTEGER  NOT NULL PRIMARY KEY,"
 				"[state] INTEGER DEFAULT '0' NULL,"
 				"[current_wave] INTEGER DEFAULT '0' NULL,"
-				"[solution] TEXT  NULL"
+				"[solution] TEXT  NULL,"
+				"[created] TIMESTAMP  NULL, "
+				"[updated] TIMESTAMP  NULL,"
+				"[completed] TIMESTAMP  NULL"
 				");";
 
 const char * tasks = "CREATE TABLE [tasks] ("

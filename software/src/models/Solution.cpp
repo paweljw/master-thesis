@@ -31,12 +31,12 @@ namespace horizon
 			this->ID = _ID;
 		}
 
-		int Solution::getState()
+		uchr Solution::getState()
 		{
 			return this->State;
 		}
 
-		void Solution::setState(int _State)
+		void Solution::setState(uchr _State)
 		{
 			this->State = _State;
 		}

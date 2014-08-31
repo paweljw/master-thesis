@@ -1,4 +1,6 @@
 #include <string>
+#include "boost/date_time/posix_time/posix_time.hpp"
+#include "globals.hpp"
 
 #pragma once
 
@@ -9,31 +11,41 @@ namespace horizon
 {
 	namespace models
 	{
-		const int SOLUTION_NOT_STARTED	= 0;
-		const int SOLUTION_STARTED		= 1;
-		const int SOLUTION_COMPLETE		= 2;
-		const int SOLUTION_BROKEN		= 9;
+		const uchr SOLUTION_NOT_STARTED	= 0;
+		const uchr SOLUTION_STARTED = 1;
+		const uchr SOLUTION_COMPLETE = 2;
+		const uchr SOLUTION_BROKEN = 9;
 
 		class Solution
 		{
 		private:
 			int ID;
-			int State;
+			uchr State;
 			int CurrentWave;
 			std::string _Solution;
+			void setState(uchr);
+			// Constant after create!!!
+			boost::posix_time::ptime Created;
 
+			// Auto-updated on DB writes!!!
+			boost::posix_time::ptime Updated;
+
+			// Only updated once!!!
+			boost::posix_time::ptime Completed;
 		public:
 			Solution();
 			Solution(int);
 			int getID();
 			void setID(int);
-			int getState();
-			void setState(int);
+			uchr getState();
 			int getWave();
 			void setWave(int);
 			std::string getSolution();
 			void setSolution(std::string);
-				
+			
+			void markStarted();
+			void markComplete();
+			void markBroken();
 		};
 	}
 }
