@@ -26,7 +26,7 @@ namespace horizon
 
 		public:
 			SQLiteDatabaseAccessor(std::string);
-			bool CreateDatabase();
+			bool RecreateDatabase();
 			int RegisterSolution(horizon::models::Solution&);
 			int RegisterWave(horizon::models::Wave&);
 			int RegisterTask(horizon::models::Task&);

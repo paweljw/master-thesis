@@ -21,7 +21,7 @@ namespace horizon
 			sqlite3_open(this->ConnectionString.c_str(), &(this->database));
 		}
 
-		bool SQLiteDatabaseAccessor::CreateDatabase()
+		bool SQLiteDatabaseAccessor::RecreateDatabase()
 		{
 			// remove file
 			if(sqlite3_close(this->database))

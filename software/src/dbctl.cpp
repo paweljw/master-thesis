@@ -23,7 +23,8 @@ int main(int argc, char** argv)
 {
 	if (argc == 1)
 	{
-		cout << "Usage: dbctl file.db command" << endl;
+		cout << "Usage: dbctl file.s3db command" << endl;
+		cout << "Commands: create" << endl;
 		return 0;
 	}
 
@@ -43,18 +44,8 @@ int main(int argc, char** argv)
 
 	horizon::db::DatabaseAccessor* dao = new horizon::db::SQLiteDatabaseAccessor(database);
 
-	if(command == "create")
-	{
-		dao->CreateDatabase();
-	}
-
-	// check for db file
-
-	// try to open it
-
-	// check if we have a command
-
-	// switch into fulfilling the command
-
+	if(command == "create" || command == "recreate" || command == "c")
+		dao->RecreateDatabase();
+	
 	return 0;
 }
