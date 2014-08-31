@@ -14,9 +14,9 @@ IF(NOT "${CMAKE_HOSTNAME}" EQUAL "jack")
 ENDIF()
 
 # Need: OpenCL, _maybe_ boost
-set(CMAKE_INCLUDE_PATH ${CMAKE_INCLUDE_PATH} "C:/SharedLibraries/boost_1_55_0")
+set(CMAKE_INCLUDE_PATH ${CMAKE_INCLUDE_PATH} "C:/SharedLibraries/boost_1_56_0")
 
-set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} "C:/SharedLibraries/boost_1_55_0/stage/lib")
+set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} "C:/SharedLibraries/boost_1_56_0/stage/lib")
 
 # set(CMAKE_INCLUDE_PATH ${CMAKE_INCLUDE_PATH} "/usr/include")
 # set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} "/usr/lib")
@@ -26,7 +26,7 @@ FIND_PACKAGE(OpenCL REQUIRED)
 INCLUDE_DIRECTORIES(${OPENCL_INCLUDE_DIR})
 
 SET(Boost_USE_STATIC_LIBS ON)
-FIND_PACKAGE(Boost 1.55.0 COMPONENTS iostreams system thread date_time filesystem timer chrono log REQUIRED)
+FIND_PACKAGE(Boost 1.56.0 COMPONENTS iostreams system thread date_time regex serialization filesystem timer chrono log REQUIRED)
 
 IF (Boost_FOUND)
     INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIR})
