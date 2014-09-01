@@ -57,7 +57,7 @@ add_executable(dbctl
     src/lib/sqlite/sqlite3.c
     src/utilhead.hpp 
     src/utilhead.cpp
-    src/DatabaseAccessor.hpp
+    src/ServerDatabaseAccessor.hpp
     src/ServerSQLiteDatabaseAccessor.hpp
     src/ServerSQLiteDatabaseAccessor.cpp
     src/ServerSQLiteDBScheme.hpp 

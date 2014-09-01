@@ -24,7 +24,7 @@ const char * tasks = "CREATE TABLE [tasks] ("
 				"[node] teXT  NULL,"
 				"[created] timesTAMP  NULL,"
 				"[updated] timesTAMP  NULL,"
-				"[deleted] timesTAMP  NULL"
+				"[completed] timesTAMP  NULL"
 				");";
 
 const char * waves = "CREATE TABLE [waves] ("

@@ -2,7 +2,7 @@
 
 #include "lib\sqlite\sqlite3.h"
 
-#include "DatabaseAccessor.hpp"
+#include "ServerDatabaseAccessor.hpp"
 
 #include "models\Solution.hpp"
 #include "models\Wave.hpp"
@@ -18,7 +18,7 @@ namespace horizon
 {
 	namespace db
 	{
-		class ServerSQLiteDatabaseAccessor : public horizon::db::DatabaseAccessor
+		class ServerSQLiteDatabaseAccessor : public horizon::db::ServerDatabaseAccessor
 		{
 		private:
 			sqlite3 *database;

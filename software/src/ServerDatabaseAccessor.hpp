@@ -10,13 +10,13 @@ namespace horizon
 {
 	namespace db
 	{
-		class DatabaseAccessor
+		class ServerDatabaseAccessor
 		{
 		protected:
 			std::string ConnectionString;
 
 		public:
-			virtual ~DatabaseAccessor() {}
+			virtual ~ServerDatabaseAccessor() {}
 			virtual bool RecreateDatabase() = 0;
 			virtual int RegisterSolution(horizon::models::Solution&) = 0;
 			virtual int RegisterWave(horizon::models::Wave&) = 0;
