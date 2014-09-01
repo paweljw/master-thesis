@@ -18,14 +18,15 @@ namespace horizon
 {
 	namespace db
 	{
-		class SQLiteDatabaseAccessor : public horizon::db::DatabaseAccessor
+		class ServerSQLiteDatabaseAccessor : public horizon::db::DatabaseAccessor
 		{
 		private:
 			sqlite3 *database;
 			src::severity_logger< severity_level > lg;
-
+			bool performQuery(std::string, std::string);
 		public:
-			SQLiteDatabaseAccessor(std::string);
+			ServerSQLiteDatabaseAccessor(std::string);
+			ServerSQLiteDatabaseAccessor(std::string);
 			bool RecreateDatabase();
 			int RegisterSolution(horizon::models::Solution&);
 			int RegisterWave(horizon::models::Wave&);

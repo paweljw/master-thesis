@@ -58,9 +58,9 @@ add_executable(dbctl
     src/utilhead.hpp 
     src/utilhead.cpp
     src/DatabaseAccessor.hpp
-    src/SQLiteDatabaseAccessor.hpp
-    src/SQLiteDatabaseAccessor.cpp
-    src/SQLiteDBScheme.hpp 
+    src/ServerSQLiteDatabaseAccessor.hpp
+    src/ServerSQLiteDatabaseAccessor.cpp
+    src/ServerSQLiteDBScheme.hpp 
     src/models/Solution.hpp
     src/models/Solution.cpp
     src/models/Wave.hpp

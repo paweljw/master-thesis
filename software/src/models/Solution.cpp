@@ -11,6 +11,8 @@ namespace horizon
 			setState(SOLUTION_NOT_STARTED);
 			setWave(0);
 			setSolution(0);
+			this->Created = boost::posix_time::microsec_clock::universal_time();
+			touch();
 		}
 
 		Solution::Solution(int _ID)
@@ -19,6 +21,8 @@ namespace horizon
 			setState(SOLUTION_NOT_STARTED);
 			setWave(0);
 			setSolution(0);
+			this->Created = boost::posix_time::microsec_clock::universal_time();
+			touch();
 		}
 
 		int Solution::getID()
@@ -29,6 +33,7 @@ namespace horizon
 		void Solution::setID(int _ID)
 		{
 			this->ID = _ID;
+			touch();
 		}
 
 		uchr Solution::getState()
@@ -39,6 +44,7 @@ namespace horizon
 		void Solution::setState(uchr _State)
 		{
 			this->State = _State;
+			touch();
 		}
 
 		int Solution::getWave()
@@ -49,6 +55,7 @@ namespace horizon
 		void Solution::setWave(int _Wave)
 		{
 			this->CurrentWave = _Wave;
+			touch();
 		}
 
 		std::string Solution::getSolution()
@@ -59,6 +66,54 @@ namespace horizon
 		void Solution::setSolution(std::string __Solution)
 		{
 			this->_Solution = __Solution;
+			touch();
+		}
+
+		void Solution::touch()
+		{
+			this->Updated = boost::posix_time::microsec_clock::universal_time();
+		}
+
+		void Solution::markStarted()
+		{
+			setState(SOLUTION_STARTED);
+		}
+
+		void Solution::markBroken()
+		{
+			setState(SOLUTION_BROKEN);
+		}
+
+		void Solution::markComplete(std::string _Solution)
+		{
+			setState(SOLUTION_COMPLETE);
+			setSolution(_Solution);
+			this->Completed = boost::posix_time::microsec_clock::universal_time();
+		}
+
+		boost::posix_time::ptime Solution::getCreated()
+		{
+			return this->Created;
+		}
+
+		boost::posix_time::ptime Solution::getUpdated()
+		{
+			return this->Updated;
+		}
+
+		boost::posix_time::ptime Solution::getCompleted()
+		{
+			return this->Completed;
+		}
+
+		boost::posix_time::time_duration Solution::getDuration()
+		{
+			return (this->Completed - this->Created);
+		}
+
+		boost::posix_time::time_duration Solution::getElapsed()
+		{
+			return (boost::posix_time::microsec_clock::universal_time() - this->Created);
 		}
 	}
 }
