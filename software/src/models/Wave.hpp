@@ -32,6 +32,8 @@ namespace horizon
 
 			// Only updated once!!!
 			boost::posix_time::ptime Completed;
+			void setState(uchr);
+			void touch();
 		public:
 			Wave();
 			Wave(int);
@@ -46,8 +48,14 @@ namespace horizon
 			void incrementTasks();
 			void decrementTasks();
 			uchr getState();
-			void setState(uchr);
 			void markComplete();
+			void markStarted();
+			void markBroken();
+			boost::posix_time::ptime getCreated();
+			boost::posix_time::ptime getUpdated();
+			boost::posix_time::ptime getCompleted();
+			boost::posix_time::time_duration getDuration();
+			boost::posix_time::time_duration getElapsed();
 		};
 	}
 }
