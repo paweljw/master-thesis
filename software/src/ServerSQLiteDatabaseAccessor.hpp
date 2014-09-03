@@ -2,7 +2,7 @@
 
 #include "lib\sqlite\sqlite3.h"
 
-#include "DatabaseAccessor.hpp"
+#include "ServerDatabaseAccessor.hpp"
 
 #include "models\Solution.hpp"
 #include "models\Wave.hpp"
@@ -18,14 +18,13 @@ namespace horizon
 {
 	namespace db
 	{
-		class ServerSQLiteDatabaseAccessor : public horizon::db::DatabaseAccessor
+		class ServerSQLiteDatabaseAccessor : public horizon::db::ServerDatabaseAccessor
 		{
 		private:
 			sqlite3 *database;
 			src::severity_logger< severity_level > lg;
 			bool performQuery(std::string, std::string);
 		public:
-			ServerSQLiteDatabaseAccessor(std::string);
 			ServerSQLiteDatabaseAccessor(std::string);
 			bool RecreateDatabase();
 			int RegisterSolution(horizon::models::Solution&);

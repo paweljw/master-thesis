@@ -8,7 +8,7 @@ namespace horizon
 		Solution::Solution()
 		{
 			setID(0);
-			setState(SOLUTION_NOT_STARTED);
+			setState(SOLUTION_UNPUBLISHED);
 			setWave(0);
 			setSolution(0);
 			this->Created = boost::posix_time::microsec_clock::universal_time();
@@ -18,7 +18,7 @@ namespace horizon
 		Solution::Solution(int _ID)
 		{
 			setID(_ID);
-			setState(SOLUTION_NOT_STARTED);
+			setState(SOLUTION_UNPUBLISHED);
 			setWave(0);
 			setSolution(0);
 			this->Created = boost::posix_time::microsec_clock::universal_time();
@@ -76,7 +76,7 @@ namespace horizon
 
 		void Solution::markStarted()
 		{
-			setState(SOLUTION_STARTED);
+			setState(SOLUTION_AVAILABLE);
 		}
 
 		void Solution::markBroken()

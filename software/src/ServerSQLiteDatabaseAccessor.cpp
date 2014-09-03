@@ -2,7 +2,7 @@
 #include <string.h>
 
 #include "ServerSQLiteDBScheme.hpp"
-#include "DatabaseAccessor.hpp"
+#include "ServerDatabaseAccessor.hpp"
 #include "ServerSQLiteDatabaseAccessor.hpp"
 
 #include "models\Solution.hpp"
