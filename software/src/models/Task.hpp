@@ -12,41 +12,41 @@ namespace horizon
 		{
 		private:
 			int _ID;
-			int _WaveID;
 			uchr _Type;
+			int _WaveID;
 			uchr _State;
-			std::string _MCX;
-			std::string _Metafile;
+			void touch();
 			std::string Node;
+			std::string _MCX;
+			void setState(uchr);
+			std::string _Metafile;
 			boost::posix_time::ptime Created;
 			boost::posix_time::ptime Updated;
 			boost::posix_time::ptime Completed;
-			void touch();
-			void setState(uchr);
 		public:
 			Task();
 			Task(int);
 			int getID();
-			void setID(int);
 			int getWave();
-			void setWave(int);
 			uchr getType();
-			void setType(uchr);
+			void setID(int);
 			uchr getState();
+			void setWave(int);
+			void markBroken();
+			void markCreated();
+			void setType(uchr);
+			void markCompleted();
 			std::string getMCX();
+			std::string getNode();
 			void setMCX(std::string);
+			void setNode(std::string);
 			std::string getMetafile();
 			void setMetafile(std::string);
-			std::string getNode();
-			void setNode(std::string);
-			void markCreated();
-			void markCompleted();
-			void markBroken();
 			boost::posix_time::ptime getCreated();
 			boost::posix_time::ptime getUpdated();
 			boost::posix_time::ptime getCompleted();
-			boost::posix_time::time_duration getDuration();
 			boost::posix_time::time_duration getElapsed();
+			boost::posix_time::time_duration getDuration();
 		};
 	}
 }
