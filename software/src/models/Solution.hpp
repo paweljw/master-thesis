@@ -11,8 +11,8 @@ namespace horizon
 {
 	namespace models
 	{
-		const uchr SOLUTION_NOT_STARTED	= 0;
-		const uchr SOLUTION_STARTED = 1;
+		const uchr SOLUTION_UNPUBLISHED	= 0;
+		const uchr SOLUTION_AVAILABLE = 1;
 		const uchr SOLUTION_COMPLETE = 2;
 		const uchr SOLUTION_BROKEN = 9;
 
