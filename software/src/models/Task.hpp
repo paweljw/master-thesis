@@ -8,18 +8,35 @@ namespace horizon
 {
 	namespace models
 	{
+		// Task types
+		const int TASK_UNDEFINED = 0;
+		const int TASK_PART_SOLUTION = 1;
+		const int TASK_PART_REDUCE = 2;
+
+		// Task states
+		const int TASK_NOT_READY = 0;
+		const int TASK_READY = 1;
+		const int TASK_SENT = 2;
+		const int TASK_RECEIVED = 3;
+		const int TASK_PROVISIONED = 4;
+		const int TASK_STARTED = 5;
+		const int TASK_PROCESSED = 6;
+		const int TASK_COMPLETE = 7;
+		const int TASK_BROKEN = 9;
+
 		class Task
 		{
 		private:
-			int _ID;
-			uchr _Type;
-			int _WaveID;
-			uchr _State;
+			int _ID; //
+			uchr _Type; //
+			int _WaveID; //
+			uchr _State; //
 			void touch();
-			std::string Node;
-			std::string _MCX;
+			std::string _Node; //
+			int _PartNum; //
+			std::string _Name; //
 			void setState(uchr);
-			std::string _Metafile;
+			std::string _Metafile; //
 			boost::posix_time::ptime Created;
 			boost::posix_time::ptime Updated;
 			boost::posix_time::ptime Completed;
@@ -36,9 +53,7 @@ namespace horizon
 			void markCreated();
 			void setType(uchr);
 			void markCompleted();
-			std::string getMCX();
 			std::string getNode();
-			void setMCX(std::string);
 			void setNode(std::string);
 			std::string getMetafile();
 			void setMetafile(std::string);
@@ -47,6 +62,10 @@ namespace horizon
 			boost::posix_time::ptime getCompleted();
 			boost::posix_time::time_duration getElapsed();
 			boost::posix_time::time_duration getDuration();
+			int getPartNum();
+			void setPartNum(int);
+			std::string getName();
+			void setName(std::string);
 		};
 	}
 }
