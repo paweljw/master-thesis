@@ -49,10 +49,8 @@ namespace horizon
 			void setID(int);
 			uchr getState();
 			void setWave(int);
-			void markBroken();
-			void markCreated();
+
 			void setType(uchr);
-			void markCompleted();
 			std::string getNode();
 			void setNode(std::string);
 			std::string getMetafile();
@@ -66,6 +64,16 @@ namespace horizon
 			void setPartNum(int);
 			std::string getName();
 			void setName(std::string);
+			void markReady();
+			void markSent();
+			void markReceived();
+			void markProvisioned();
+			void markStarted();
+			void markProcessed();
+			void markBroken();
+			void markCreated();
+			void markCompleted();
+		
 		};
 	}
 }
