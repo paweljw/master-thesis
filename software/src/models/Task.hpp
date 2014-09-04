@@ -49,7 +49,6 @@ namespace horizon
 			void setID(int);
 			uchr getState();
 			void setWave(int);
-
 			void setType(uchr);
 			std::string getNode();
 			void setNode(std::string);
@@ -73,7 +72,6 @@ namespace horizon
 			void markBroken();
 			void markCreated();
 			void markCompleted();
-		
 		};
 	}
 }
