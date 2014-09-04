@@ -13,20 +13,15 @@ IF(NOT "${CMAKE_HOSTNAME}" EQUAL "jack")
 	SET(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR})
 ENDIF()
 
-# Need: OpenCL, _maybe_ boost
-set(CMAKE_INCLUDE_PATH ${CMAKE_INCLUDE_PATH} "C:/SharedLibraries/boost_1_55_0")
-
-set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} "C:/SharedLibraries/boost_1_55_0/stage/lib")
-
-# set(CMAKE_INCLUDE_PATH ${CMAKE_INCLUDE_PATH} "/usr/include")
-# set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} "/usr/lib")
+set(CMAKE_INCLUDE_PATH ${CMAKE_INCLUDE_PATH} "C:/SharedLibraries/boost_1_56_0")
+set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} "C:/SharedLibraries/boost_1_56_0/stage/lib")
 
 SET(OPENCL_VENDOR "NVIDIA")
 FIND_PACKAGE(OpenCL REQUIRED)
 INCLUDE_DIRECTORIES(${OPENCL_INCLUDE_DIR})
 
 SET(Boost_USE_STATIC_LIBS ON)
-FIND_PACKAGE(Boost 1.55.0 COMPONENTS iostreams system thread date_time filesystem timer chrono log REQUIRED)
+FIND_PACKAGE(Boost 1.56.0 COMPONENTS iostreams system thread date_time regex serialization filesystem timer chrono log REQUIRED)
 
 IF (Boost_FOUND)
     INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIR})
@@ -44,20 +39,34 @@ if (OPENMP_FOUND)
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
 endif()
 
-
-find_package(SQLITE3 REQUIRED)
-if(SQLITE3_FOUND)
-	INCLUDE_DIRECTORIES(${SQLITE3_INCLUDE_DIR})
-endif()
-
 include_directories("src/")
+include_directories("src/lib")
 
 IF(MSVC)
 	# Enable catching C++ exception
 	SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /EHsc")
 ENDIF()
 
-add_executable(splitter src/splitter.cpp)
-target_link_libraries(splitter ${OPENCL_LIBRARIES} ${Boost_LIBRARIES} ${SQLITE3_LIBRARY})
+add_executable(splitter 
+    src/utilhead.cpp
+    src/splitter.cpp)
+# target_link_libraries(splitter ${OPENCL_LIBRARIES} ${Boost_LIBRARIES})
+target_link_libraries(splitter ${Boost_LIBRARIES})
 
-add_executable(dbctl src/dbctl.cpp)
+add_executable(dbctl
+    src/lib/sqlite/sqlite3.c
+    src/utilhead.hpp 
+    src/utilhead.cpp
+    src/ServerDatabaseAccessor.hpp
+    src/ServerSQLiteDatabaseAccessor.hpp
+    src/ServerSQLiteDatabaseAccessor.cpp
+    src/ServerSQLiteDBScheme.hpp 
+    src/models/Solution.hpp
+    src/models/Solution.cpp
+    src/models/Wave.hpp
+    src/models/Wave.cpp
+    src/models/Task.hpp
+    src/models/Task.cpp
+    src/dbctl.cpp)
+
+target_link_libraries(dbctl ${Boost_LIBRARIES})
