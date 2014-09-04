@@ -115,5 +115,15 @@ namespace horizon
 		{
 			return (boost::posix_time::microsec_clock::universal_time() - this->Created);
 		}
+
+		std::string Solution::getName()
+		{
+			return this->_Name;
+		}
+
+		void Solution::setName(std::string Name)
+		{
+			this->_Name = Name;
+		}
 	}
 }

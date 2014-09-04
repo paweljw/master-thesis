@@ -23,6 +23,7 @@ namespace horizon
 			uchr State;
 			int CurrentWave;
 			std::string _Solution;
+			std::string _Name;
 			void setState(uchr);
 			// Constant after create!!!
 			boost::posix_time::ptime Created;
@@ -51,6 +52,8 @@ namespace horizon
 			boost::posix_time::ptime getCompleted();
 			boost::posix_time::time_duration getDuration();
 			boost::posix_time::time_duration getElapsed();
+			std::string getName();
+			void setName(std::string);
 		};
 	}
 }
