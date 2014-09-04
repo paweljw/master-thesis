@@ -20,7 +20,7 @@ namespace horizon
 			setSolutionID(0);
 			setSeq(0);
 			setTasks(0);
-			setState(WAVE_NOT_STARTED);
+			setState(WAVE_UNPUBLISHED);
 
 			this->Created = boost::posix_time::microsec_clock::universal_time();
 			touch();
@@ -33,7 +33,7 @@ namespace horizon
 			setSolutionID(0);
 			setSeq(0);
 			setTasks(0);
-			setState(WAVE_NOT_STARTED);
+			setState(WAVE_UNPUBLISHED);
 
 			this->Created = boost::posix_time::microsec_clock::universal_time();
 			touch();

@@ -10,8 +10,8 @@ namespace horizon
 {
 	namespace models
 	{
-		const uchr WAVE_NOT_STARTED = 0;
-		const uchr WAVE_STARTED = 1;
+		const uchr WAVE_UNPUBLISHED = 0;
+		const uchr WAVE_AVAILABLE = 1;
 		const uchr WAVE_COMPLETED = 2;
 		const uchr WAVE_BROKEN = 9;
 			
