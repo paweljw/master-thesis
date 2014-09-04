@@ -48,11 +48,25 @@ int main(int argc, char** argv)
 		dao->RecreateDatabase();
 	}*/
 	
+	horizon::db::ServerDatabaseAccessor* dao = new horizon::db::ServerSQLiteDatabaseAccessor(database);
+
 	if (command == "screate" || command == "srecreate" || command == "sc")
 	{
-		horizon::db::ServerDatabaseAccessor* dao = new horizon::db::ServerSQLiteDatabaseAccessor(database);
 		dao->RecreateDatabase();
 	}
+
+	if(command == "tss")
+	{
+		horizon::models::Solution solution;
+		solution.setWave(1);
+		solution.markStarted();
+		solution.setName("testSolution");
+
+		dao->RegisterSolution(solution);
+		BOOST_LOG_SEV(lg, info) << "Output solution now has ID " << solution.getID();
+	}
+
+
 
 	return 0;
 }

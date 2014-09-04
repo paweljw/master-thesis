@@ -4,7 +4,7 @@ namespace horizon
 {
 	namespace dbscheme
 	{
-const char * simulations = "CREATE TABLE [simulations] ("
+const char * simulations = "CREATE TABLE [solutions] ("
 				"[id] INTEGER  NOT NULL PRIMARY KEY,"
 				"[state] INTEGER DEFAULT '0' NULL,"
 				"[current_wave] INTEGER DEFAULT '0' NULL,"

@@ -109,9 +109,9 @@ namespace horizon
 		}
 
 		
-		void Wave::markStarted()
+		void Wave::markAvailable()
 		{
-			this->_State = WAVE_STARTED;
+			this->_State = WAVE_AVAILABLE;
 			touch();
 		}
 

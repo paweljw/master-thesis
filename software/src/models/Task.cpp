@@ -126,11 +126,6 @@ namespace horizon
 			setState(TASK_PROVISIONED);
 		}
 
-		void Task::markReady()
-		{
-			setState(TASK_READY);
-		}
-
 		void Task::markReceived()
 		{
 			setState(TASK_RECEIVED);

@@ -10,7 +10,8 @@ namespace horizon
 			setID(0);
 			setState(SOLUTION_UNPUBLISHED);
 			setWave(0);
-			setSolution(0);
+			setSolution("");
+			setName("");
 			this->Created = boost::posix_time::microsec_clock::universal_time();
 			touch();
 		}
@@ -20,7 +21,8 @@ namespace horizon
 			setID(_ID);
 			setState(SOLUTION_UNPUBLISHED);
 			setWave(0);
-			setSolution(0);
+			setSolution("");
+			setName("");
 			this->Created = boost::posix_time::microsec_clock::universal_time();
 			touch();
 		}

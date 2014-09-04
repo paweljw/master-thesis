@@ -49,7 +49,7 @@ namespace horizon
 			void decrementTasks();
 			uchr getState();
 			void markComplete();
-			void markStarted();
+			void markAvailable();
 			void markBroken();
 			boost::posix_time::ptime getCreated();
 			boost::posix_time::ptime getUpdated();
