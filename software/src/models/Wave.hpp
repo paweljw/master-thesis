@@ -1,5 +1,8 @@
 #include "boost/date_time/posix_time/posix_time.hpp"
+#include "boost/algorithm/string/trim.hpp"
 #include "globals.hpp"
+#include "utilhead.hpp"
+using namespace logging::trivial;
 
 #pragma once
 
@@ -32,9 +35,10 @@ namespace horizon
 
 			// Only updated once!!!
 			boost::posix_time::ptime Completed;
-			void setState(uchr);
 			void touch();
+			src::severity_logger< severity_level > lg;
 		public:
+			void setState(uchr);
 			Wave();
 			Wave(int);
 			int getID();
@@ -56,6 +60,9 @@ namespace horizon
 			boost::posix_time::ptime getCompleted();
 			boost::posix_time::time_duration getDuration();
 			boost::posix_time::time_duration getElapsed();
+			void setCreated(std::string);
+			void setUpdated(std::string);
+			void setCompleted(std::string);
 		};
 	}
 }

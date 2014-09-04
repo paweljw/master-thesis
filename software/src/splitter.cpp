@@ -13,7 +13,7 @@
 #include <boost/filesystem.hpp>
 
 // SQLITE3 BINDINGS
-#include <sqlite3.h>
+#include "lib/sqlite/sqlite3.h"
 
 // UTILITIES
 #include "utilhead.hpp"

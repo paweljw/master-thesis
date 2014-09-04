@@ -18,6 +18,8 @@ namespace horizon
 
 		Solution::Solution(int _ID)
 		{
+			using namespace logging::trivial;
+			src::severity_logger< severity_level > lg;
 			setID(_ID);
 			setState(SOLUTION_UNPUBLISHED);
 			setWave(0);
@@ -126,6 +128,45 @@ namespace horizon
 		void Solution::setName(std::string Name)
 		{
 			this->_Name = Name;
+		}
+
+		void Solution::setCreated(std::string _Created)
+		{
+			HORIZON_UNLESS(boost::algorithm::trim_copy(_Created).empty())
+			{
+				try
+				{
+					this->Created = boost::posix_time::time_from_string(_Created);
+				} catch(std::exception e) {
+					BOOST_LOG_SEV(lg, warning) << "Failed to convert time because " << e.what();
+				}
+			}
+		}
+
+		void Solution::setUpdated(std::string _Updated)
+		{
+			HORIZON_UNLESS(boost::algorithm::trim_copy(_Updated).empty())
+			{
+				try
+				{
+					this->Created = boost::posix_time::time_from_string(_Updated);
+				} catch(std::exception e) {
+					BOOST_LOG_SEV(lg, warning) << "Failed to convert time because " << e.what();
+				}
+			}
+		}
+
+		void Solution::setCompleted(std::string _Completed)
+		{
+			HORIZON_UNLESS(boost::algorithm::trim_copy(_Completed).empty())
+			{
+				try
+				{
+					this->Created = boost::posix_time::time_from_string(_Completed);
+				} catch(std::exception e) {
+					BOOST_LOG_SEV(lg, warning) << "Failed to convert time because " << e.what();
+				}
+			}
 		}
 	}
 }

@@ -146,5 +146,44 @@ namespace horizon
 		{
 			return (boost::posix_time::microsec_clock::universal_time() - this->Created);
 		}
+
+		void Wave::setCreated(std::string _Created)
+		{
+			HORIZON_UNLESS(boost::algorithm::trim_copy(_Created).empty())
+			{
+				try
+				{
+					this->Created = boost::posix_time::time_from_string(_Created);
+				} catch(std::exception e) {
+					BOOST_LOG_SEV(lg, warning) << "Failed to convert time because " << e.what();
+				}
+			}
+		}
+
+		void Wave::setUpdated(std::string _Updated)
+		{
+			HORIZON_UNLESS(boost::algorithm::trim_copy(_Updated).empty())
+			{
+				try
+				{
+					this->Created = boost::posix_time::time_from_string(_Updated);
+				} catch(std::exception e) {
+					BOOST_LOG_SEV(lg, warning) << "Failed to convert time because " << e.what();
+				}
+			}
+		}
+
+		void Wave::setCompleted(std::string _Completed)
+		{
+			HORIZON_UNLESS(boost::algorithm::trim_copy(_Completed).empty())
+			{
+				try
+				{
+					this->Created = boost::posix_time::time_from_string(_Completed);
+				} catch(std::exception e) {
+					BOOST_LOG_SEV(lg, warning) << "Failed to convert time because " << e.what();
+				}
+			}
+		}
 	}
 }

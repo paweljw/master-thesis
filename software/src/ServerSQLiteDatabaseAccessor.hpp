@@ -30,9 +30,19 @@ namespace horizon
 		public:
 			ServerSQLiteDatabaseAccessor(std::string);
 			bool RecreateDatabase();
+			
 			int RegisterSolution(horizon::models::Solution&);
+			int UpdateSolution(horizon::models::Solution&);
+			void FillSolution(horizon::models::Solution&);
+
 			int RegisterWave(horizon::models::Wave&);
+			int UpdateWave(horizon::models::Wave&);
+			void FillWave(horizon::models::Wave&);
+
 			int RegisterTask(horizon::models::Task&);
+			int UpdateTask(horizon::models::Task&);
+			void FillTask(horizon::models::Task&);
+
 			bool BeginTransaction();
 			bool CommitTransaction();
 		};

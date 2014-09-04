@@ -1,6 +1,10 @@
 #include <string>
 #include "boost/date_time/posix_time/posix_time.hpp"
+#include "boost/algorithm/string/trim.hpp"
+#include "utilhead.hpp"
 #include "globals.hpp"
+using namespace logging::trivial;
+			
 
 #pragma once
 
@@ -19,12 +23,12 @@ namespace horizon
 		class Solution
 		{
 		private:
+			src::severity_logger< severity_level > lg;
 			int ID;
 			uchr State;
 			int CurrentWave;
 			std::string _Solution;
 			std::string _Name;
-			void setState(uchr);
 			// Constant after create!!!
 			boost::posix_time::ptime Created;
 
@@ -35,6 +39,7 @@ namespace horizon
 			boost::posix_time::ptime Completed;
 			void touch();
 		public:
+			void setState(uchr);
 			Solution();
 			Solution(int);
 			int getID();
@@ -52,6 +57,11 @@ namespace horizon
 			boost::posix_time::ptime getCompleted();
 			boost::posix_time::time_duration getDuration();
 			boost::posix_time::time_duration getElapsed();
+			
+			void setCreated(std::string);
+			void setUpdated(std::string);
+			void setCompleted(std::string);
+
 			std::string getName();
 			void setName(std::string);
 		};

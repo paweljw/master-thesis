@@ -1,6 +1,9 @@
 #include <string>
 #include "globals.hpp"
 #include <boost/date_time/posix_time/posix_time.hpp>
+#include "boost/algorithm/string/trim.hpp"
+#include "utilhead.hpp"
+using namespace logging::trivial;
 
 #pragma once
 
@@ -27,6 +30,7 @@ namespace horizon
 		class Task
 		{
 		private:
+			src::severity_logger< severity_level > lg;
 			int _ID; //
 			uchr _Type; //
 			int _WaveID; //
@@ -35,12 +39,12 @@ namespace horizon
 			std::string _Node; //
 			int _PartNum; //
 			std::string _Name; //
-			void setState(uchr);
 			std::string _Metafile; //
 			boost::posix_time::ptime Created;
 			boost::posix_time::ptime Updated;
 			boost::posix_time::ptime Completed;
 		public:
+			void setState(uchr);
 			Task();
 			Task(int);
 			int getID();
@@ -72,6 +76,9 @@ namespace horizon
 			void markBroken();
 			void markCreated();
 			void markCompleted();
+			void setCreated(std::string);
+			void setUpdated(std::string);
+			void setCompleted(std::string);
 		};
 	}
 }
