@@ -97,5 +97,24 @@ int main(int argc, char** argv)
 			BOOST_LOG_SEV(lg, info) << "Wave Test complete, all ok.";
 	}
 
+	if(command == "testTask")
+	{
+		horizon::models::Task task;
+		task.setName("Cokolwiek");
+		task.setMetafile("this.mcx");
+		task.setPartNum(8);
+		dao->RegisterTask(task);
+
+		task.setPartNum(7);
+		dao->UpdateTask(task);
+
+		horizon::models::Task task2(task.getID());
+
+		dao->FillTask(task2);
+
+		if(task.getPartNum() == task2.getPartNum() && task.getPartNum() == 7)
+			BOOST_LOG_SEV(lg, info) << "Task Test complete, all ok.";
+	}
+
 	return 0;
 }

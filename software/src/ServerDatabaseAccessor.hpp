@@ -10,6 +10,8 @@ namespace horizon
 {
 	namespace db
 	{
+		std::string safe_reinterpret_cast(const unsigned char *);
+
 		class ServerDatabaseAccessor
 		{
 		protected:
@@ -30,6 +32,8 @@ namespace horizon
 			virtual void FillWave(horizon::models::Wave&) = 0; 
 
 			virtual int RegisterTask(horizon::models::Task&) = 0;
+			virtual int UpdateTask(horizon::models::Task&) = 0;
+			virtual void FillTask(horizon::models::Task&) = 0;
 		};
 	}
 }

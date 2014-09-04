@@ -40,6 +40,8 @@ namespace horizon
 			void FillWave(horizon::models::Wave&);
 
 			int RegisterTask(horizon::models::Task&);
+			int UpdateTask(horizon::models::Task&);
+			void FillTask(horizon::models::Task&);
 
 			bool BeginTransaction();
 			bool CommitTransaction();
