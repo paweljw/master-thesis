@@ -5,9 +5,9 @@
 
 typedef unsigned char uchr;
 
-// bwahahahaha
-#define unless(x)   if(!(x))
+// Simple unless() ( == if(!) ) macro
+#define HORIZON_UNLESS(x)   if(!(x))
 
-// But no, seriously. I was programming in Ruby for the past two months, not having unless feels like not having a hand.
+// But no, seriously. I was programming in Ruby for the past two months, not having an unless construct feels like not having a hand.
 
 #endif

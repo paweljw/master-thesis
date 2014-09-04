@@ -58,11 +58,11 @@ namespace horizon
 			std::string ret = boost::posix_time::to_iso_extended_string(bpt);
 
 			if(ret == "not-a-date-time") 
-				return "datetime('now')";
+				return "NULL";
 
 			boost::algorithm::replace_first(ret, ",", ".");
 			ret.resize(23);
-			BOOST_LOG_SEV(lg, info) << "datetime('"  << ret << "')";
+			// BOOST_LOG_SEV(lg, info) << "datetime('"  << ret << "')";
 			
 			return "datetime('" + ret + "')";
 		}
@@ -94,7 +94,13 @@ namespace horizon
 				return false;
 			}
 
-			boost::filesystem::remove(this->ConnectionString);
+			try
+			{
+				boost::filesystem::remove(this->ConnectionString);
+			} catch(boost::filesystem::filesystem_error e) {
+				BOOST_LOG_SEV(lg, warning) << "Filesystem error: " << e.what() << " - call aborted";
+				return false;
+			}
 
 			if(sqlite3_open_v2(this->ConnectionString.c_str(), &(this->database), SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE, NULL))
 			{
@@ -102,9 +108,9 @@ namespace horizon
 				return false;
 			}
 
-			if (!performNonQuery(horizon::dbscheme::simulations, "Simulations")) return false;
-			if (!performNonQuery(horizon::dbscheme::waves, "Waves")) return false;
-			if (!performNonQuery(horizon::dbscheme::tasks, "Tasks")) return false;
+			HORIZON_UNLESS(performNonQuery(horizon::dbscheme::simulations, "Simulations")) return false;
+			HORIZON_UNLESS(performNonQuery(horizon::dbscheme::waves, "Waves")) return false;
+			HORIZON_UNLESS(performNonQuery(horizon::dbscheme::tasks, "Tasks")) return false;
 
 			BOOST_LOG_SEV(lg, info) << "Server database recreated successfully";
 
@@ -124,7 +130,7 @@ namespace horizon
 			boost::algorithm::replace_first(sql, "@updated", this->sqlite3_time(s.getUpdated()));
 			boost::algorithm::replace_first(sql, "@completed", this->sqlite3_time(s.getCompleted()));
 
-			BOOST_LOG_SEV(lg, info) << "SQL string is now " << sql;
+			//BOOST_LOG_SEV(lg, info) << "SQL string is now " << sql;
 
 			// prepare and fill statement object
 			sqlite3_stmt *statement;
@@ -143,22 +149,22 @@ namespace horizon
 			int bind_code;
 			
 			bind_code = sqlite3_bind_int(statement, 1, s.getState());
-			if(bind_code != SQLITE_OK) BOOST_LOG_SEV(lg, warning) << "RegisterSolution: code " << bind_code << " at parameter 1";
+			HORIZON_UNLESS(bind_code == SQLITE_OK) BOOST_LOG_SEV(lg, warning) << "RegisterSolution: code " << bind_code << " at parameter 1";
 
 			bind_code = sqlite3_bind_int(statement, 2, s.getWave());
-			if(bind_code != SQLITE_OK) BOOST_LOG_SEV(lg, warning) << "RegisterSolution: code " << bind_code << " at parameter 2";
+			HORIZON_UNLESS(bind_code == SQLITE_OK) BOOST_LOG_SEV(lg, warning) << "RegisterSolution: code " << bind_code << " at parameter 2";
 
 			bind_code = sqlite3_bind_text(statement, 3, s.getName().c_str(), -1, SQLITE_TRANSIENT); // not sure if SQLITE_STATIC would work
-			if(bind_code != SQLITE_OK) BOOST_LOG_SEV(lg, warning) << "RegisterSolution: code " << bind_code << " at parameter 3";
+			HORIZON_UNLESS(bind_code == SQLITE_OK) BOOST_LOG_SEV(lg, warning) << "RegisterSolution: code " << bind_code << " at parameter 3";
 
 			bind_code = sqlite3_bind_text(statement, 4, s.getSolution().c_str(), -1, SQLITE_TRANSIENT); // not sure if SQLITE_STATIC would work
-			if(bind_code != SQLITE_OK) BOOST_LOG_SEV(lg, warning) << "RegisterSolution: code " << bind_code << " at parameter 4";
+			HORIZON_UNLESS(bind_code == SQLITE_OK) BOOST_LOG_SEV(lg, warning) << "RegisterSolution: code " << bind_code << " at parameter 4";
 
 			bind_code = sqlite3_step(statement);
-			if(bind_code != SQLITE_DONE) BOOST_LOG_SEV(lg, warning) << "RegisterSolution: code " << bind_code << " at sqlite3_step";
+			HORIZON_UNLESS(bind_code == SQLITE_DONE) BOOST_LOG_SEV(lg, warning) << "RegisterSolution: code " << bind_code << " at sqlite3_step";
 
 			bind_code = sqlite3_finalize(statement);
-			if(bind_code != SQLITE_OK) BOOST_LOG_SEV(lg, warning) << "RegisterSolution: code " << bind_code << " at sqlite3_finalize";
+			HORIZON_UNLESS(bind_code == SQLITE_OK) BOOST_LOG_SEV(lg, warning) << "RegisterSolution: code " << bind_code << " at sqlite3_finalize";
 
 			this->CommitTransaction();
 
@@ -167,10 +173,261 @@ namespace horizon
 			return s.getID();
 		}
 
+		int ServerSQLiteDatabaseAccessor::UpdateSolution(horizon::models::Solution& s)
+		{
+			// begin our transaction
+			this->BeginTransaction();
+
+			// prepare sql text
+			std::string sql =	"UPDATE solutions SET state=?, current_wave=?, name=?, solution=?, created=@created, updated=@updated, completed=@completed "
+								"WHERE id=?;";
+
+			boost::algorithm::replace_first(sql, "@created", this->sqlite3_time(s.getCreated()));
+			boost::algorithm::replace_first(sql, "@updated", this->sqlite3_time(s.getUpdated()));
+			boost::algorithm::replace_first(sql, "@completed", this->sqlite3_time(s.getCompleted()));
+
+			// prepare and fill statement object
+			sqlite3_stmt *statement;
+			int prepare_code = sqlite3_prepare_v2(this->database, sql.c_str(), -1, &statement, NULL);
+
+			HORIZON_UNLESS(prepare_code == SQLITE_OK)
+				BOOST_LOG_SEV(lg, warning) << "UpdateSolution: prepare code wrong, " << prepare_code;
+
+			if(statement == NULL)
+			{
+				BOOST_LOG_SEV(lg, fatal) << "UpdateSolution: statement is null";
+				return 0;
+			}
+
+			// bind data to params
+			int bind_code;
+			
+			bind_code = sqlite3_bind_int(statement, 1, s.getState());
+			HORIZON_UNLESS(bind_code == SQLITE_OK) BOOST_LOG_SEV(lg, warning) << "UpdateSolution: code " << bind_code << " at parameter 1";
+
+			bind_code = sqlite3_bind_int(statement, 2, s.getWave());
+			HORIZON_UNLESS(bind_code == SQLITE_OK) BOOST_LOG_SEV(lg, warning) << "UpdateSolution: code " << bind_code << " at parameter 2";
+
+			bind_code = sqlite3_bind_text(statement, 3, s.getName().c_str(), -1, SQLITE_TRANSIENT); // not sure if SQLITE_STATIC would work
+			HORIZON_UNLESS(bind_code == SQLITE_OK) BOOST_LOG_SEV(lg, warning) << "UpdateSolution: code " << bind_code << " at parameter 3";
+
+			bind_code = sqlite3_bind_text(statement, 4, s.getSolution().c_str(), -1, SQLITE_TRANSIENT); // not sure if SQLITE_STATIC would work
+			HORIZON_UNLESS(bind_code == SQLITE_OK) BOOST_LOG_SEV(lg, warning) << "UpdateSolution: code " << bind_code << " at parameter 4";
+
+			bind_code = sqlite3_bind_int(statement, 5, s.getID());
+			HORIZON_UNLESS(bind_code == SQLITE_OK) BOOST_LOG_SEV(lg, warning) << "UpdateSolution: code " << bind_code << " at parameter 5";
+
+			bind_code = sqlite3_step(statement);
+			HORIZON_UNLESS(bind_code == SQLITE_DONE) BOOST_LOG_SEV(lg, warning) << "UpdateSolution: code " << bind_code << " at sqlite3_step";
+
+			bind_code = sqlite3_finalize(statement);
+			HORIZON_UNLESS(bind_code == SQLITE_OK) BOOST_LOG_SEV(lg, warning) << "UpdateSolution: code " << bind_code << " at sqlite3_finalize";
+
+			this->CommitTransaction();
+
+			return s.getID();
+		}
+		
+		void ServerSQLiteDatabaseAccessor::FillSolution(horizon::models::Solution& s)
+		{
+			if(s.getID() < 1)
+				return;
+
+			std::string sql =	"SELECT state, current_wave, name, solution, "
+								"strftime('%Y-%m-%d %H:%M:%f', created) AS created, "
+								"strftime('%Y-%m-%d %H:%M:%f', updated) AS updated, "
+								"strftime('%Y-%m-%d %H:%M:%f', completed) AS completed "
+								"FROM solutions WHERE id = ?;";
+
+			sqlite3_stmt *statement;
+			int prepare_code = sqlite3_prepare_v2(this->database, sql.c_str(), -1, &statement, NULL);
+
+			HORIZON_UNLESS(prepare_code == SQLITE_OK)
+				BOOST_LOG_SEV(lg, warning) << "FillSolution: prepare code wrong, " << prepare_code;
+
+			if(statement == NULL)
+			{
+				BOOST_LOG_SEV(lg, fatal) << "FillSolution: statement is null";
+				return;
+			}
+
+			// bind data to params
+			int bind_code;
+			
+			bind_code = sqlite3_bind_int(statement, 1, s.getID());
+			HORIZON_UNLESS(bind_code == SQLITE_OK) BOOST_LOG_SEV(lg, warning) << "FillSolution: code " << bind_code << " at parameter 1";
+
+			sqlite3_step(statement);
+
+			s.setState(sqlite3_column_int(statement, 0));
+			s.setWave(sqlite3_column_int(statement, 1));
+			s.setName(std::string(reinterpret_cast<const char*>(sqlite3_column_text(statement, 2))));
+			s.setSolution(std::string(reinterpret_cast<const char*>(sqlite3_column_text(statement, 3))));
+			s.setCreated(std::string(reinterpret_cast<const char*>(sqlite3_column_text(statement, 4))));
+			s.setUpdated(std::string(reinterpret_cast<const char*>(sqlite3_column_text(statement, 5))));
+			HORIZON_UNLESS(sqlite3_column_text(statement, 6) == 0)
+				s.setCompleted(std::string(reinterpret_cast<const char*>(sqlite3_column_text(statement, 6))));
+
+			sqlite3_finalize(statement);
+		}
+
 		int ServerSQLiteDatabaseAccessor::RegisterWave(horizon::models::Wave& w)
 		{
-			return 0;
+			// begin our transaction
+			this->BeginTransaction();
+
+			// prepare sql text
+			std::string sql =	"INSERT INTO waves (solution_id, seq, tasks, state, created, updated, completed) "
+								"VALUES (?, ?, ?, ?, @created, @updated, @completed);";
+
+			boost::algorithm::replace_first(sql, "@created", this->sqlite3_time(w.getCreated()));
+			boost::algorithm::replace_first(sql, "@updated", this->sqlite3_time(w.getUpdated()));
+			boost::algorithm::replace_first(sql, "@completed", this->sqlite3_time(w.getCompleted()));
+
+			//BOOST_LOG_SEV(lg, info) << "SQL string is now " << sql;
+
+			// prepare and fill statement object
+			sqlite3_stmt *statement;
+			int prepare_code = sqlite3_prepare_v2(this->database, sql.c_str(), -1, &statement, NULL);
+
+			if(prepare_code != SQLITE_OK)
+				BOOST_LOG_SEV(lg, warning) << "RegisterWave: prepare code wrong, " << prepare_code;
+
+			if(statement == NULL)
+			{
+				BOOST_LOG_SEV(lg, fatal) << "RegisterWave: statement is null";
+				return 0;
+			}
+
+			// bind data to params
+			int bind_code;
+			
+			bind_code = sqlite3_bind_int(statement, 1, w.getSolutionID());
+			HORIZON_UNLESS(bind_code == SQLITE_OK) BOOST_LOG_SEV(lg, warning) << "RegisterWave: code " << bind_code << " at parameter 1";
+
+			bind_code = sqlite3_bind_int(statement, 2, w.getSeq());
+			HORIZON_UNLESS(bind_code == SQLITE_OK) BOOST_LOG_SEV(lg, warning) << "RegisterWave: code " << bind_code << " at parameter 2";
+
+			bind_code = sqlite3_bind_int(statement, 3, w.getTasks()); // not sure if SQLITE_STATIC would work
+			HORIZON_UNLESS(bind_code == SQLITE_OK) BOOST_LOG_SEV(lg, warning) << "RegisterWave: code " << bind_code << " at parameter 3";
+
+			bind_code = sqlite3_bind_int(statement, 4, w.getState()); // not sure if SQLITE_STATIC would work
+			HORIZON_UNLESS(bind_code == SQLITE_OK) BOOST_LOG_SEV(lg, warning) << "RegisterWave: code " << bind_code << " at parameter 4";
+
+			bind_code = sqlite3_step(statement);
+			HORIZON_UNLESS(bind_code == SQLITE_DONE) BOOST_LOG_SEV(lg, warning) << "RegisterWave: code " << bind_code << " at sqlite3_step";
+
+			bind_code = sqlite3_finalize(statement);
+			HORIZON_UNLESS(bind_code == SQLITE_OK) BOOST_LOG_SEV(lg, warning) << "RegisterWave: code " << bind_code << " at sqlite3_finalize";
+
+			this->CommitTransaction();
+
+			w.setID(static_cast<int>(this->lastInsertId()));
+
+			return w.getID();
 		}
+
+		int ServerSQLiteDatabaseAccessor::UpdateWave(horizon::models::Wave& w)
+		{
+			// begin our transaction
+			this->BeginTransaction();
+
+			// prepare sql text
+			std::string sql =	"UPDATE waves SET solution_id=?, seq=?, tasks=?, state=?, created=@created, updated=@updated, completed=@completed "
+								"WHERE id=?;";
+			
+			boost::algorithm::replace_first(sql, "@created", this->sqlite3_time(w.getCreated()));
+			boost::algorithm::replace_first(sql, "@updated", this->sqlite3_time(w.getUpdated()));
+			boost::algorithm::replace_first(sql, "@completed", this->sqlite3_time(w.getCompleted()));
+
+			//BOOST_LOG_SEV(lg, info) << "SQL string is now " << sql;
+
+			// prepare and fill statement object
+			sqlite3_stmt *statement;
+			int prepare_code = sqlite3_prepare_v2(this->database, sql.c_str(), -1, &statement, NULL);
+
+			if(prepare_code != SQLITE_OK)
+				BOOST_LOG_SEV(lg, warning) << "UpdateWave: prepare code wrong, " << prepare_code;
+
+			if(statement == NULL)
+			{
+				BOOST_LOG_SEV(lg, fatal) << "UpdateWave: statement is null";
+				return 0;
+			}
+
+			// bind data to params
+			int bind_code;
+			
+			bind_code = sqlite3_bind_int(statement, 1, w.getSolutionID());
+			HORIZON_UNLESS(bind_code == SQLITE_OK) BOOST_LOG_SEV(lg, warning) << "UpdateWave: code " << bind_code << " at parameter 1";
+
+			bind_code = sqlite3_bind_int(statement, 2, w.getSeq());
+			HORIZON_UNLESS(bind_code == SQLITE_OK) BOOST_LOG_SEV(lg, warning) << "UpdateWave: code " << bind_code << " at parameter 2";
+
+			bind_code = sqlite3_bind_int(statement, 3, w.getTasks()); // not sure if SQLITE_STATIC would work
+			HORIZON_UNLESS(bind_code == SQLITE_OK) BOOST_LOG_SEV(lg, warning) << "UpdateWave: code " << bind_code << " at parameter 3";
+
+			bind_code = sqlite3_bind_int(statement, 4, w.getState()); // not sure if SQLITE_STATIC would work
+			HORIZON_UNLESS(bind_code == SQLITE_OK) BOOST_LOG_SEV(lg, warning) << "UpdateWave: code " << bind_code << " at parameter 4";
+
+			bind_code = sqlite3_bind_int(statement, 5, w.getID());
+			HORIZON_UNLESS(bind_code == SQLITE_OK) BOOST_LOG_SEV(lg, warning) << "UpdateWave: code " << bind_code << " at parameter 5";
+
+			bind_code = sqlite3_step(statement);
+			HORIZON_UNLESS(bind_code == SQLITE_DONE) BOOST_LOG_SEV(lg, warning) << "UpdateWave: code " << bind_code << " at sqlite3_step";
+
+			bind_code = sqlite3_finalize(statement);
+			HORIZON_UNLESS(bind_code == SQLITE_OK) BOOST_LOG_SEV(lg, warning) << "UpdateWave: code " << bind_code << " at sqlite3_finalize";
+
+			this->CommitTransaction();
+
+			return w.getID();
+		}
+		
+		void ServerSQLiteDatabaseAccessor::FillWave(horizon::models::Wave& w)
+		{
+			
+			if(w.getID() < 1)
+				return;
+
+			std::string sql =	"SELECT solution_id, seq, tasks, state, "
+								"strftime('%Y-%m-%d %H:%M:%f', created) AS created, "
+								"strftime('%Y-%m-%d %H:%M:%f', updated) AS updated, "
+								"strftime('%Y-%m-%d %H:%M:%f', completed) AS completed "
+								"FROM waves WHERE id = ?;";
+
+			sqlite3_stmt *statement;
+			int prepare_code = sqlite3_prepare_v2(this->database, sql.c_str(), -1, &statement, NULL);
+
+			HORIZON_UNLESS(prepare_code == SQLITE_OK)
+				BOOST_LOG_SEV(lg, warning) << "FillWave: prepare code wrong, " << prepare_code;
+
+			if(statement == NULL)
+			{
+				BOOST_LOG_SEV(lg, fatal) << "FillWave: statement is null";
+				return;
+			}
+
+			// bind data to params
+			int bind_code;
+			
+			bind_code = sqlite3_bind_int(statement, 1, w.getID());
+			HORIZON_UNLESS(bind_code == SQLITE_OK) BOOST_LOG_SEV(lg, warning) << "FillWave: code " << bind_code << " at parameter 1";
+
+			sqlite3_step(statement);
+
+			w.setSolutionID(sqlite3_column_int(statement, 0));
+			w.setSeq(sqlite3_column_int(statement, 1));
+			w.setTasks(sqlite3_column_int(statement, 2));
+			w.setState(sqlite3_column_int(statement, 3));
+			w.setCreated(std::string(reinterpret_cast<const char*>(sqlite3_column_text(statement, 4))));
+			w.setUpdated(std::string(reinterpret_cast<const char*>(sqlite3_column_text(statement, 5))));
+			HORIZON_UNLESS(sqlite3_column_text(statement, 6) == 0)
+				w.setCompleted(std::string(reinterpret_cast<const char*>(sqlite3_column_text(statement, 6))));
+
+			sqlite3_finalize(statement);
+		}
+
 
 		int ServerSQLiteDatabaseAccessor::RegisterTask(horizon::models::Task& t)
 		{

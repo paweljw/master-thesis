@@ -55,7 +55,7 @@ int main(int argc, char** argv)
 		dao->RecreateDatabase();
 	}
 
-	if(command == "tss")
+	if(command == "testSolution")
 	{
 		horizon::models::Solution solution;
 		solution.setWave(1);
@@ -63,10 +63,39 @@ int main(int argc, char** argv)
 		solution.setName("testSolution");
 
 		dao->RegisterSolution(solution);
-		BOOST_LOG_SEV(lg, info) << "Output solution now has ID " << solution.getID();
+
+		solution.setWave(5);
+		dao->UpdateSolution(solution);
+
+		horizon::models::Solution solution2;
+
+		solution2.setID(solution.getID());
+
+		dao->FillSolution(solution2);
+
+		if(solution.getWave() == solution2.getWave())
+			BOOST_LOG_SEV(lg, info) << "Solution Test complete, all ok.";
 	}
 
+	if(command == "testWave")
+	{
+		horizon::models::Wave wave;
+		wave.setSeq(100);
+		wave.setTasks(10);
+		dao->RegisterWave(wave);
 
+		wave.decrementTasks();
+		dao->UpdateWave(wave);
+
+		horizon::models::Wave wave2;
+
+		wave2.setID(wave.getID());
+
+		dao->FillWave(wave2);
+
+		if(wave.getTasks() == wave2.getTasks() && wave.getTasks() == 9)
+			BOOST_LOG_SEV(lg, info) << "Wave Test complete, all ok.";
+	}
 
 	return 0;
 }
