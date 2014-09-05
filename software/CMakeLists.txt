@@ -48,8 +48,24 @@ IF(MSVC)
 ENDIF()
 
 add_executable(splitter 
+    src/lib/sqlite/sqlite3.c
+    src/lib/inih/INIReader.cpp
+    src/lib/inih/ini.c
+    src/utilhead.hpp 
     src/utilhead.cpp
+    src/ServerDatabaseAccessor.hpp
+    src/ServerSQLiteDatabaseAccessor.hpp
+    src/ServerSQLiteDatabaseAccessor.cpp
+    src/ServerSQLiteDBScheme.hpp 
+    src/models/Solution.hpp
+    src/models/Solution.cpp
+    src/models/Wave.hpp
+    src/models/Wave.cpp
+    src/models/Task.hpp
+    src/models/Task.cpp
     src/splitter.cpp)
+
+
 # target_link_libraries(splitter ${OPENCL_LIBRARIES} ${Boost_LIBRARIES})
 target_link_libraries(splitter ${Boost_LIBRARIES})
 
