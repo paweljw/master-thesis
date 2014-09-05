@@ -440,8 +440,8 @@ namespace horizon
 			this->BeginTransaction();
 
 			// prepare sql text
-			std::string sql =	"INSERT INTO tasks (wave_id, type, state, part_num, metafile, node, created, updated, completed) "
-								"VALUES (?, ?, ?, ?, ?, ?, @created, @updated, @completed);";
+			std::string sql =	"INSERT INTO tasks (wave_id, type, state, part_num, metafile, node, name, created, updated, completed) "
+								"VALUES (?, ?, ?, ?, ?, ?, ?, @created, @updated, @completed);";
 
 			boost::algorithm::replace_first(sql, "@created", this->sqlite3_time(t.getCreated()));
 			boost::algorithm::replace_first(sql, "@updated", this->sqlite3_time(t.getUpdated()));
@@ -483,6 +483,9 @@ namespace horizon
 			bind_code = sqlite3_bind_text(statement, 6, t.getNode().c_str(), -1, SQLITE_TRANSIENT); // not sure if SQLITE_STATIC would work
 			HORIZON_UNLESS(bind_code == SQLITE_OK) BOOST_LOG_SEV(lg, warning) << "RegisterTask: code " << bind_code << " at parameter 6";
 
+			bind_code = sqlite3_bind_text(statement, 7, t.getName().c_str(), -1, SQLITE_TRANSIENT); // not sure if SQLITE_STATIC would work
+			HORIZON_UNLESS(bind_code == SQLITE_OK) BOOST_LOG_SEV(lg, warning) << "RegisterTask: code " << bind_code << " at parameter 7";
+
 			bind_code = sqlite3_step(statement);
 			HORIZON_UNLESS(bind_code == SQLITE_DONE) BOOST_LOG_SEV(lg, warning) << "RegisterTask: code " << bind_code << " at sqlite3_step";
 
@@ -502,7 +505,7 @@ namespace horizon
 			this->BeginTransaction();
 
 			// prepare sql text
-			std::string sql =	"UPDATE tasks SET wave_id=?, type=?, state=?, part_num=?, metafile=?, node=?, "
+			std::string sql =	"UPDATE tasks SET wave_id=?, type=?, state=?, part_num=?, metafile=?, node=?, name=?, "
 								"created=@created, updated=@updated, completed=@completed "
 								"WHERE id=?;";
 
@@ -544,8 +547,11 @@ namespace horizon
 			bind_code = sqlite3_bind_text(statement, 6, t.getNode().c_str(), -1, SQLITE_TRANSIENT); // not sure if SQLITE_STATIC would work
 			HORIZON_UNLESS(bind_code == SQLITE_OK) BOOST_LOG_SEV(lg, warning) << "UpdateTask: code " << bind_code << " at parameter 6";
 
-			bind_code = sqlite3_bind_int(statement, 7, t.getID());
+			bind_code = sqlite3_bind_text(statement, 7, t.getName().c_str(), -1, SQLITE_TRANSIENT); // not sure if SQLITE_STATIC would work
 			HORIZON_UNLESS(bind_code == SQLITE_OK) BOOST_LOG_SEV(lg, warning) << "UpdateTask: code " << bind_code << " at parameter 7";
+			
+			bind_code = sqlite3_bind_int(statement, 8, t.getID());
+			HORIZON_UNLESS(bind_code == SQLITE_OK) BOOST_LOG_SEV(lg, warning) << "UpdateTask: code " << bind_code << " at parameter 8";
 
 			bind_code = sqlite3_step(statement);
 			HORIZON_UNLESS(bind_code == SQLITE_DONE) BOOST_LOG_SEV(lg, warning) << "UpdateTask: code " << bind_code << " at sqlite3_step";
@@ -564,7 +570,7 @@ namespace horizon
 			if(t.getID() < 1)
 				return;
 
-			std::string sql =	"SELECT wave_id, type, state, part_num, metafile, node, "
+			std::string sql =	"SELECT wave_id, type, state, part_num, metafile, node, name, "
 								"strftime('%Y-%m-%d %H:%M:%f', created) AS created, "
 								"strftime('%Y-%m-%d %H:%M:%f', updated) AS updated, "
 								"strftime('%Y-%m-%d %H:%M:%f', completed) AS completed "
@@ -596,9 +602,10 @@ namespace horizon
 			t.setPartNum(sqlite3_column_int(statement, 3));
 			t.setMetafile(safe_reinterpret_cast(sqlite3_column_text(statement, 4)));
 			t.setNode(safe_reinterpret_cast(sqlite3_column_text(statement, 5)));
-			t.setCreated(safe_reinterpret_cast(sqlite3_column_text(statement, 6)));
-			t.setUpdated(safe_reinterpret_cast(sqlite3_column_text(statement, 7)));
-			t.setCompleted(safe_reinterpret_cast(sqlite3_column_text(statement, 8)));
+			t.setName(safe_reinterpret_cast(sqlite3_column_text(statement, 6)));
+			t.setCreated(safe_reinterpret_cast(sqlite3_column_text(statement, 7)));
+			t.setUpdated(safe_reinterpret_cast(sqlite3_column_text(statement, 8)));
+			t.setCompleted(safe_reinterpret_cast(sqlite3_column_text(statement, 9)));
 
 			sqlite3_finalize(statement);
 		}

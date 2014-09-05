@@ -59,7 +59,7 @@ int main(int argc, char** argv)
 	{
 		horizon::models::Solution solution;
 		solution.setWave(1);
-		solution.markStarted();
+		solution.markAvailable();
 		solution.setName("testSolution");
 
 		dao->RegisterSolution(solution);

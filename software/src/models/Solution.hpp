@@ -49,7 +49,7 @@ namespace horizon
 			void setWave(int);
 			std::string getSolution();
 			void setSolution(std::string);
-			void markStarted();
+			void markAvailable();
 			void markComplete(std::string);
 			void markBroken();
 			boost::posix_time::ptime getCreated();

@@ -24,7 +24,6 @@ namespace horizon
 
 			this->Created = boost::posix_time::microsec_clock::universal_time();
 			touch();
-			this->Completed = this->Created;
 		}
 		
 		Wave::Wave(int _ID)
@@ -37,7 +36,6 @@ namespace horizon
 
 			this->Created = boost::posix_time::microsec_clock::universal_time();
 			touch();
-			this->Completed = this->Created;
 		}
 		
 		int Wave::getID()

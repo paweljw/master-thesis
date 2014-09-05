@@ -78,7 +78,7 @@ namespace horizon
 			this->Updated = boost::posix_time::microsec_clock::universal_time();
 		}
 
-		void Solution::markStarted()
+		void Solution::markAvailable()
 		{
 			setState(SOLUTION_AVAILABLE);
 		}
@@ -127,6 +127,9 @@ namespace horizon
 
 		void Solution::setName(std::string Name)
 		{
+			Name.erase(std::remove(Name.begin(), Name.end(), '\\'), Name.end());
+			Name.erase(std::remove(Name.begin(), Name.end(), '/'), Name.end());
+			boost::algorithm::replace_all(Name, ".", "_");
 			this->_Name = Name;
 		}
 
