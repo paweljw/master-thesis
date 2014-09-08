@@ -14,8 +14,8 @@
 // UTILITIES
 #include "utilhead.hpp"
 
-#include "ServerDatabaseAccessor.hpp"
-#include "ServerSQLiteDatabaseAccessor.hpp"
+#include "db/ServerDatabaseAccessor.hpp"
+#include "db/ServerSQLiteDatabaseAccessor.hpp"
 
 using namespace std;
 

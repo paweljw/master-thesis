@@ -2,7 +2,7 @@
 
 #include "lib\sqlite\sqlite3.h"
 
-#include "ServerDatabaseAccessor.hpp"
+#include "db\ServerDatabaseAccessor.hpp"
 
 #include "models\Solution.hpp"
 #include "models\Wave.hpp"

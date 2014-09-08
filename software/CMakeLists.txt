@@ -53,10 +53,10 @@ add_executable(splitter
     src/lib/inih/ini.c
     src/utilhead.hpp 
     src/utilhead.cpp
-    src/ServerDatabaseAccessor.hpp
-    src/ServerSQLiteDatabaseAccessor.hpp
-    src/ServerSQLiteDatabaseAccessor.cpp
-    src/ServerSQLiteDBScheme.hpp 
+    src/db/ServerDatabaseAccessor.hpp
+    src/db/ServerSQLiteDatabaseAccessor.hpp
+    src/db/ServerSQLiteDatabaseAccessor.cpp
+    src/db/ServerSQLiteDBScheme.hpp 
     src/models/Solution.hpp
     src/models/Solution.cpp
     src/models/Wave.hpp
@@ -65,18 +65,16 @@ add_executable(splitter
     src/models/Task.cpp
     src/splitter.cpp)
 
-
-# target_link_libraries(splitter ${OPENCL_LIBRARIES} ${Boost_LIBRARIES})
 target_link_libraries(splitter ${Boost_LIBRARIES})
 
 add_executable(dbctl
     src/lib/sqlite/sqlite3.c
     src/utilhead.hpp 
     src/utilhead.cpp
-    src/ServerDatabaseAccessor.hpp
-    src/ServerSQLiteDatabaseAccessor.hpp
-    src/ServerSQLiteDatabaseAccessor.cpp
-    src/ServerSQLiteDBScheme.hpp 
+    src/db/ServerDatabaseAccessor.hpp
+    src/db/ServerSQLiteDatabaseAccessor.hpp
+    src/db/ServerSQLiteDatabaseAccessor.cpp
+    src/db/ServerSQLiteDBScheme.hpp 
     src/models/Solution.hpp
     src/models/Solution.cpp
     src/models/Wave.hpp
@@ -86,3 +84,6 @@ add_executable(dbctl
     src/dbctl.cpp)
 
 target_link_libraries(dbctl ${Boost_LIBRARIES})
+
+
+# target_link_libraries(splitter ${OPENCL_LIBRARIES} ${Boost_LIBRARIES})
