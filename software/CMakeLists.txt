@@ -85,5 +85,14 @@ add_executable(dbctl
 
 target_link_libraries(dbctl ${Boost_LIBRARIES})
 
+add_executable(server
+	src/lib/mongoose/mongoose.h
+	src/lib/mongoose/mongoose.c
+	src/utilhead.hpp
+	src/utilhead.cpp
+	src/server.cpp
+	)
+
+target_link_libraries(server ${Boost_LIBRARIES})
 
 # target_link_libraries(splitter ${OPENCL_LIBRARIES} ${Boost_LIBRARIES})
