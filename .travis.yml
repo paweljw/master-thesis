@@ -1,3 +1,7 @@
+env:
+  - OPENCL_VENDOR=AMD
+  - BOOST_VERSION=1.46.0
+
 language: cpp
 
 compiler:
