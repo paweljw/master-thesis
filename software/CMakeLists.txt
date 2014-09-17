@@ -16,24 +16,12 @@ ENDIF()
 set(CMAKE_INCLUDE_PATH ${CMAKE_INCLUDE_PATH} "C:/SharedLibraries/boost_1_56_0")
 set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} "C:/SharedLibraries/boost_1_56_0/stage/lib")
 
-IF(NOT $ENV{OPENCL_VENDOR} EQUAL "")
-    MESSAGE(STATUS "OpenclVendor " $ENV{OPENCL_VENDOR})
-    SET(OPENCL_VENDOR $ENV{OPENCL_VENDOR})
-ELSE()
-    MESSAGE(STATUS "OpenclVendor " $ENV{OPENCL_VENDOR})
-    SET(OPENCL_VENDOR "NVIDIA")
-ENDIF()
-
+SET(OPENCL_VENDOR "NVIDIA")
 FIND_PACKAGE(OpenCL REQUIRED)
 INCLUDE_DIRECTORIES(${OPENCL_INCLUDE_DIR})
 
 SET(Boost_USE_STATIC_LIBS ON)
-
-IF(NOT $ENV{BOOST_VERSION} EQUAL "")
-    FIND_PACKAGE(Boost $ENV{BOOST_VERSION} COMPONENTS iostreams system thread date_time regex serialization filesystem timer chrono log REQUIRED)
-ELSE()
-    FIND_PACKAGE(Boost 1.56.0 COMPONENTS iostreams system thread date_time regex serialization filesystem timer chrono log REQUIRED)
-ENDIF()
+FIND_PACKAGE(Boost 1.56.0 COMPONENTS iostreams system thread date_time regex serialization filesystem timer chrono log REQUIRED)
 
 IF (Boost_FOUND)
     INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIR})
@@ -45,6 +33,11 @@ IF (Boost_FOUND)
     ADD_DEFINITIONS (-DBOOST_CHRONO_HEADER_ONLY )
 ENDIF()
 
+find_package(OpenMP)
+if (OPENMP_FOUND)
+    set (CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
+    set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+endif()
 
 include_directories("src/")
 include_directories("src/lib")
