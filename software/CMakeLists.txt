@@ -95,26 +95,4 @@ add_executable(server
 
 target_link_libraries(server ${Boost_LIBRARIES})
 
-add_executable(db_test
-    src/lib/sqlite/sqlite3.c
-    src/utilhead.hpp 
-    src/utilhead.cpp
-    src/db/ServerDatabaseAccessor.hpp
-    src/db/ServerSQLiteDatabaseAccessor.hpp
-    src/db/ServerSQLiteDatabaseAccessor.cpp
-    src/db/ServerSQLiteDBScheme.hpp 
-    src/models/Solution.hpp
-    src/models/Solution.cpp
-    src/models/Wave.hpp
-    src/models/Wave.cpp
-    src/models/Task.hpp
-    src/models/Task.cpp
-    src/db_test.cpp)
-
-target_link_libraries(db_test ${Boost_LIBRARIES})
-
-enable_testing()
-
-add_test( db_test db_test --detect_memory_leak=0 )
-
 # target_link_libraries(splitter ${OPENCL_LIBRARIES} ${Boost_LIBRARIES})

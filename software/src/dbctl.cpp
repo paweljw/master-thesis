@@ -23,8 +23,8 @@ int main(int argc, char** argv)
 {
 	if (argc == 1)
 	{
-		cout << "Usage: dbctl file.db command" << endl;
-		cout << "Commands: sc" << endl;
+		cout << "Usage: dbctl file.s3db command" << endl;
+		cout << "Commands: create" << endl;
 		return 0;
 	}
 
@@ -57,7 +57,24 @@ int main(int argc, char** argv)
 
 	if(command == "testSolution")
 	{
-		
+		horizon::models::Solution solution;
+		solution.setWave(1);
+		solution.markAvailable();
+		solution.setName("testSolution");
+
+		dao->RegisterSolution(solution);
+
+		solution.setWave(5);
+		dao->UpdateSolution(solution);
+
+		horizon::models::Solution solution2;
+
+		solution2.setID(solution.getID());
+
+		dao->FillSolution(solution2);
+
+		if(solution.getWave() == solution2.getWave())
+			BOOST_LOG_SEV(lg, info) << "Solution Test complete, all ok.";
 	}
 
 	if(command == "testWave")

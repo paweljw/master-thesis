@@ -16,5 +16,4 @@ before_script:
 script:
   - cd software/build/
   - cmake ..
-  - make
-  - make test
+  - make all
