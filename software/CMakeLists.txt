@@ -88,6 +88,10 @@ target_link_libraries(dbctl ${Boost_LIBRARIES})
 add_executable(server
 	src/lib/mongoose/mongoose.h
 	src/lib/mongoose/mongoose.c
+    src/lib/inih/ini.c
+    src/lib/inih/INIReader.cpp
+    src/net/RequestManager.hpp
+    src/net/RequestManager.cpp
 	src/utilhead.hpp
 	src/utilhead.cpp
 	src/server.cpp
