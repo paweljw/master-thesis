@@ -1,20 +1,24 @@
-#include <string>
-#include <vector>
-#include <utility>
-#include "lib/mongoose/mongoose.h"
-#include <boost/algorithm/string.hpp>
-#include "utilhead.hpp"
-
 #pragma once
 
 #ifndef __REQUEST_MANAGER_INCLUDED
 #define __REQUEST_MANAGER_INCLUDED
+
+#include <string>
+#include <vector>
+#include <utility>
+#include <boost/algorithm/string.hpp>
+
+#include "lib/mongoose/mongoose.h"
+
+#include "utilhead.hpp"
 
 namespace horizon
 {
 	namespace net
 	{
 		typedef std::vector< std::pair<std::string, std::string> > Parameters;
+
+		void init_reader(std::string);
 
 		/// Fulfills /hello request
 		void request_hello(struct mg_connection *conn);
