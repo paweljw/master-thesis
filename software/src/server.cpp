@@ -17,7 +17,7 @@ int main()
 	mg_set_option(server, "listening_port", config.Get("server", "port", "8080").c_str());
 
 	for (;;) {
-	mg_poll_server(server, 1000);  // Infinite loop, Ctrl-C to stop
+		mg_poll_server(server, 1000);  // Infinite loop, Ctrl-C to stop
 	}
 	mg_destroy_server(&server);
 

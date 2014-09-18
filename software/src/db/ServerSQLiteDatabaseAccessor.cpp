@@ -568,7 +568,7 @@ namespace horizon
 		{
 			
 			if(t.getID() < 1)
-				return;
+				throw std::exception("ServerSQLiteDatabaseAccessor::FillTask: bad ID");
 
 			std::string sql =	"SELECT wave_id, type, state, part_num, metafile, node, name, "
 								"strftime('%Y-%m-%d %H:%M:%f', created) AS created, "
@@ -585,7 +585,8 @@ namespace horizon
 			if(statement == NULL)
 			{
 				BOOST_LOG_SEV(lg, fatal) << "FillTask: statement is null";
-				return;
+				sqlite3_finalize(statement);
+				throw std::exception("ServerSQLiteDatabaseAccessor::FillTask: bad statement");
 			}
 
 			// bind data to params
@@ -594,7 +595,12 @@ namespace horizon
 			bind_code = sqlite3_bind_int(statement, 1, t.getID());
 			HORIZON_UNLESS(bind_code == SQLITE_OK) BOOST_LOG_SEV(lg, warning) << "FillTask: code " << bind_code << " at parameter 1";
 
-			sqlite3_step(statement);
+			HORIZON_UNLESS(sqlite3_step(statement) == SQLITE_ROW)
+			{
+				BOOST_LOG_SEV(lg, fatal) << "FillTask: no data";
+				sqlite3_finalize(statement);
+				throw std::exception("ServerSQLiteDatabaseAccessor::FillTask: no data");
+			}
 
 			t.setWave(sqlite3_column_int(statement, 0));
 			t.setType(sqlite3_column_int(statement, 1));

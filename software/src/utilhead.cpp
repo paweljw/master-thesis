@@ -27,6 +27,16 @@ void loggerhead(std::string where)
         keywords::rotation_size = 10 * 1024 * 1024,                                   /*< rotate files every 10 MiB... >*/
         keywords::format = "[%TimeStamp%] <%Severity%>: %Message%"
     );
+}
 
-    
+namespace horizon
+{
+
+	bool is_numeric(std::string const& str)
+	{
+		std::string::const_iterator first(str.begin()), last(str.end());
+		return boost::spirit::qi::parse(first, last,
+			boost::spirit::double_ >> *boost::spirit::qi::space)
+			&& first == last;
+	}
 }

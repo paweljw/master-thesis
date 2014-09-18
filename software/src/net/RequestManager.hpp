@@ -23,8 +23,11 @@ namespace horizon
 		/// Fulfills /hello request
 		void request_hello(struct mg_connection *conn);
 
-		/// Fulfills /*.mcx.gz?auth=code requests
-		int request_package(struct mg_connection *conn);
+		/// Fulfills /packageByPart requests
+		int request_package_by_part(struct mg_connection *conn);
+
+		/// Fulfills /packageById requests
+		int request_package_by_id(struct mg_connection *conn);
 
 		/// Logs static requests
 		void request_static(struct mg_connection *conn);
@@ -47,8 +50,10 @@ namespace horizon
 				if(boost::find_first(conn->uri, "/hello")) {
 					request_hello(conn);
 					return MG_TRUE;
-				} else if(boost::find_first(conn->uri, "/package")) {
-					return request_package(conn);
+				} else if(boost::find_first(conn->uri, "/packageByPart")) {
+					return request_package_by_part(conn);
+				} else if (boost::find_first(conn->uri, "/packageById")) {
+					return request_package_by_id(conn);
 				}
 
 				request_static(conn);
