@@ -47,7 +47,7 @@ namespace horizon
 				if(boost::find_first(conn->uri, "/hello")) {
 					request_hello(conn);
 					return MG_TRUE;
-				} else if(boost::find_first(conn->uri, ".mcx.gz")) {
+				} else if(boost::find_first(conn->uri, "/package")) {
 					return request_package(conn);
 				}
 

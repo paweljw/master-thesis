@@ -30,12 +30,17 @@ namespace horizon
 
 		int request_package(struct mg_connection *conn)
 		{
-			std::string code = get_param(parse_querystring(conn), "auth");
+			Parameters params = parse_querystring(conn);
+			std::string code = get_param(params, "auth");
 
 			if(auth(code))
 			{
-				BOOST_LOG_SEV(lg, info) << "PKGA " << conn->uri << ": " << __FUNCTIONW__ << "+" << __LINE__;
-				mg_send_file(conn, ("./storage/" + std::string(conn->uri)).c_str());
+				std::string wave = get_param(params, "wave");
+				std::string part = get_param(params, "part");
+				BOOST_LOG_SEV(lg, info) << "PKGA (wave " << wave << ", part " << part << "): " << __FUNCTIONW__ << "+" << __LINE__;
+
+				mg_send_header(conn, "Content-Disposition", ("attachment; filename=" + wave + "_" + part + ".gz").c_str());
+				mg_send_file(conn, ("./storage/" + (wave + "_" + part + ".gz")).c_str());
 				return MG_MORE;
 			} else {
 				BOOST_LOG_SEV(lg, info) << "PKGU " << conn->uri << " (" << code << ") : " << __FUNCTIONW__ << "+" << __LINE__;
