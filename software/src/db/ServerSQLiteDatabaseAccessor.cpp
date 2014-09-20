@@ -11,6 +11,9 @@
 
 #include <boost/algorithm/string/replace.hpp>
 #include <boost/filesystem.hpp>
+#include <boost/foreach.hpp>
+
+#include "lib/json_spirit/json_spirit.h"
 
 namespace horizon
 {
@@ -612,5 +615,62 @@ namespace horizon
 			return performNonQuery("COMMIT;", "CommitTransaction");
 		}
 
+		std::vector<horizon::models::Task> ServerSQLiteDatabaseAccessor::TaskList(int num)
+		{
+			std::string sql = "SELECT tasks.id FROM tasks WHERE state = 1 ORDER BY tasks.created ASC LIMIT ?;";
+
+			sqlite3_stmt *statement;
+			int prepare_code = sqlite3_prepare_v2(this->database, sql.c_str(), -1, &statement, NULL);
+
+			HORIZON_UNLESS(prepare_code == SQLITE_OK)
+				BOOST_LOG_SEV(lg, warning) << "TaskListJSON: prepare code wrong, " << prepare_code;
+
+			if (statement == NULL)
+			{
+				BOOST_LOG_SEV(lg, fatal) << "FillTask: statement is null";
+				sqlite3_finalize(statement);
+				throw std::exception("ServerSQLiteDatabaseAccessor::TaskListJSON: bad statement");
+			}
+
+			// bind data to params
+			int bind_code;
+
+			bind_code = sqlite3_bind_int(statement, 1, num);
+			HORIZON_UNLESS(bind_code == SQLITE_OK) BOOST_LOG_SEV(lg, warning) << "TaskListJSON: code " << bind_code << " at parameter 1";
+
+			std::vector<horizon::models::Task> tasks = std::vector<horizon::models::Task>(0);
+
+			while (sqlite3_step(statement) == SQLITE_ROW)
+			{
+				horizon::models::Task t(sqlite3_column_int(statement, 0));
+				this->FillTask(t);
+				tasks.push_back(t);
+			}
+
+			sqlite3_finalize(statement);
+
+			return tasks;
+		}
+
+		void ServerSQLiteDatabaseAccessor::MassMarkTasksSent(std::vector<horizon::models::Task> tasks)
+		{
+			BOOST_FOREACH(horizon::models::Task t, tasks)
+			{
+				t.markSent();
+				this->UpdateTask(t);
+			}
+		}
+
+		std::string TaskListJSON(std::vector<horizon::models::Task> tasks)
+		{
+			json_spirit::Array ar;
+
+			BOOST_FOREACH(horizon::models::Task t, tasks)
+			{
+				ar.push_back(t.toJSONObject());
+			}
+
+			return json_spirit::write(ar, json_spirit::pretty_print);
+		}
 	}
 }

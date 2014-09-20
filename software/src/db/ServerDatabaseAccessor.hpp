@@ -1,6 +1,6 @@
 #pragma once
 
-#include <string.h>
+#include <string>
 
 #include "models/Solution.hpp"
 #include "models/Wave.hpp"
@@ -34,6 +34,10 @@ namespace horizon
 			virtual int RegisterTask(horizon::models::Task&) = 0;
 			virtual int UpdateTask(horizon::models::Task&) = 0;
 			virtual void FillTask(horizon::models::Task&) = 0;
+
+			virtual std::vector<horizon::models::Task> TaskList(int) = 0;
+			virtual std::string TaskListJSON(std::vector<horizon::models::Task>) = 0;
+			virtual void MassMarkTasksSent(std::vector<horizon::models::Task>) = 0;
 		};
 	}
 }

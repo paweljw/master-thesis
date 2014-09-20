@@ -10,6 +10,7 @@
 
 #include "utilhead.hpp"
 
+
 #pragma once
 using namespace logging::trivial;
 
@@ -43,6 +44,10 @@ namespace horizon
 
 			bool BeginTransaction();
 			bool CommitTransaction();
+
+			std::vector<horizon::models::Task> TaskList(int);
+			std::string TaskListJSON(std::vector<horizon::models::Task>);
+			void MassMarkTasksSent(std::vector<horizon::models::Task>);
 		};
 
 	};
