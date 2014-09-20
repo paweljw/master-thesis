@@ -26,6 +26,8 @@
 #include <boost/spirit/include/qi_char_class.hpp>
 #include <boost/spirit/include/qi_operator.hpp>
 
+#include <boost/date_time/posix_time/posix_time.hpp>
+
 
 namespace logging = boost::log;
 namespace src = boost::log::sources;
@@ -39,6 +41,8 @@ void loggerhead(std::string where);
 namespace horizon
 {
 	bool is_numeric(std::string const& str);
+
+	std::string sqlite3_time(boost::posix_time::ptime bpt);
 }
 
 #endif

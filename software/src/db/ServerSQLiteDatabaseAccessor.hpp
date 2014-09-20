@@ -9,7 +9,6 @@
 #include "models\Task.hpp"
 
 #include "utilhead.hpp"
-#include <boost/date_time/posix_time/posix_time.hpp>
 
 #pragma once
 using namespace logging::trivial;
@@ -26,7 +25,6 @@ namespace horizon
 			src::severity_logger< severity_level > lg;
 			bool performNonQuery(std::string, std::string);
 			sqlite3_int64 lastInsertId();
-			std::string sqlite3_time(boost::posix_time::ptime);
 		public:
 			ServerSQLiteDatabaseAccessor(std::string);
 			bool RecreateDatabase();

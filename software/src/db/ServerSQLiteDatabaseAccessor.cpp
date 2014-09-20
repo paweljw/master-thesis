@@ -61,20 +61,6 @@ namespace horizon
 			return true;
 		}
 
-		std::string ServerSQLiteDatabaseAccessor::sqlite3_time(boost::posix_time::ptime bpt)
-		{
-			std::string ret = boost::posix_time::to_iso_extended_string(bpt);
-
-			if(ret == "not-a-date-time") 
-				return "NULL";
-
-			boost::algorithm::replace_first(ret, ",", ".");
-			ret.resize(23);
-			// BOOST_LOG_SEV(lg, info) << "datetime('"  << ret << "')";
-			
-			return "datetime('" + ret + "')";
-		}
-
 		sqlite3_int64 ServerSQLiteDatabaseAccessor::lastInsertId()
 		{
 			sqlite3_int64 ret = sqlite3_last_insert_rowid(this->database);
@@ -134,9 +120,9 @@ namespace horizon
 			std::string sql =	"INSERT INTO solutions (state, current_wave, name, solution, created, updated, completed) "
 								"VALUES (?, ?, ?, ?, @created, @updated, @completed);";
 
-			boost::algorithm::replace_first(sql, "@created", this->sqlite3_time(s.getCreated()));
-			boost::algorithm::replace_first(sql, "@updated", this->sqlite3_time(s.getUpdated()));
-			boost::algorithm::replace_first(sql, "@completed", this->sqlite3_time(s.getCompleted()));
+			boost::algorithm::replace_first(sql, "@created", horizon::sqlite3_time(s.getCreated()));
+			boost::algorithm::replace_first(sql, "@updated", horizon::sqlite3_time(s.getUpdated()));
+			boost::algorithm::replace_first(sql, "@completed", horizon::sqlite3_time(s.getCompleted()));
 
 			//BOOST_LOG_SEV(lg, info) << "SQL string is now " << sql;
 
@@ -190,9 +176,9 @@ namespace horizon
 			std::string sql =	"UPDATE solutions SET state=?, current_wave=?, name=?, solution=?, created=@created, updated=@updated, completed=@completed "
 								"WHERE id=?;";
 
-			boost::algorithm::replace_first(sql, "@created", this->sqlite3_time(s.getCreated()));
-			boost::algorithm::replace_first(sql, "@updated", this->sqlite3_time(s.getUpdated()));
-			boost::algorithm::replace_first(sql, "@completed", this->sqlite3_time(s.getCompleted()));
+			boost::algorithm::replace_first(sql, "@created", horizon::sqlite3_time(s.getCreated()));
+			boost::algorithm::replace_first(sql, "@updated", horizon::sqlite3_time(s.getUpdated()));
+			boost::algorithm::replace_first(sql, "@completed", horizon::sqlite3_time(s.getCompleted()));
 
 			// prepare and fill statement object
 			sqlite3_stmt *statement;
@@ -287,9 +273,9 @@ namespace horizon
 			std::string sql =	"INSERT INTO waves (solution_id, seq, tasks, state, created, updated, completed) "
 								"VALUES (?, ?, ?, ?, @created, @updated, @completed);";
 
-			boost::algorithm::replace_first(sql, "@created", this->sqlite3_time(w.getCreated()));
-			boost::algorithm::replace_first(sql, "@updated", this->sqlite3_time(w.getUpdated()));
-			boost::algorithm::replace_first(sql, "@completed", this->sqlite3_time(w.getCompleted()));
+			boost::algorithm::replace_first(sql, "@created", horizon::sqlite3_time(w.getCreated()));
+			boost::algorithm::replace_first(sql, "@updated", horizon::sqlite3_time(w.getUpdated()));
+			boost::algorithm::replace_first(sql, "@completed", horizon::sqlite3_time(w.getCompleted()));
 
 			//BOOST_LOG_SEV(lg, info) << "SQL string is now " << sql;
 
@@ -343,9 +329,9 @@ namespace horizon
 			std::string sql =	"UPDATE waves SET solution_id=?, seq=?, tasks=?, state=?, created=@created, updated=@updated, completed=@completed "
 								"WHERE id=?;";
 			
-			boost::algorithm::replace_first(sql, "@created", this->sqlite3_time(w.getCreated()));
-			boost::algorithm::replace_first(sql, "@updated", this->sqlite3_time(w.getUpdated()));
-			boost::algorithm::replace_first(sql, "@completed", this->sqlite3_time(w.getCompleted()));
+			boost::algorithm::replace_first(sql, "@created", horizon::sqlite3_time(w.getCreated()));
+			boost::algorithm::replace_first(sql, "@updated", horizon::sqlite3_time(w.getUpdated()));
+			boost::algorithm::replace_first(sql, "@completed", horizon::sqlite3_time(w.getCompleted()));
 
 			//BOOST_LOG_SEV(lg, info) << "SQL string is now " << sql;
 
@@ -443,9 +429,9 @@ namespace horizon
 			std::string sql =	"INSERT INTO tasks (wave_id, type, state, part_num, metafile, node, name, created, updated, completed) "
 								"VALUES (?, ?, ?, ?, ?, ?, ?, @created, @updated, @completed);";
 
-			boost::algorithm::replace_first(sql, "@created", this->sqlite3_time(t.getCreated()));
-			boost::algorithm::replace_first(sql, "@updated", this->sqlite3_time(t.getUpdated()));
-			boost::algorithm::replace_first(sql, "@completed", this->sqlite3_time(t.getCompleted()));
+			boost::algorithm::replace_first(sql, "@created", horizon::sqlite3_time(t.getCreated()));
+			boost::algorithm::replace_first(sql, "@updated", horizon::sqlite3_time(t.getUpdated()));
+			boost::algorithm::replace_first(sql, "@completed", horizon::sqlite3_time(t.getCompleted()));
 
 			//BOOST_LOG_SEV(lg, info) << "SQL string is now " << sql;
 
@@ -509,9 +495,9 @@ namespace horizon
 								"created=@created, updated=@updated, completed=@completed "
 								"WHERE id=?;";
 
-			boost::algorithm::replace_first(sql, "@created", this->sqlite3_time(t.getCreated()));
-			boost::algorithm::replace_first(sql, "@updated", this->sqlite3_time(t.getUpdated()));
-			boost::algorithm::replace_first(sql, "@completed", this->sqlite3_time(t.getCompleted()));
+			boost::algorithm::replace_first(sql, "@created", horizon::sqlite3_time(t.getCreated()));
+			boost::algorithm::replace_first(sql, "@updated", horizon::sqlite3_time(t.getUpdated()));
+			boost::algorithm::replace_first(sql, "@completed", horizon::sqlite3_time(t.getCompleted()));
 
 			// prepare and fill statement object
 			sqlite3_stmt *statement;

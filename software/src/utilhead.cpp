@@ -39,4 +39,18 @@ namespace horizon
 			boost::spirit::double_ >> *boost::spirit::qi::space)
 			&& first == last;
 	}
+
+	std::string sqlite3_time(boost::posix_time::ptime bpt)
+	{
+		std::string ret = boost::posix_time::to_iso_extended_string(bpt);
+
+		if (ret == "not-a-date-time")
+			return "NULL";
+
+		boost::algorithm::replace_first(ret, ",", ".");
+		ret.resize(23);
+		// BOOST_LOG_SEV(lg, info) << "datetime('"  << ret << "')";
+
+		return "datetime('" + ret + "')";
+	}
 }
