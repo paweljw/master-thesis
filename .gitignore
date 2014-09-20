@@ -61,9 +61,4 @@ $RECYCLE.BIN/
 *.msm
 *.msp
 
-# ==========================
-# CMake - logika
-# ==========================
-
 software/build/*
-software/CMakeLists.txt
