@@ -1,4 +1,5 @@
 #include "models\Task.hpp"
+#include "utilhead.hpp"
 
 namespace horizon
 {
@@ -223,6 +224,65 @@ namespace horizon
 					BOOST_LOG_SEV(lg, warning) << "Failed to convert time because " << e.what();
 				}
 			}
+		}
+
+		Task::Task(std::string json)
+		{
+			json_spirit::mValue v;
+
+			json_spirit::read(json, v);
+
+			const json_spirit::mObject map = v.get_obj();
+
+			this->setCompleted((*map.find("Completed")).second.get_str());
+			this->setCreated((*map.find("Created")).second.get_str());
+			this->setID((*map.find("ID")).second.get_int());
+			this->setMetafile((*map.find("Metafile")).second.get_str());
+			this->setName((*map.find("Name")).second.get_str());
+			this->setNode((*map.find("Node")).second.get_str());
+			this->setPartNum((*map.find("PartNum")).second.get_int());
+			this->setState((*map.find("State")).second.get_int());
+			this->setType((*map.find("Type")).second.get_int());
+			this->setUpdated((*map.find("Updated")).second.get_str());
+			this->setWave((*map.find("Wave")).second.get_int());
+		}
+
+		std::string Task::toJSONString()
+		{
+			json_spirit::Object taskobj;
+
+			taskobj.push_back(json_spirit::Pair("Completed", horizon::sqlite3_time(this->getCompleted())));
+			taskobj.push_back(json_spirit::Pair("Updated", horizon::sqlite3_time(this->getUpdated())));
+			taskobj.push_back(json_spirit::Pair("Created", horizon::sqlite3_time(this->getCreated())));
+			taskobj.push_back(json_spirit::Pair("ID", this->getID()));
+			taskobj.push_back(json_spirit::Pair("Metafile", this->getMetafile()));
+			taskobj.push_back(json_spirit::Pair("Name", this->getName()));
+			taskobj.push_back(json_spirit::Pair("Node", this->getNode()));
+			taskobj.push_back(json_spirit::Pair("PartNum", this->getPartNum()));
+			taskobj.push_back(json_spirit::Pair("State", this->getState()));
+			taskobj.push_back(json_spirit::Pair("Type", this->getType()));
+			taskobj.push_back(json_spirit::Pair("Wave", this->getWave()));
+
+			return json_spirit::write(taskobj, json_spirit::pretty_print);
+		}
+
+		json_spirit::Object Task::toJSONObject()
+		{
+			json_spirit::Object taskobj;
+
+			taskobj.push_back(json_spirit::Pair("Completed", horizon::sqlite3_time(this->getCompleted())));
+			taskobj.push_back(json_spirit::Pair("Updated", horizon::sqlite3_time(this->getUpdated())));
+			taskobj.push_back(json_spirit::Pair("Created", horizon::sqlite3_time(this->getCreated())));
+			taskobj.push_back(json_spirit::Pair("ID", this->getID()));
+			taskobj.push_back(json_spirit::Pair("Metafile", this->getMetafile()));
+			taskobj.push_back(json_spirit::Pair("Name", this->getName()));
+			taskobj.push_back(json_spirit::Pair("Node", this->getNode()));
+			taskobj.push_back(json_spirit::Pair("PartNum", this->getPartNum()));
+			taskobj.push_back(json_spirit::Pair("State", this->getState()));
+			taskobj.push_back(json_spirit::Pair("Type", this->getType()));
+			taskobj.push_back(json_spirit::Pair("Wave", this->getWave()));
+
+			return taskobj;
 		}
 	}
 }
