@@ -1,4 +1,4 @@
-CMAKE_MINIMUM_REQUIRED (VERSION 2.6)
+CMAKE_MINIMUM_REQUIRED (VERSION 2.8)
 project (MultiVectorAttack)
 
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR})
@@ -42,71 +42,10 @@ endif()
 include_directories("src/")
 include_directories("src/lib")
 
-IF(MSVC)
-	# Enable catching C++ exception
-	SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /EHsc")
-ENDIF()
+include(CMakeFiles/msvc.cmake)
 
-add_executable(splitter 
-    src/lib/sqlite/sqlite3.c
-    src/lib/inih/INIReader.cpp
-    src/lib/inih/ini.c
-    src/utilhead.hpp 
-    src/utilhead.cpp
-    src/db/ServerDatabaseAccessor.hpp
-    src/db/ServerSQLiteDatabaseAccessor.hpp
-    src/db/ServerSQLiteDatabaseAccessor.cpp
-    src/db/ServerSQLiteDBScheme.hpp 
-    src/models/Solution.hpp
-    src/models/Solution.cpp
-    src/models/Wave.hpp
-    src/models/Wave.cpp
-    src/models/Task.hpp
-    src/models/Task.cpp
-    src/splitter.cpp)
-
-target_link_libraries(splitter ${Boost_LIBRARIES})
-
-add_executable(dbctl
-    src/lib/sqlite/sqlite3.c
-    src/utilhead.hpp 
-    src/utilhead.cpp
-    src/db/ServerDatabaseAccessor.hpp
-    src/db/ServerSQLiteDatabaseAccessor.hpp
-    src/db/ServerSQLiteDatabaseAccessor.cpp
-    src/db/ServerSQLiteDBScheme.hpp 
-    src/models/Solution.hpp
-    src/models/Solution.cpp
-    src/models/Wave.hpp
-    src/models/Wave.cpp
-    src/models/Task.hpp
-    src/models/Task.cpp
-    src/dbctl.cpp)
-
-target_link_libraries(dbctl ${Boost_LIBRARIES})
-
-add_executable(server
-    src/lib/sqlite/sqlite3.c
-	src/lib/mongoose/mongoose.h
-	src/lib/mongoose/mongoose.c
-    src/lib/inih/ini.c
-    src/lib/inih/INIReader.cpp
-    src/db/ServerDatabaseAccessor.hpp
-    src/db/ServerSQLiteDatabaseAccessor.hpp
-    src/db/ServerSQLiteDatabaseAccessor.cpp
-    src/net/RequestManager.hpp
-    src/net/RequestManager.cpp
-    src/models/Solution.hpp
-    src/models/Solution.cpp
-    src/models/Wave.hpp
-    src/models/Wave.cpp
-    src/models/Task.hpp
-    src/models/Task.cpp
-	src/utilhead.hpp
-	src/utilhead.cpp
-	src/server.cpp
-	)
-
-target_link_libraries(server ${Boost_LIBRARIES})
+include(CMakeFiles/splitter.cmake)
+include(CMakeFiles/dbctl.cmake)
+include(CMakeFiles/server.cmake)
 
 # target_link_libraries(splitter ${OPENCL_LIBRARIES} ${Boost_LIBRARIES})
