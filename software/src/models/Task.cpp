@@ -226,12 +226,8 @@ namespace horizon
 			}
 		}
 
-		Task::Task(std::string json)
+		Task::Task(json_spirit::mValue v)
 		{
-			json_spirit::mValue v;
-
-			json_spirit::read(json, v);
-
 			const json_spirit::mObject map = v.get_obj();
 
 			this->setCompleted((*map.find("Completed")).second.get_str());

@@ -1,8 +1,9 @@
 #include <string>
 #include "globals.hpp"
 #include <boost/date_time/posix_time/posix_time.hpp>
-#include "boost/algorithm/string/trim.hpp"
-#include "lib\json_spirit\json_spirit.h"
+#include <boost/algorithm/string/trim.hpp>
+
+#include "lib/json_spirit/json_spirit.h"
 #include "utilhead.hpp"
 using namespace logging::trivial;
 
@@ -48,7 +49,7 @@ namespace horizon
 			void setState(uchr);
 			Task();
 			Task(int);
-			Task(std::string);
+			Task(json_spirit::mValue);
 			int getID();
 			int getWave();
 			uchr getType();
