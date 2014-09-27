@@ -7,9 +7,9 @@ add_executable(server
     src/lib/json_spirit/json_spirit_reader.cpp
     src/lib/json_spirit/json_spirit_writer.cpp
     src/lib/json_spirit/json_spirit_value.cpp
-    src/db/ServerDatabaseAccessor.hpp
-    src/db/ServerSQLiteDatabaseAccessor.hpp
-    src/db/ServerSQLiteDatabaseAccessor.cpp
+    src/db/DatabaseAccessor.hpp
+    src/db/SQLiteDatabaseAccessor.hpp
+    src/db/SQLiteDatabaseAccessor.cpp
     src/net/RequestManager.hpp
     src/net/RequestManager.cpp
     src/models/Solution.hpp

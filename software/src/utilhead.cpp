@@ -1,5 +1,8 @@
 #include "utilhead.hpp"
 
+#include <boost/algorithm/string/trim.hpp>
+#include <boost/algorithm/string/replace.hpp>
+
 std::string formattedNow()
 {
   time_t rawtime;
@@ -48,9 +51,13 @@ namespace horizon
 			return "NULL";
 
 		boost::algorithm::replace_first(ret, ",", ".");
-		ret.resize(23);
-		// BOOST_LOG_SEV(lg, info) << "datetime('"  << ret << "')";
 
+		// Because apparently if you don't provide it with a character,
+		// Resize decides it's a cool thing to fill it up with nulls.
+		ret.resize(23, ' ');
+
+		boost::algorithm::trim(ret);
+		
 		return "datetime('" + ret + "')";
 	}
 }

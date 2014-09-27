@@ -14,8 +14,8 @@
 // UTILITIES
 #include "utilhead.hpp"
 
-#include "db/ServerDatabaseAccessor.hpp"
-#include "db/ServerSQLiteDatabaseAccessor.hpp"
+#include "db/DatabaseAccessor.hpp"
+#include "db/SQLiteDatabaseAccessor.hpp"
 
 using namespace std;
 
@@ -48,7 +48,7 @@ int main(int argc, char** argv)
 		dao->RecreateDatabase();
 	}*/
 	
-	horizon::db::ServerDatabaseAccessor* dao = new horizon::db::ServerSQLiteDatabaseAccessor(database);
+	horizon::db::DatabaseAccessor* dao = new horizon::db::SQLiteDatabaseAccessor(database);
 
 	if (command == "screate" || command == "srecreate" || command == "sc")
 	{

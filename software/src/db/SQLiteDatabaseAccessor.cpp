@@ -2,8 +2,8 @@
 #include <string.h>
 
 #include "db/ServerSQLiteDBScheme.hpp"
-#include "db/ServerDatabaseAccessor.hpp"
-#include "db/ServerSQLiteDatabaseAccessor.hpp"
+#include "db/DatabaseAccessor.hpp"
+#include "db/SQLiteDatabaseAccessor.hpp"
 
 #include "models\Solution.hpp"
 #include "models\Wave.hpp"
@@ -27,7 +27,7 @@ namespace horizon
 			return std::string(reinterpret_cast<const char*>(column));
 		}
 
-		bool ServerSQLiteDatabaseAccessor::performNonQuery(std::string query, std::string unitName)
+		bool SQLiteDatabaseAccessor::performNonQuery(std::string query, std::string unitName)
 		{
 			if(this->database == NULL)
 			{
@@ -64,7 +64,7 @@ namespace horizon
 			return true;
 		}
 
-		sqlite3_int64 ServerSQLiteDatabaseAccessor::lastInsertId()
+		sqlite3_int64 SQLiteDatabaseAccessor::lastInsertId()
 		{
 			sqlite3_int64 ret = sqlite3_last_insert_rowid(this->database);
 			if(static_cast<int>(ret) == 0)
@@ -73,7 +73,7 @@ namespace horizon
 			return ret;
 		}
 
-		ServerSQLiteDatabaseAccessor::ServerSQLiteDatabaseAccessor(std::string cs)
+		SQLiteDatabaseAccessor::SQLiteDatabaseAccessor(std::string cs)
 		{
 			this->ConnectionString = cs;
 			if(sqlite3_open_v2(this->ConnectionString.c_str(), &(this->database), SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE, NULL))
@@ -82,7 +82,7 @@ namespace horizon
 			}
 		}
 
-		bool ServerSQLiteDatabaseAccessor::RecreateDatabase()
+		bool SQLiteDatabaseAccessor::RecreateDatabase()
 		{
 			// remove file
 			if(sqlite3_close(this->database))
@@ -114,7 +114,7 @@ namespace horizon
 			return true;
 		}
 
-		int ServerSQLiteDatabaseAccessor::RegisterSolution(horizon::models::Solution& s)
+		int SQLiteDatabaseAccessor::RegisterSolution(horizon::models::Solution& s)
 		{
 			// begin our transaction
 			this->BeginTransaction();
@@ -170,7 +170,7 @@ namespace horizon
 			return s.getID();
 		}
 
-		int ServerSQLiteDatabaseAccessor::UpdateSolution(horizon::models::Solution& s)
+		int SQLiteDatabaseAccessor::UpdateSolution(horizon::models::Solution& s)
 		{
 			// begin our transaction
 			this->BeginTransaction();
@@ -225,7 +225,7 @@ namespace horizon
 			return s.getID();
 		}
 		
-		void ServerSQLiteDatabaseAccessor::FillSolution(horizon::models::Solution& s)
+		void SQLiteDatabaseAccessor::FillSolution(horizon::models::Solution& s)
 		{
 			if(s.getID() < 1)
 				return;
@@ -267,7 +267,7 @@ namespace horizon
 			sqlite3_finalize(statement);
 		}
 
-		int ServerSQLiteDatabaseAccessor::RegisterWave(horizon::models::Wave& w)
+		int SQLiteDatabaseAccessor::RegisterWave(horizon::models::Wave& w)
 		{
 			// begin our transaction
 			this->BeginTransaction();
@@ -323,7 +323,7 @@ namespace horizon
 			return w.getID();
 		}
 
-		int ServerSQLiteDatabaseAccessor::UpdateWave(horizon::models::Wave& w)
+		int SQLiteDatabaseAccessor::UpdateWave(horizon::models::Wave& w)
 		{
 			// begin our transaction
 			this->BeginTransaction();
@@ -380,7 +380,7 @@ namespace horizon
 			return w.getID();
 		}
 		
-		void ServerSQLiteDatabaseAccessor::FillWave(horizon::models::Wave& w)
+		void SQLiteDatabaseAccessor::FillWave(horizon::models::Wave& w)
 		{
 			
 			if(w.getID() < 1)
@@ -423,7 +423,7 @@ namespace horizon
 			sqlite3_finalize(statement);
 		}
 
-		int ServerSQLiteDatabaseAccessor::RegisterTask(horizon::models::Task& t)
+		int SQLiteDatabaseAccessor::RegisterTask(horizon::models::Task& t)
 		{
 			// begin our transaction
 			this->BeginTransaction();
@@ -488,7 +488,7 @@ namespace horizon
 			return t.getID();
 		}
 
-		int ServerSQLiteDatabaseAccessor::UpdateTask(horizon::models::Task& t)
+		int SQLiteDatabaseAccessor::UpdateTask(horizon::models::Task& t)
 		{
 			// begin our transaction
 			this->BeginTransaction();
@@ -506,8 +506,12 @@ namespace horizon
 			sqlite3_stmt *statement;
 			int prepare_code = sqlite3_prepare_v2(this->database, sql.c_str(), -1, &statement, NULL);
 
-			if(prepare_code != SQLITE_OK)
+			if (prepare_code != SQLITE_OK)
+			{
 				BOOST_LOG_SEV(lg, warning) << "UpdateTask: prepare code wrong, " << prepare_code;
+				BOOST_LOG_SEV(lg, warning) << sql;
+			}
+
 
 			if(statement == NULL)
 			{
@@ -553,11 +557,11 @@ namespace horizon
 			return t.getID();
 		}
 		
-		void ServerSQLiteDatabaseAccessor::FillTask(horizon::models::Task& t)
+		void SQLiteDatabaseAccessor::FillTask(horizon::models::Task& t)
 		{
 			
 			if(t.getID() < 1)
-				throw std::exception("ServerSQLiteDatabaseAccessor::FillTask: bad ID");
+				throw std::exception("SQLiteDatabaseAccessor::FillTask: bad ID");
 
 			std::string sql =	"SELECT wave_id, type, state, part_num, metafile, node, name, "
 								"strftime('%Y-%m-%d %H:%M:%f', created) AS created, "
@@ -575,7 +579,7 @@ namespace horizon
 			{
 				BOOST_LOG_SEV(lg, fatal) << "FillTask: statement is null";
 				sqlite3_finalize(statement);
-				throw std::exception("ServerSQLiteDatabaseAccessor::FillTask: bad statement");
+				throw std::exception("SQLiteDatabaseAccessor::FillTask: bad statement");
 			}
 
 			// bind data to params
@@ -588,7 +592,7 @@ namespace horizon
 			{
 				BOOST_LOG_SEV(lg, fatal) << "FillTask: no data";
 				sqlite3_finalize(statement);
-				throw std::exception("ServerSQLiteDatabaseAccessor::FillTask: no data");
+				throw std::exception("SQLiteDatabaseAccessor::FillTask: no data");
 			}
 
 			t.setWave(sqlite3_column_int(statement, 0));
@@ -605,17 +609,17 @@ namespace horizon
 			sqlite3_finalize(statement);
 		}
 
-		bool ServerSQLiteDatabaseAccessor::BeginTransaction()
+		bool SQLiteDatabaseAccessor::BeginTransaction()
 		{
 			return performNonQuery("BEGIN TRANSACTION;", "BeginTransaction");
 		}
 
-		bool ServerSQLiteDatabaseAccessor::CommitTransaction()
+		bool SQLiteDatabaseAccessor::CommitTransaction()
 		{
 			return performNonQuery("COMMIT;", "CommitTransaction");
 		}
 
-		std::vector<horizon::models::Task> ServerSQLiteDatabaseAccessor::TaskList(int num)
+		std::vector<horizon::models::Task> SQLiteDatabaseAccessor::TaskList(int num)
 		{
 			std::string sql = "SELECT tasks.id FROM tasks WHERE state = 1 ORDER BY tasks.created ASC LIMIT ?;";
 
@@ -629,7 +633,7 @@ namespace horizon
 			{
 				BOOST_LOG_SEV(lg, fatal) << "FillTask: statement is null";
 				sqlite3_finalize(statement);
-				throw std::exception("ServerSQLiteDatabaseAccessor::TaskListJSON: bad statement");
+				throw std::exception("SQLiteDatabaseAccessor::TaskListJSON: bad statement");
 			}
 
 			// bind data to params
@@ -652,7 +656,7 @@ namespace horizon
 			return tasks;
 		}
 
-		void ServerSQLiteDatabaseAccessor::MassMarkTasksSent(std::vector<horizon::models::Task> tasks)
+		void SQLiteDatabaseAccessor::MassMarkTasksSent(std::vector<horizon::models::Task> tasks)
 		{
 			BOOST_FOREACH(horizon::models::Task t, tasks)
 			{
@@ -661,7 +665,7 @@ namespace horizon
 			}
 		}
 
-		std::string TaskListJSON(std::vector<horizon::models::Task> tasks)
+		std::string SQLiteDatabaseAccessor::TaskListToJSON(std::vector<horizon::models::Task> tasks)
 		{
 			json_spirit::Array ar;
 
@@ -671,6 +675,25 @@ namespace horizon
 			}
 
 			return json_spirit::write(ar, json_spirit::pretty_print);
+		}
+
+		std::vector<horizon::models::Task> SQLiteDatabaseAccessor::JSONToTaskList(std::string json)
+		{
+			json_spirit::mArray ar;
+			json_spirit::mValue v;
+
+			json_spirit::read(json, v);
+
+			ar = v.get_array();
+
+			std::vector<horizon::models::Task> tasks = std::vector<horizon::models::Task>(0);
+
+			BOOST_FOREACH(json_spirit::mValue p, ar)
+			{
+				tasks.push_back(horizon::models::Task(p));
+			}
+
+			return tasks;
 		}
 	}
 }

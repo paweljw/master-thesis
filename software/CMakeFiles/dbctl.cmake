@@ -5,9 +5,9 @@ add_executable(dbctl
     src/lib/json_spirit/json_spirit_value.cpp
     src/utilhead.hpp 
     src/utilhead.cpp
-    src/db/ServerDatabaseAccessor.hpp
-    src/db/ServerSQLiteDatabaseAccessor.hpp
-    src/db/ServerSQLiteDatabaseAccessor.cpp
+    src/db/DatabaseAccessor.hpp
+    src/db/SQLiteDatabaseAccessor.hpp
+    src/db/SQLiteDatabaseAccessor.cpp
     src/db/ServerSQLiteDBScheme.hpp 
     src/models/Solution.hpp
     src/models/Solution.cpp

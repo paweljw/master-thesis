@@ -2,7 +2,7 @@
 
 #include "lib\sqlite\sqlite3.h"
 
-#include "db\ServerDatabaseAccessor.hpp"
+#include "db\DatabaseAccessor.hpp"
 
 #include "models\Solution.hpp"
 #include "models\Wave.hpp"
@@ -19,7 +19,7 @@ namespace horizon
 {
 	namespace db
 	{
-		class ServerSQLiteDatabaseAccessor : public horizon::db::ServerDatabaseAccessor
+		class SQLiteDatabaseAccessor : public horizon::db::DatabaseAccessor
 		{
 		private:
 			sqlite3 *database;
@@ -27,7 +27,7 @@ namespace horizon
 			bool performNonQuery(std::string, std::string);
 			sqlite3_int64 lastInsertId();
 		public:
-			ServerSQLiteDatabaseAccessor(std::string);
+			SQLiteDatabaseAccessor(std::string);
 			bool RecreateDatabase();
 			
 			int RegisterSolution(horizon::models::Solution&);
@@ -46,8 +46,9 @@ namespace horizon
 			bool CommitTransaction();
 
 			std::vector<horizon::models::Task> TaskList(int);
-			std::string TaskListJSON(std::vector<horizon::models::Task>);
+			std::string TaskListToJSON(std::vector<horizon::models::Task>);
 			void MassMarkTasksSent(std::vector<horizon::models::Task>);
+			std::vector<horizon::models::Task> JSONToTaskList(std::string);
 		};
 
 	};

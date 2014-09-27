@@ -22,8 +22,8 @@
 #include "models\Wave.hpp"
 #include "models\Task.hpp"
 
-#include "db/ServerDatabaseAccessor.hpp"
-#include "db/ServerSQLiteDatabaseAccessor.hpp"
+#include "db/DatabaseAccessor.hpp"
+#include "db/SQLiteDatabaseAccessor.hpp"
 
 using namespace std;
 
@@ -49,7 +49,7 @@ int main(int argc, char** argv)
 		return 1;
 	}
 
-	horizon::db::ServerDatabaseAccessor* DAO = new horizon::db::ServerSQLiteDatabaseAccessor(reader.Get("paths", "db_file", "storage/server.s3db"));
+	horizon::db::DatabaseAccessor* DAO = new horizon::db::SQLiteDatabaseAccessor(reader.Get("paths", "db_file", "storage/server.s3db"));
 
 	// Read configuration defaults
 
