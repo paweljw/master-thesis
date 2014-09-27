@@ -1,3 +1,9 @@
+/**
+ * @file	C:\Users\PJW\Documents\GitHub\master-thesis\software\src\models\Solution.cpp
+ *
+ * @brief	Implements the solution class.
+ */
+
 #include "Solution.hpp"
 
 namespace horizon
