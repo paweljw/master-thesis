@@ -29,8 +29,28 @@ namespace horizon
 		/// Fulfills /packageById requests
 		int request_package_by_id(struct mg_connection *conn);
 
+		/// Fulfills /packageMeta requests
+		int request_package_meta(struct mg_connection *conn);
+
 		/// Logs static requests
 		void request_static(struct mg_connection *conn);
+
+		/**
+		 * @fn	void put_task(struct mg_connection *conn);
+		 *
+		 * @brief	Returns task from client.
+		 *
+		 * @author	PJW
+		 * @date	2014-09-22
+		 *
+		 * @param [in,out]	conn	If non-null, the connection.
+		 */
+
+		int put_task(struct mg_connection *conn);
+
+		int put_meta(struct mg_connection *conn);
+
+		int request_task_list(struct mg_connection *conn);
 
 		Parameters parse_querystring(struct mg_connection *conn);
 		std::string get_param(Parameters, std::string);
@@ -54,6 +74,14 @@ namespace horizon
 					return request_package_by_part(conn);
 				} else if (boost::find_first(conn->uri, "/packageById")) {
 					return request_package_by_id(conn);
+				} else if (boost::find_first(conn->uri, "/packageMeta")) {
+					return request_package_meta(conn);
+				} else if (boost::find_first(conn->uri, "/returnTask")) {
+					return put_task(conn);
+				} else if (boost::find_first(conn->uri, "/returnMeta")) {
+					return put_meta(conn);
+				} else if (boost::find_first(conn->uri, "/getTasks")) {
+					return request_task_list(conn);
 				}
 
 				request_static(conn);
