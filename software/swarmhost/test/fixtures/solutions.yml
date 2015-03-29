@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  state: 1
+  wave_id: 
+  name: MyString
+  solution: MyString
+  completed: 2015-03-29 19:30:30
+
+two:
+  state: 1
+  wave_id: 
+  name: MyString
+  solution: MyString
+  completed: 2015-03-29 19:30:30

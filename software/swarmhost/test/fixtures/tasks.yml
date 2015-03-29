@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  wave_id: 
+  name: MyString
+  type: 1
+  state: 1
+  part_num: 1
+  metafile: MyString
+  node_id: 
+
+two:
+  wave_id: 
+  name: MyString
+  type: 1
+  state: 1
+  part_num: 1
+  metafile: MyString
+  node_id: 

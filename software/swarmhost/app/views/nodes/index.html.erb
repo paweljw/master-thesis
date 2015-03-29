@@ -1,0 +1,20 @@
+<%- model_class = Node -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.pluralize.titleize %></h1>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th><%= model_class.human_attribute_name(:name) %></th>
+      <th><%= model_class.human_attribute_name(:active_at) %></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @nodes.each do |node| %>
+      <tr>
+        <td><%= node.name %></td>
+        <td><%= node.active_at.nil? ? 'never' : l(node.active_at) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

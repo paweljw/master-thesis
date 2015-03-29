@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  solution_id: 
+  seq: 1
+  tasks: 1
+  state: 1
+  completed: 2015-03-29 19:31:21
+
+two:
+  solution_id: 
+  seq: 1
+  tasks: 1
+  state: 1
+  completed: 2015-03-29 19:31:21
