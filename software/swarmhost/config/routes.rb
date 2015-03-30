@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   root to: "nodes#index"
 
   resources :nodes, only: :index
+  resources :tasks, only: [ :index, :show, :update ]
 
   namespace :admin do
     resources :nodes
