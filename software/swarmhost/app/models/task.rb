@@ -5,7 +5,7 @@ class Task < ActiveRecord::Base
   enum kind: [ :undefined, :solution, :reduce ]
   enum state: [ :not_ready, :ready, :sent, :received, :provisioned, :started, :processed, :complete, :broken ]
 
-  scope :to_send, -> { where(status: :ready) }
+  scope :to_send, -> { where(state: :ready) }
 
   mount_uploader :metafile, MetafileUploader
 end

@@ -18,6 +18,10 @@ class TasksController < ApplicationController
   def update
     @resource = Task.find(params[:id])
     @resource.update( params.require(:task).permit! )
+    @resource.reload
+    if @resource.state == :complete
+      @resource.wave.decrement_task_number
+    end
     render text: 'OK'
   end
 end
