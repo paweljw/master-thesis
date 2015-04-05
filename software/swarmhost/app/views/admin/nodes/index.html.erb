@@ -27,6 +27,7 @@
                       :method => :delete,
                       :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
                       :class => 'btn btn-xs btn-danger' %>
+          <%= link_to t('.config', default: 'Get config'), locust_admin_node_path(node, format: :yml), target: :blank, class: 'btn btn-primary btn-xs' %>
         </td>
       </tr>
     <% end %>

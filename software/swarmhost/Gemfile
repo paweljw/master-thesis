@@ -34,7 +34,6 @@ gem "twitter-bootstrap-rails"
 gem "devise"
 gem "cancan"
 gem "role_model"
-gem "open4"
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
