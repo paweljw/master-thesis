@@ -1,5 +1,5 @@
 default: &default
-  adapter: sqlite3
+  adapter: 'sqlite3'
   pool: 5
   timeout: 5000
 
