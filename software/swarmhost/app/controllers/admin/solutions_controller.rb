@@ -27,13 +27,17 @@ class Admin::SolutionsController < Admin::ApplicationController
       f.strip!
       puts f
       t = wave.tasks.build
-      t.name = File.basename(f)
+      t.name = File.basename f
       t.kind = 1
       t.state = :ready
       t.part_num = i
-      t.metafile = File.open(f)
+      t.metafile = File.open f
       t.save!
+
+      File.delete f
     end
+
+    File.delete description_file
 
     wave.update(state: 1)
   end
