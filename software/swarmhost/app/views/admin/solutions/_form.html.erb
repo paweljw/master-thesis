@@ -1,0 +1,42 @@
+<%= form_for [:admin, @resource], :html => { :class => "form-horizontal node" } do |f| %>
+
+    <% if @resource.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@resource.errors.count, "error") %> prohibited this node from being saved:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @resource.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="control-group">
+    <%= f.label :mtx, :class => 'control-label', multipart: true %>
+    <div class="controls">
+      <%= f.file_field :mtx, :class => 'form-control' %>
+      </div></div>
+
+  <div class="control-group">
+    <%= f.label :rhs, :class => 'control-label', multipart: true %>
+      <div class="controls">
+      <%= f.file_field :rhs,  :class => 'form-control' %>
+        </div></div>
+
+  <div class="control-group">
+    <%= f.label :part_size, :class => 'control-label', multipart: true %>
+    <div class="controls">
+      <%= f.text_field :part_size, value: "1024",  :class => 'form-control' %>
+    </div>
+    </div>
+<br/>
+
+  <%= f.submit nil, :class => 'btn btn-primary' %>
+  <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+            nodes_path, :class => 'btn btn-default' %>
+
+<% end %>

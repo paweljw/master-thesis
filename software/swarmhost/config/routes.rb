@@ -10,5 +10,6 @@ Rails.application.routes.draw do
 
   namespace :admin do
     resources :nodes
+    resources :solutions, only: [ :index, :create, :new, :destroy ]
   end
 end

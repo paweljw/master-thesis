@@ -12,16 +12,22 @@ module CrudController
   def update
     @resource = resource_class.find(params[:id])
     @resource.update(safe_params)
-    redirect_to action: index
+    redirect_to action: :index
   end
 
   def create
     @resource = resource_class.create(safe_params)
-    redirect_to action: index
+    redirect_to action: :index
   end
 
   def show
     @resource = resource_class.find(params[:id])
+  end
+
+  def destroy
+    @resource = resource_class.find(params[:id])
+    @resource.delete
+    redirect_to action: :index
   end
 
   def safe_params

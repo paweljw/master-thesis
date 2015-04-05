@@ -111,9 +111,6 @@ int main(int argc, char** argv)
 	int OneXPercent = X / 100;
 	#pragma endregion
 
-	ofstream output((STORAGE_DIR + "solution_descr_" + string(argv[1])).c_str());
-
-	output << argv[1] << ":" << endl;
 
 	cout << "Part size at " << PartSize << endl;
 
@@ -124,13 +121,17 @@ int main(int argc, char** argv)
 
 	vector< boost::shared_ptr<ofstream>> OutStreams;
 
-	string base_filename = argv[1];
+	boost::filesystem::path base_path(argv[1]);
+	string base_filename = base_path.stem().string();
+
+	cout << "Output goes to " << STORAGE_DIR << "solution_descr_" << base_filename << endl;
+	ofstream output((STORAGE_DIR + "solution_descr_" + base_filename).c_str());
 
 	for(int partnum=0; partnum<PartsNum;partnum++)
 	{
 		std::string FileName = base_filename + "_" + boost::lexical_cast<std::string>(partnum) + ".mcx";
-
 		OutStreams.push_back( boost::make_shared<ofstream>((TMP_DIR + FileName).c_str()) );
+		cout << "Opening stream " << TMP_DIR << FileName << endl;
 	}
 
 	// Write out RHS to package files
@@ -202,11 +203,12 @@ int main(int argc, char** argv)
 		std::string FileName = base_filename + "_" + boost::lexical_cast<std::string>(i);
 
 		ifstream file(TMP_DIR + FileName + ".mcx", ios_base::in);
-		cout << "Compressing " << FileName << endl;
+		cout << "Compressing " << TMP_DIR << FileName << ".mcx" << endl;
 
 		ofstream outf(STORAGE_DIR + FileName + ".gz", ios_base::out|ios_base::binary);
+		cout << "Compressed " << STORAGE_DIR << FileName << ".gz" << endl;
 
-		output << "\t\"" << STORAGE_DIR << FileName << ".gz\"" << endl;
+		output << STORAGE_DIR << FileName << ".gz" << endl;
 
 		boost::iostreams::filtering_streambuf<boost::iostreams::input> in;
 		in.push(boost::iostreams::gzip_compressor());
@@ -220,6 +222,7 @@ int main(int argc, char** argv)
 		boost::filesystem::remove(TMP_DIR + FileName + ".mcx");
 	}
 
+	output.close();
 
 	return 0;
 }
