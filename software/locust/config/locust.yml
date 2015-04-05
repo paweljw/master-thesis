@@ -1,5 +1,7 @@
 server:
-  address: localhost:3000
+  address: http://localhost:3000
   key: 6d567b83921206961c02ad0a89454ed3
 
-platforms: all
+client:
+  platforms: all # unused
+  min_tasks: 5

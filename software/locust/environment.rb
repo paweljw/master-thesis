@@ -4,6 +4,7 @@ require 'active_record'
 require 'sqlite3'
 require 'rest_client'
 require 'fileutils'
+require 'uri'
 
 # Setup Locust root
 LOCUST_ROOT = File.dirname(__FILE__)

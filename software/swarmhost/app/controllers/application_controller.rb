@@ -7,6 +7,6 @@ class ApplicationController < ActionController::Base
     raise "Bad Key" if params[:auth].blank?
     raise "Bad Key" if Node.find_by(key: params[:auth]).nil?
 
-    @node = Node.find_by(key: params[:auth]).first
+    @node = Node.find_by(key: params[:auth])
   end
 end
