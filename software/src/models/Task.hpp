@@ -83,7 +83,7 @@ namespace horizon
 			void setUpdated(std::string);
 			void setCompleted(std::string);
 			std::string toJSONString();
-			json_spirit::Object Task::toJSONObject();
+			json_spirit::Object toJSONObject();
 		};
 	}
 }

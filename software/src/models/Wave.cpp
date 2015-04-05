@@ -1,4 +1,4 @@
-#include "models\Wave.hpp"
+#include "models/Wave.hpp"
 
 namespace horizon
 {
@@ -25,7 +25,7 @@ namespace horizon
 			this->Created = boost::posix_time::microsec_clock::universal_time();
 			touch();
 		}
-		
+
 		Wave::Wave(int _ID)
 		{
 			setID(_ID);
@@ -37,7 +37,7 @@ namespace horizon
 			this->Created = boost::posix_time::microsec_clock::universal_time();
 			touch();
 		}
-		
+
 		int Wave::getID()
 		{
 			return this->_ID;
@@ -53,7 +53,7 @@ namespace horizon
 		{
 			return this->_SolutionID;
 		}
-		
+
 		void Wave::setSolutionID(int SolutionID)
 		{
 			this->_SolutionID = SolutionID;
@@ -106,7 +106,7 @@ namespace horizon
 			touch();
 		}
 
-		
+
 		void Wave::markAvailable()
 		{
 			this->_State = WAVE_AVAILABLE;

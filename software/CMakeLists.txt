@@ -1,8 +1,10 @@
 CMAKE_MINIMUM_REQUIRED (VERSION 2.8)
 project (MultiVectorAttack)
 
+add_definitions(-std=c++11)
+
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} ${CMAKE_SOURCE_DIR})
- 
+
 if(NOT CMAKE_BUILD_TYPE)
 	SET(CMAKE_BUILD_TYPE "Debug")
 endif()
@@ -13,15 +15,15 @@ IF(NOT "${CMAKE_HOSTNAME}" EQUAL "jack")
 	SET(CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR})
 ENDIF()
 
-set(CMAKE_INCLUDE_PATH ${CMAKE_INCLUDE_PATH} "C:/SharedLibraries/boost_1_56_0")
-set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} "C:/SharedLibraries/boost_1_56_0/stage/lib")
+# set(CMAKE_INCLUDE_PATH ${CMAKE_INCLUDE_PATH} "/usr/local/boost-1.57.0/include/")
+# set(CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_PATH} "/usr/local/boost-1.57.0/lib/")
 
-SET(OPENCL_VENDOR "NVIDIA")
-FIND_PACKAGE(OpenCL REQUIRED)
-INCLUDE_DIRECTORIES(${OPENCL_INCLUDE_DIR})
+# SET(OPENCL_VENDOR "NVIDIA")
+# FIND_PACKAGE(OpenCL REQUIRED)
+# INCLUDE_DIRECTORIES(${OPENCL_INCLUDE_DIR})
 
 SET(Boost_USE_STATIC_LIBS ON)
-FIND_PACKAGE(Boost 1.56.0 COMPONENTS iostreams system thread date_time regex serialization filesystem timer chrono log REQUIRED)
+FIND_PACKAGE(Boost 1.55.0 COMPONENTS iostreams system filesystem REQUIRED)
 
 IF (Boost_FOUND)
     INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIR})
@@ -39,13 +41,14 @@ if (OPENMP_FOUND)
     set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
 endif()
 
+find_package(ZLIB)
+
 include_directories("src/")
 include_directories("src/lib")
 
-include(CMakeFiles/msvc.cmake)
-
+# include(CMakeFiles/msvc.cmake)
 include(CMakeFiles/splitter.cmake)
-include(CMakeFiles/dbctl.cmake)
-include(CMakeFiles/server.cmake)
+# include(CMakeFiles/dbctl.cmake)
+# include(CMakeFiles/server.cmake)
 
 # target_link_libraries(splitter ${OPENCL_LIBRARIES} ${Boost_LIBRARIES})

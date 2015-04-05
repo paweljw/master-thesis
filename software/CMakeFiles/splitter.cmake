@@ -1,22 +1,4 @@
-add_executable(splitter 
-    src/lib/sqlite/sqlite3.c
-    src/lib/inih/INIReader.cpp
-    src/lib/inih/ini.c
-    src/lib/json_spirit/json_spirit_reader.cpp
-    src/lib/json_spirit/json_spirit_writer.cpp
-    src/lib/json_spirit/json_spirit_value.cpp
-    src/utilhead.hpp 
-    src/utilhead.cpp
-    src/db/DatabaseAccessor.hpp
-    src/db/SQLiteDatabaseAccessor.hpp
-    src/db/SQLiteDatabaseAccessor.cpp
-    src/db/ServerSQLiteDBScheme.hpp 
-    src/models/Solution.hpp
-    src/models/Solution.cpp
-    src/models/Wave.hpp
-    src/models/Wave.cpp
-    src/models/Task.hpp
-    src/models/Task.cpp
+add_executable(splitter
     src/splitter.cpp)
 
-target_link_libraries(splitter ${Boost_LIBRARIES})
+target_link_libraries(splitter ${Boost_LIBRARIES} ${ZLIB_LIBRARIES})
