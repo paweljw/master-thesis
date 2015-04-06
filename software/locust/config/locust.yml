@@ -3,5 +3,9 @@ server:
   key: 6d567b83921206961c02ad0a89454ed3
 
 client:
-  platforms: all # unused
-  min_tasks: 5
+  platforms: all # unused for now
+  store_tasks: 5
+  use_opencl: true
+  heartbeat: 5
+  no_opencl_threads: 4
+  storage_dir: ./storage
