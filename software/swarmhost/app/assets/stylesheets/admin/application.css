@@ -14,3 +14,13 @@
  *= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
  *= require_self
  */
+
+tr.clickable
+{
+    cursor: pointer;
+}
+
+tr.clickable:hover td
+{
+    background: #bdddb1;
+}

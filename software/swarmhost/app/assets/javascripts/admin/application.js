@@ -21,4 +21,8 @@
 $(document).on('ready page:load', function() {
     $('.datatable').DataTable({
     });
+
+    $('.table > tbody > tr.clickable').on('click', function() {
+        window.location.href = $(this).data('link');
+    });
 });

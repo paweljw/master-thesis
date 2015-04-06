@@ -29,3 +29,9 @@ en:
         rhs: right-hand-side vector
         part_size: size of part
         dim: matrix dimension
+      node:
+        active_at: last seen at
+        key: authorization key
+        name: name
+        created_at: created at
+        actions: actions
