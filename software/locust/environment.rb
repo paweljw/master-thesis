@@ -5,6 +5,9 @@ require 'sqlite3'
 require 'rest_client'
 require 'fileutils'
 require 'uri'
+require 'optparse'
+require 'json'
+require 'zlib'
 
 # Setup Locust root
 LOCUST_ROOT = File.dirname(__FILE__)
