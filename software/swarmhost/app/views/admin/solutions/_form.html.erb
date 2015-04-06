@@ -33,6 +33,13 @@
       <%= f.text_field :part_size, value: "1024",  :class => 'form-control' %>
     </div>
     </div>
+
+  <div class="control-group">
+    <%= f.label :dim, :class => 'control-label', multipart: true %>
+    <div class="controls">
+      <%= f.text_field :dim, :class => 'form-control' %>
+    </div>
+  </div>
 <br/>
 
   <%= f.submit nil, :class => 'btn btn-primary' %>

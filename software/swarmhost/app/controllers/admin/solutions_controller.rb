@@ -8,9 +8,6 @@ class Admin::SolutionsController < Admin::ApplicationController
     wave.state = :unpublished
     wave.save!
 
-
-    # run the splitter
-
     splitter_path = File.join( Rails.root, "bin", "splitter" )
     storage_dir = File.join( Rails.root, Solution::STORAGE_DIR )
     tmp_dir = File.join( Rails.root, Solution::TMP_DIR )
@@ -37,9 +34,10 @@ class Admin::SolutionsController < Admin::ApplicationController
       File.delete f
     end
 
-    File.delete description_file
+    File.delete description_path
 
-    wave.update(state: 1)
+    wave.update state: 1
+    @resource.update state: 1
   end
 
   def resource_class

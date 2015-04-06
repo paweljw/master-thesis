@@ -1,0 +1,5 @@
+pl:
+  time:
+    formats:
+      default: '%Y-%M-%d %H:%M'
+  .title: 'test'

@@ -16,5 +16,6 @@ Rails.application.routes.draw do
       get :locust, on: :member
     end
     resources :solutions, only: [ :index, :create, :new, :destroy ]
+    resources :tasks, only: [ :index ]
   end
 end

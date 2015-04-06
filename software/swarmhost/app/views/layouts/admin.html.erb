@@ -14,66 +14,65 @@
 
     <%= stylesheet_link_tag "application", :media => "all" %>
 
-    <!-- For third-generation iPad with high-resolution Retina display: -->
-    <!-- Size should be 144 x 144 pixels -->
-    <%= favicon_link_tag 'apple-touch-icon-144x144-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '144x144' %>
-
-    <!-- For iPhone with high-resolution Retina display: -->
-    <!-- Size should be 114 x 114 pixels -->
-    <%= favicon_link_tag 'apple-touch-icon-114x114-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '114x114' %>
-
-    <!-- For first- and second-generation iPad: -->
-    <!-- Size should be 72 x 72 pixels -->
-    <%= favicon_link_tag 'apple-touch-icon-72x72-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '72x72' %>
-
-    <!-- For non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
-    <!-- Size should be 57 x 57 pixels -->
-    <%= favicon_link_tag 'apple-touch-icon-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png' %>
-
-    <!-- For all other devices -->
     <!-- Size should be 32 x 32 pixels -->
-    <%= favicon_link_tag 'favicon.ico', :rel => 'shortcut icon' %>
+    <%= favicon_link_tag '/favicon.gif', type: 'image/gif', :rel => 'shortcut icon' %>
 
     <%= javascript_include_tag "application" %>
   </head>
-  <body>
 
-    <div class="navbar navbar-default navbar-static-top">
-      <div class="container">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+  <body>
+  <div id="wrapper">
+    <nav class="navbar navbar-default top-navbar" role="navigation">
+      <div class="container-fluid">
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+          <span class="sr-only">Toggle navigation</span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="#">SwarmHost Server Control</a>
-        <div class="navbar-collapse collapse navbar-responsive-collapse">
-          <ul class="nav navbar-nav">
-            <li><%= link_to "Węzły", admin_nodes_path  %></li>
-            <li><%= link_to "Solutions", admin_solutions_path  %></li>
-            <li><%= link_to "Wyloguj",  destroy_user_session_path, :method => :delete %></li>
-          </ul>
-
-          <ul class="nav navbar-nav navbar-right">
-            <li class="navbar-text">Ahoy, <strong><%= current_user.name %></strong>!</li>
-          </ul>
-        </div>
+        <a class="navbar-brand" href="/admin"><b>Swarm</b>Host</a>
 
       </div>
-    </div>
 
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-10 col-lg-offset-1">
-          <%= bootstrap_flash %>
-          <%= yield %>
+      <div class="collapse navbar-collapse">
+        <ul class="nav navbar-top-links navbar-right">
+          <%= yield :title_buttons %>
+          <li><%= link_to "Logout", destroy_user_session_path, method: :delete %></li>
+        </ul>
+      </div>
         </div>
-      </div><!--/row-->
+    </nav>
+    <!--/. NAV TOP  -->
+    <nav class="navbar-default navbar-side" role="navigation">
+      <div class="sidebar-collapse">
+        <ul class="nav" id="main-menu">
+          <li>
+            <a <%= 'class="active-menu"'.html_safe if controller_name == 'nodes' %> href="<%= admin_nodes_path %>"><i class="fa fa-gears"></i> Nodes</a>
+          </li>
+          <li>
+            <a <%= 'class="active-menu"'.html_safe if controller_name == 'solutions' %> href="<%= admin_solutions_path %>"><i class="fa fa-th"></i> Solutions</a>
+          </li>
+          <li>
+            <a <%= 'class="active-menu"'.html_safe if controller_name == 'tasks' %> href="<%= admin_tasks_path %>"><i class="fa fa-bolt"></i> Tasks</a>
+          </li>
+        </ul>
 
-      <footer>
-        <p>&copy; Paweł J. Wal 2015</p>
-      </footer>
+      </div>
 
-    </div> <!-- /container -->
+    </nav>
+    <!-- /. NAV SIDE  -->
+    <div id="page-wrapper">
+      <div id="page-inner">
 
+        <%= yield %>
+
+        <footer>Swarmhost &copy; Paweł J. Wal. Insight Template by <a href="http://webthemez.com">WebThemez</a></p></footer>
+      </div>
+      <!-- /. PAGE INNER  -->
+    </div>
+    <!-- /. PAGE WRAPPER  -->
+  </div>
+  <!-- /. WRAPPER  -->
   </body>
 </html>

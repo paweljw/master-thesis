@@ -82,6 +82,11 @@ GEM
     jbuilder (2.2.12)
       activesupport (>= 3.0.0, < 5)
       multi_json (~> 1.2)
+    jquery-datatables-rails (3.2.0)
+      actionpack (>= 3.1)
+      jquery-rails
+      railties (>= 3.1)
+      sass-rails
     jquery-rails (4.0.3)
       rails-dom-testing (~> 1.0)
       railties (>= 4.2.0)
@@ -104,6 +109,7 @@ GEM
     multi_json (1.11.0)
     nokogiri (1.6.6.2)
       mini_portile (~> 0.6.0)
+    nprogress-rails (0.1.6.6)
     orm_adapter (0.5.0)
     rack (1.6.0)
     rack-test (0.6.3)
@@ -204,8 +210,10 @@ DEPENDENCIES
   devise
   font-awesome-rails
   jbuilder (~> 2.0)
+  jquery-datatables-rails
   jquery-rails
   less-rails
+  nprogress-rails
   rails (= 4.2.1)
   role_model
   sass-rails (~> 5.0)

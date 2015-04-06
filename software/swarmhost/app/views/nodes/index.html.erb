@@ -13,7 +13,7 @@
     <% @nodes.each do |node| %>
       <tr>
         <td><%= node.name %></td>
-        <td><%= node.active_at.nil? ? 'never' : l(node.active_at) %></td>
+        <td><%= node.active_at.nil? ? 'never' : time_tag(node.active_at, distance_of_time_in_words(node.active_at, DateTime.now), title: l(node.active_at)) %></td>
       </tr>
     <% end %>
   </tbody>

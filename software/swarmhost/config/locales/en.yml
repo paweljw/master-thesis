@@ -21,3 +21,11 @@
 
 en:
   hello: "Hello world"
+
+  activerecord:
+    attributes:
+      solution:
+        mtx: matrix
+        rhs: right-hand-side vector
+        part_size: size of part
+        dim: matrix dimension
