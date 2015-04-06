@@ -1,2 +1,4 @@
 log/*.log
-db/*.sqlite
+db/*.sqlite3
+storage/tasks/*.gz
+storage/tasks/*.mcx
