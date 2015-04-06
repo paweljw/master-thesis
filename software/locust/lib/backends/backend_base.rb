@@ -6,8 +6,8 @@ module Backend
       true
     end
 
-    def run
-
+    def run(opts = {})
+      raise "You really should just inherit from this."
     end
 
     def report

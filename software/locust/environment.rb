@@ -8,6 +8,7 @@ require 'uri'
 require 'optparse'
 require 'json'
 require 'zlib'
+require 'opencl_ruby_ffi'
 
 # Setup Locust root
 LOCUST_ROOT = File.dirname(__FILE__)

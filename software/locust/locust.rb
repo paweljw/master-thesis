@@ -3,12 +3,17 @@
 require './environment'
 
 # OPTIONS
-options = {}
+options = { loop: true }
+
 OptionParser.new do |opts|
   opts.banner = "Usage: locust.rb [options]"
 
   opts.on("-q", "--quiet", "Run quietly") do |v|
     options[:quiet] = true
+  end
+
+  opts.on("--no-loop", "Run quietly") do |v|
+    options[:loop] = false
   end
 end.parse!
 
@@ -23,6 +28,47 @@ server_key = LOCUST_CONFIG['server']['key']
 heartbeat_uri = URI.join(LOCUST_CONFIG['server']['address'], '/nodes/heartbeat')
 heartbeat_delay = LOCUST_CONFIG['client']['heartbeat'].to_i
 tasks_requisition_uri = URI.join(LOCUST_CONFIG['server']['address'], '/tasks.json')
+
+# PLATFORM SETUP
+
+## OpenCL detection
+
+has_opencl = true
+
+opencl_platforms = []
+
+begin
+  platforms = OpenCL.platforms
+
+  platforms.each_with_index do |p, i|
+    logger.info "Found OpenCL platform #{i}: #{p.name}"
+
+    p.devices.each_with_index do |d, j|
+      logger.info "--- Found device #{j}: #{d.name}"
+      opencl_platforms << "#{i}:#{j}"
+    end
+  end
+rescue OpenCL::Error => e
+  has_opencl = false
+  logger.warn "OpenCL setup failed. Falling back to CPU."
+end
+
+unless options[:loop]
+  logger.info "Exiting because locust was called with --no-loop"
+  exit
+end
+
+thread_array = []
+
+if has_opencl
+  logger.fatal "Should load opencl backends here"
+else
+  threads = LOCUST_CONFIG['client']['no_opencl_threads'].to_i
+
+  threads.times do |i|
+    Thread.new { Backend::FakeBackend.new.run(logger: logger, platform: 0, device: i) }
+  end
+end
 
 begin
   while true do
