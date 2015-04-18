@@ -51,6 +51,7 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord
+  json
   narray_ffi
   opencl_ruby_ffi
   rest-client

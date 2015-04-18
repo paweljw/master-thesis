@@ -1,0 +1,2 @@
+--with-sqlite3-include=/home/pwal/sqlite3
+--with-sqlite3-lib=/home/pwal/sqlite3

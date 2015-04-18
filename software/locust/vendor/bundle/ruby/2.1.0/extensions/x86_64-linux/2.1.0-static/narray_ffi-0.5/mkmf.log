@@ -1,0 +1,36 @@
+have_header: checking for narray.h... -------------------- no
+
+"gcc -o conftest -I/packages/ruby/2.1.1/include/ruby-2.1.0/x86_64-linux -I/packages/ruby/2.1.1/include/ruby-2.1.0/ruby/backward -I/packages/ruby/2.1.1/include/ruby-2.1.0 -I. -I/packages/ruby/2.1.1/lib/ruby/2.1.0/x86_64-linux/include     -O3 -fno-fast-math -ggdb3 -Wall -Wextra -Wno-unused-parameter -Wno-parentheses -Wno-long-long -Wno-missing-field-initializers -Wunused-variable -Wpointer-arith -Wwrite-strings -Wdeclaration-after-statement -Wimplicit-function-declaration conftest.c  -L. -L/packages/ruby/2.1.1/lib -Wl,-R/packages/ruby/2.1.1/lib -L/packages/ruby/2.1.1/lib/ruby/2.1.0/x86_64-linux/lib -Wl,-R/packages/ruby/2.1.1/lib/ruby/2.1.0/x86_64-linux/lib -L. -fstack-protector -rdynamic -Wl,-export-dynamic     -Wl,-R -Wl,/packages/ruby/2.1.1/lib -L/packages/ruby/2.1.1/lib -lruby-static  -lpthread -lrt -lgmp -ldl -lcrypt -lm   -lc"
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: int main(int argc, char **argv)
+4: {
+5:   return 0;
+6: }
+/* end */
+
+"gcc -E -I/packages/ruby/2.1.1/include/ruby-2.1.0/x86_64-linux -I/packages/ruby/2.1.1/include/ruby-2.1.0/ruby/backward -I/packages/ruby/2.1.1/include/ruby-2.1.0 -I. -I/packages/ruby/2.1.1/lib/ruby/2.1.0/x86_64-linux/include     -O3 -fno-fast-math -ggdb3 -Wall -Wextra -Wno-unused-parameter -Wno-parentheses -Wno-long-long -Wno-missing-field-initializers -Wunused-variable -Wpointer-arith -Wwrite-strings -Wdeclaration-after-statement -Wimplicit-function-declaration  conftest.c -o conftest.i"
+conftest.c:3:20: error: narray.h: No such file or directory
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: #include <narray.h>
+/* end */
+
+--------------------
+
+have_header: checking for narray.h... -------------------- yes
+
+"gcc -E -I/packages/ruby/2.1.1/include/ruby-2.1.0/x86_64-linux -I/packages/ruby/2.1.1/include/ruby-2.1.0/ruby/backward -I/packages/ruby/2.1.1/include/ruby-2.1.0 -I. -I/home/pwal/master-thesis/software/locust/vendor/bundle/ruby/2.1.0/gems/narray-0.6.1.1/./ -I/home/pwal/master-thesis/software/locust/vendor/bundle/ruby/2.1.0/gems/narray-0.6.1.1/../../extensions/x86_64-linux/2.1.0-static/narray-0.6.1.1/ -I/packages/ruby/2.1.1/lib/ruby/2.1.0/x86_64-linux/include     -O3 -fno-fast-math -ggdb3 -Wall -Wextra -Wno-unused-parameter -Wno-parentheses -Wno-long-long -Wno-missing-field-initializers -Wunused-variable -Wpointer-arith -Wwrite-strings -Wdeclaration-after-statement -Wimplicit-function-declaration  conftest.c -o conftest.i"
+checked program was:
+/* begin */
+1: #include "ruby.h"
+2: 
+3: #include <narray.h>
+/* end */
+
+--------------------
+
