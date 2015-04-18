@@ -12,7 +12,7 @@ OptionParser.new do |opts|
     options[:quiet] = true
   end
 
-  opts.on("--no-loop", "Run quietly") do |v|
+  opts.on("--no-loop", "Don't start looping") do |v|
     options[:loop] = false
   end
 end.parse!
@@ -94,7 +94,8 @@ begin
         remote_tasks = JSON.parse(response, symbolize_names: true)
 
         remote_tasks.each do |t|
-          t_attrs = { swarmhost_id: t[:id], kind: t[:kind], state: 3, name: t[:name], remote_url: t[:metafile][:url] }
+          t_attrs = { swarmhost_id: t[:id], kind: t[:kind], state: 3, name: t[:name],
+            remote_url: t[:metafile][:url], part_size: t[:part_size], global_size: t[:global_size] }
           task = Task.create(t_attrs)
           logger.info "Created task with id #{task.id} from Swarmhost task #{t[:id]}"
         end
@@ -116,6 +117,9 @@ begin
         storage_path = File.join(LOCUST_CONFIG['client']['storage_dir'], "tasks", "#{f.id.to_s}.gz")
         unzipped_path = File.join(LOCUST_CONFIG['client']['storage_dir'], "tasks", "#{f.id.to_s}.mcx")
 
+        mtx_path = File.join(LOCUST_CONFIG['client']['storage_dir'], "tasks", "#{f.id.to_s}.mtx")
+        rhs_path = File.join(LOCUST_CONFIG['client']['storage_dir'], "tasks", "#{f.id.to_s}.rhs")
+
         File.open( storage_path, 'w' ) { |file| file.write response }
 
         Zlib::GzipReader.open(storage_path) do |gz|
@@ -124,6 +128,42 @@ begin
         end
 
         File.delete(storage_path)
+
+        mtx_file = File.open(mtx_path, 'w')
+        rhs_file = File.open(rhs_path, 'w')
+
+        lines = 0
+
+        ary = File.readlines(unzipped_path)
+        rhs_line = ary[0]
+
+        rhs_file.write("#{f.global_size} 1\n")
+
+        rhs_line.split(" ").each { |l| rhs_file.write("#{l}\n")}
+
+        rhs_file.close
+
+        nonzero = 0
+        counting = false
+
+        ary.each do |line|
+          nonzero += 1 if counting
+          counting = false and nonzero -= 1 if line.strip == "%" && counting
+          counting = true if line.strip == "%" && !counting
+        end
+
+        mtx_file.write("#{f.global_size} #{f.global_size} #{nonzero}\n")
+
+        counting = false
+
+        ary.each do |line|
+          mtx_file.write(line) if counting && line.strip != "%"
+
+          counting = false and nonzero -= 1 if line.strip == "%" && counting
+          counting = true if line.strip == "%" && !counting
+        end
+
+        mtx_file.close
 
         f.update(state: 4) # task is provisioned and ready for operations
       rescue Exception => e
@@ -136,6 +176,8 @@ begin
   end
 rescue SignalException => e
   p "Graceful exit begin"
+
+  # join the threads, yadda yadda
 
   p "Graceful exit end"
   exit

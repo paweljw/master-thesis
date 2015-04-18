@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150406083800) do
+ActiveRecord::Schema.define(version: 20150418132820) do
 
   create_table "nodes", force: :cascade do |t|
     t.string   "name"
@@ -33,6 +33,7 @@ ActiveRecord::Schema.define(version: 20150406083800) do
     t.string   "part_size"
     t.string   "metafile"
     t.integer  "dim"
+    t.integer  "full_size"
   end
 
   create_table "tasks", force: :cascade do |t|
@@ -43,12 +44,14 @@ ActiveRecord::Schema.define(version: 20150406083800) do
     t.integer  "part_num"
     t.string   "metafile"
     t.integer  "node_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
     t.datetime "completed"
     t.integer  "kind"
     t.decimal  "time"
     t.string   "backend"
+    t.integer  "part_size"
+    t.integer  "global_size"
   end
 
   add_index "tasks", ["node_id"], name: "index_tasks_on_node_id"

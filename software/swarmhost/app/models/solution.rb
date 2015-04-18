@@ -12,7 +12,7 @@ class Solution < ActiveRecord::Base
 
   mount_uploader :metafile, MetafileUploader
 
-  before_save :set_name
+  before_create :set_name
 
   def self.states
     [ :unpublished, :available, :complete, :broken ]

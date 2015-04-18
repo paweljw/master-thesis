@@ -9,4 +9,12 @@ class Task < ActiveRecord::Base
   scope :to_send, -> { where(state: 1) }
 
   mount_uploader :metafile, MetafileUploader
+
+  def part_size
+    self.wave.solution.part_size
+  end
+
+  def global_size
+    self.wave.solution.full_size
+  end
 end

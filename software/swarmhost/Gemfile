@@ -1,4 +1,4 @@
-#ruby=ruby-2.2.0
+#ruby=ruby-2.2.1
 #ruby-gemset=rails4.2
 
 source 'https://rubygems.org'
