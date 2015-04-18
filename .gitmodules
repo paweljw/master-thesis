@@ -1,3 +1,3 @@
-[submodule "software/src/lib/mongoose"]
-	path = software/src/lib/mongoose
-	url = https://github.com/cesanta/mongoose
+[submodule "software/engths2013"]
+	path = software/engths2013
+	url = git@github.com:paweljw/engths2013.git

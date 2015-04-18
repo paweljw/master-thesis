@@ -61,4 +61,4 @@ $RECYCLE.BIN/
 *.msm
 *.msp
 
-software/build/*
+software/splitter/build/*

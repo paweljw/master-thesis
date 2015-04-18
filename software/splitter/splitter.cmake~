@@ -1,0 +1,4 @@
+add_executable(splitter
+    splitter/splitter.cpp)
+
+target_link_libraries(splitter ${Boost_LIBRARIES} ${ZLIB_LIBRARIES})

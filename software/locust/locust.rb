@@ -50,7 +50,7 @@ begin
   end
 rescue OpenCL::Error => e
   has_opencl = false
-  logger.warn "OpenCL setup failed. Falling back to CPU."
+  logger.warn "OpenCL setup failed. Falling back to CPU. (#{e.message})"
 end
 
 unless options[:loop]
