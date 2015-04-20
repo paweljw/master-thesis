@@ -5,4 +5,5 @@ class Task < ActiveRecord::Base
   scope :undone, -> { where("state <= 5") }
   scope :for_provisioning, -> { where("state = 3") }
   scope :for_doing, -> { where("state = 4") }
+  scope :for_upload, -> { where("state = 6") }
 end

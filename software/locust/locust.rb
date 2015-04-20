@@ -28,6 +28,7 @@ server_key = LOCUST_CONFIG['server']['key']
 heartbeat_uri = URI.join(LOCUST_CONFIG['server']['address'], '/nodes/heartbeat')
 heartbeat_delay = LOCUST_CONFIG['client']['heartbeat'].to_i
 tasks_requisition_uri = URI.join(LOCUST_CONFIG['server']['address'], '/tasks.json')
+tasks_return_uri = URI.join(LOCUST_CONFIG['server']['address'], '/tasks')
 
 # PLATFORM SETUP
 
@@ -61,7 +62,13 @@ end
 thread_array = []
 
 if has_opencl
-  logger.fatal "Should load opencl backends here"
+  platforms = OpenCL.platforms
+
+  platforms.each_with_index do |p, i|
+    p.devices.each_with_index do |d, j|
+      Thread.new { Backend::PjwBackend.new.run(logger: logger, platform: i, device: j) }
+    end
+  end
 else
   threads = LOCUST_CONFIG['client']['no_opencl_threads'].to_i
 
@@ -169,6 +176,26 @@ begin
       rescue Exception => e
         logger.fatal "Server appears to be down (#{e}), delaying communication"
       end
+
+      Task.for_upload.each do |f|
+        begin
+          logger.info "Uploading task #{f.id}"
+
+          url = URI.join(tasks_return_uri, f.swarmhost_id)
+
+          response = RestClient.post(url,
+            task: {
+              metafile: File.open(File.join(LOCUST_CONFIG['client']['storage_dir'], "tasks", "#{f.id.to_s}.ret")),
+              state: 7,
+              completed: DateTime.now,
+              time: f.time,
+              backend: f.backend
+            })
+
+          f.update(state: 7) # task is provisioned and ready for operations
+        rescue Exception => e
+          logger.fatal "Server appears to be down (#{e}), delaying communication"
+        end
 
     end
 
