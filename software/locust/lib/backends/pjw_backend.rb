@@ -3,13 +3,11 @@ require_relative '../../environment.rb'
 
 module Backend
   class PjwBackend < Backend::Base
-=begin
     def run(opts = {})
       logger = opts[:logger]
       platform = opts[:platform]
       device = opts[:device]
 
-      # load task
       t = Task.for_running.limit(1)
       t.update(state: 5)
 
@@ -21,14 +19,11 @@ module Backend
       cmd = "./mtx_loader #{mtx_file} #{rhs_file} 192 0 #{platform} #{device} #{offset}"
       ret = `#{cmd}`
 
-      File.open(File.join(LOCUST_CONFIG['client']['storage_dir'], "tasks", "#{t.id.to_s}.ret")).do |f|
-        f.write ret
-      end
+      File.open(File.join(LOCUST_CONFIG['client']['storage_dir'], "tasks", "#{t.id.to_s}.ret")) { |f| f.write ret }
     end
 
     def opencl
       true
     end
-=end
   end
 end
