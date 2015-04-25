@@ -37,3 +37,5 @@ ActiveRecord::Base.establish_connection(
   :adapter => DATABASE_CONFIG["adapter"],
   :database => File.join( LOCUST_ROOT, DATABASE_CONFIG["database"] )
 )
+
+# ActiveRecord::Base.allow_concurrency = true

@@ -28,7 +28,7 @@ server_key = LOCUST_CONFIG['server']['key']
 heartbeat_uri = URI.join(LOCUST_CONFIG['server']['address'], '/nodes/heartbeat')
 heartbeat_delay = LOCUST_CONFIG['client']['heartbeat'].to_i
 tasks_requisition_uri = URI.join(LOCUST_CONFIG['server']['address'], '/tasks.json')
-tasks_return_uri = URI.join(LOCUST_CONFIG['server']['address'], '/tasks')
+tasks_return_uri = URI.join(LOCUST_CONFIG['server']['address'], '/tasks/')
 
 # PLATFORM SETUP
 
@@ -61,12 +61,16 @@ end
 
 thread_array = []
 
+loader_location = LOCUST_CONFIG['client']['loader_location']
+
+semaphore = Mutex.new
+
 if has_opencl
   platforms = OpenCL.platforms
 
   platforms.each_with_index do |p, i|
     p.devices.each_with_index do |d, j|
-      Thread.new { Backend::PjwBackend.new.run(logger: logger, platform: i, device: j) }
+      Thread.new { Backend::PjwBackend.new.run(logger: logger, platform: i, device: j, loader_location: loader_location, semaphore: semaphore) }
     end
   end
 else
@@ -90,6 +94,8 @@ begin
       heartbeat_delay = 60
     end
 
+    # logger.info 'Requisition step'
+
     # TASK REQUISITION
     if Task.undone.count < LOCUST_CONFIG['client']['store_tasks'].to_i
       begin
@@ -102,7 +108,7 @@ begin
 
         remote_tasks.each do |t|
           t_attrs = { swarmhost_id: t[:id], kind: t[:kind], state: 3, name: t[:name],
-            remote_url: t[:metafile][:url], part_size: t[:part_size], global_size: t[:global_size] }
+            remote_url: t[:metafile][:url], part_size: t[:part_size], global_size: t[:global_size], part_num: t[:part_num] }
           task = Task.create(t_attrs)
           logger.info "Created task with id #{task.id} from Swarmhost task #{t[:id]}"
         end
@@ -114,8 +120,13 @@ begin
     end
 
     # TASK PROVISIONING
+    
+    # logger.info 'provisioning step'
+
+    # logger.info "Tasks for provisioning: #{Task.for_provisioning.count}"
 
     Task.for_provisioning.each do |f|
+      p "found task for provisioning: #{f}"
       begin
         logger.info "Provisioning task #{f.id}"
         remote_url = URI.join(LOCUST_CONFIG['server']['address'], f.remote_url)
@@ -159,12 +170,18 @@ begin
           counting = true if line.strip == "%" && !counting
         end
 
-        mtx_file.write("#{f.global_size} #{f.global_size} #{nonzero}\n")
+        mtx_file.write("#{f.global_size} #{f.part_size} #{nonzero}\n")
 
         counting = false
 
+	offset = f.offset
+
         ary.each do |line|
-          mtx_file.write(line) if counting && line.strip != "%"
+          if counting && line.strip != "%"
+	   arln = line.strip.split(" ")
+           arln[0] = (arln[0].to_i - offset.to_i).to_s
+           mtx_file.write("#{arln.join(" ")}\n")
+	  end
 
           counting = false and nonzero -= 1 if line.strip == "%" && counting
           counting = true if line.strip == "%" && !counting
@@ -175,37 +192,40 @@ begin
         f.update(state: 4) # task is provisioned and ready for operations
       rescue Exception => e
         logger.fatal "Server appears to be down (#{e}), delaying communication"
+	logger.info e.backtrace
       end
+     end
+
+      # logger.info "Upload should happen here"
 
       Task.for_upload.each do |f|
         begin
           logger.info "Uploading task #{f.id}"
 
-          url = URI.join(tasks_return_uri, f.swarmhost_id)
+          url = URI.join(tasks_return_uri, "#{f.swarmhost_id}")
 
-          response = RestClient.post(url,
+          response = RestClient.put(url.to_s,
             task: {
-              metafile: File.open(File.join(LOCUST_CONFIG['client']['storage_dir'], "tasks", "#{f.id.to_s}.ret")),
-              state: 7,
+              metafile: File.new(File.join(LOCUST_CONFIG['client']['storage_dir'], "tasks", "#{f.id.to_s}.ret"), 'rb'),
+              state: 'complete',
               completed: DateTime.now,
               time: f.time,
               backend: f.backend
-            })
+            },
+	    auth: server_key )
 
-          f.update(state: 7) # task is provisioned and ready for operations
+            f.update(state: 7) # has been sent. Good bye, task!
         rescue Exception => e
           logger.fatal "Server appears to be down (#{e}), delaying communication"
         end
-
-    end
+      end
 
     sleep heartbeat_delay
   end
-end
 rescue SignalException => e
   p "Graceful exit begin"
 
-  # join the threads, yadda yadda
+  # ActiveRecord::Base.verify_active_connections!
 
   p "Graceful exit end"
   exit
