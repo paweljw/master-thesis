@@ -1,11 +1,10 @@
 server:
-  address: http://localhost:3000
-  key: 6d567b83921206961c02ad0a89454ed3
-
+  address: https://dnjbdxiklb.localtunnel.me
+  key: 9caa4cba174e6a90f6ae99d798e72b6c
 client:
+  platforms: all
+  min_tasks: 1
   platforms: all # unused for now
-  store_tasks: 5
+  store_tasks: 1
   use_opencl: true
-  heartbeat: 5
-  no_opencl_threads: 4
-  storage_dir: ./storage
+  heartbeat: 30
