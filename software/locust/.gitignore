@@ -4,5 +4,6 @@ storage/tasks/*.gz
 storage/tasks/*.mcx
 storage/tasks/*.mtx
 storage/tasks/*.rhs
+storage/tasks/*.ret
 config/locust.yml
 .bundle
