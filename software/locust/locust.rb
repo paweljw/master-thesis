@@ -201,6 +201,7 @@ begin
 
     sleep heartbeat_delay
   end
+end
 rescue SignalException => e
   p "Graceful exit begin"
 
