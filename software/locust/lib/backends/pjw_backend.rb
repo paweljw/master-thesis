@@ -18,15 +18,21 @@ module Backend
 	t = nil
 
         sem.synchronize do
-          # p 'in semaphore'
-          return if Task.for_doing.count == 0
+          # p "Backend #{platform}:#{device} enters semaphore"
+          break if Task.for_doing.count == 0
 
-          # p 'got some job'
-          t = Task.for_doing.limit(1).first
-          t.update! state: 5
+	  begin 
+            t = Task.for_doing.limit(1).first
+            t = nil unless t.update(state: 5)
+          rescue Exception => e
+            logger.warn "Exception during looking for work: #{e}"
+          end
+
+	  # p "Backend #{platform}:#{device} leaves semaphore"
 	end
-
-	# p 't is not nil!' unless t.nil?
+ 
+        
+        # p "t is now #{t.inspect} for backend #{platform}:#{device}"
 
         if !t.nil?
 	  begin
@@ -44,10 +50,19 @@ module Backend
             # logger.info "Cmd is #{cmd}"
             ret = `#{cmd}`
 
+	    rsplt = ret.split(/\r?\n/).select { |l| l.include? "TIME" }
+
+            # logger.info "rsplat: #{rsplt}"
+            time = rsplt[0].split(" ")[1].to_f
+
+            # logger.info "Time: #{time}"
+
 	    logger.info "Task #{t.id} finishing on #{platform}:#{device}"
 
             File.open(File.join(LOCUST_CONFIG['client']['storage_dir'], "tasks", "#{t.id.to_s}.ret"), 'w') { |f| f.write ret }
-            t.update state: 6	  
+
+
+            t.update state: 6, backend: "Platform #{platform} device #{device}", time: time
          rescue Exception => e
            logger.warn "Exception! #{e}"
            logger.warn e.backtrace

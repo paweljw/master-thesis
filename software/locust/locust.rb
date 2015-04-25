@@ -223,10 +223,10 @@ begin
     sleep heartbeat_delay
   end
 rescue SignalException => e
-  p "Graceful exit begin"
+  logger.info "Graceful exit begin"
 
   # ActiveRecord::Base.verify_active_connections!
 
-  p "Graceful exit end"
+  logger.info "Graceful exit end"
   exit
 end
