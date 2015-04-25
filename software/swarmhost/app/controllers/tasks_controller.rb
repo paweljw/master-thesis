@@ -1,13 +1,15 @@
 class TasksController < ApplicationController
   before_action :check_key
+  protect_from_forgery except: :update
 
   def index
-    requested_number = params[:num]
+    requested_number = params[:num].to_i
     @collection = Task.to_send.limit(requested_number)
-    @collection.update_all(state: 2, node_id: @node.id)
+    p "collection count: #{@collection.count}"
     respond_to do |format|
       format.json { render json: @collection }
     end
+    @collection.update_all(state: 2, node_id: @node.id)
   end
 
   def show

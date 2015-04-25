@@ -6,7 +6,7 @@ class Task < ActiveRecord::Base
   enum state: [ :not_ready, :ready, :sent, :received, :provisioned, :started, :processed, :complete, :broken ]
 
   default_scope -> { order(created_at: :asc).order(state: :desc) }
-  scope :to_send, -> { where(state: 1) }
+  scope :to_send, -> { where("state = 1") }
 
   mount_uploader :metafile, MetafileUploader
 
@@ -15,6 +15,6 @@ class Task < ActiveRecord::Base
   end
 
   def global_size
-    self.wave.solution.full_size
+    self.wave.solution.dim
   end
 end

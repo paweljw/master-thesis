@@ -15,27 +15,27 @@ module Backend
       while true
         sleep 1
 
-	t = nil
+        t = nil
 
         sem.synchronize do
           # p "Backend #{platform}:#{device} enters semaphore"
           break if Task.for_doing.count == 0
 
-	  begin 
+          begin
             t = Task.for_doing.limit(1).first
             t = nil unless t.update(state: 5)
           rescue Exception => e
             logger.warn "Exception during looking for work: #{e}"
           end
 
-	  # p "Backend #{platform}:#{device} leaves semaphore"
-	end
- 
-        
+          # p "Backend #{platform}:#{device} leaves semaphore"
+        end
+
+
         # p "t is now #{t.inspect} for backend #{platform}:#{device}"
 
         if !t.nil?
-	  begin
+          begin
             logger.info "Task #{t.id} is starting on #{platform}:#{device}"
 
             mtx_path = File.join(LOCUST_CONFIG['client']['storage_dir'], "tasks", "#{t.id.to_s}.mtx")
@@ -50,25 +50,25 @@ module Backend
             # logger.info "Cmd is #{cmd}"
             ret = `#{cmd}`
 
-	    rsplt = ret.split(/\r?\n/).select { |l| l.include? "TIME" }
+            rsplt = ret.split(/\r?\n/).select { |l| l.include? "TIME" }
 
             # logger.info "rsplat: #{rsplt}"
             time = rsplt[0].split(" ")[1].to_f
 
             # logger.info "Time: #{time}"
 
-	    logger.info "Task #{t.id} finishing on #{platform}:#{device}"
+            logger.info "Task #{t.id} finishing on #{platform}:#{device}"
 
             File.open(File.join(LOCUST_CONFIG['client']['storage_dir'], "tasks", "#{t.id.to_s}.ret"), 'w') { |f| f.write ret }
 
 
             t.update state: 6, backend: "Platform #{platform} device #{device}", time: time
-         rescue Exception => e
-           logger.warn "Exception! #{e}"
-           logger.warn e.backtrace
+          rescue Exception => e
+            logger.warn "Exception! #{e}"
+            logger.warn e.backtrace
 
-           t.update! state: 4
-         end
+            t.update! state: 4
+          end
         end
       end
     end

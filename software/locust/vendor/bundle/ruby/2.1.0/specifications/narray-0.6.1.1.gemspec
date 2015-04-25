@@ -17,8 +17,8 @@ Gem::Specification.new do |s|
   s.homepage = "http://masa16.github.io/narray/"
   s.licenses = ["Ruby"]
   s.rdoc_options = ["--title", "NArray", "--main", "NArray", "--exclude", "mk.*", "--exclude", "extconf\\.rb", "--exclude", "src/.*\\.h", "--exclude", "src/lib/", "--exclude", ".*\\.o", "--exclude", "narray\\.so", "--exclude", "libnarray\\.*"]
-  s.rubygems_version = "2.2.2"
+  s.rubygems_version = "2.4.6"
   s.summary = "N-dimensional Numerical Array class for Ruby"
 
-  s.installed_by_version = "2.2.2" if s.respond_to? :installed_by_version
+  s.installed_by_version = "2.4.6" if s.respond_to? :installed_by_version
 end

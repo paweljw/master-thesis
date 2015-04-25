@@ -177,7 +177,7 @@ int main(int argc, char** argv)
 			_localx--;
 			_localy--;
 
-			_part = _localy / PartSize;
+			_part = _localx / PartSize;
 			*OutStreams[_part] << _localx << " " << _localy << " " << lvalue << endl;
 			count++;
 			if(!(count % OnePercent)) cout << ".";
