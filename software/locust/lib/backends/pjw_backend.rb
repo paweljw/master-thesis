@@ -1,6 +1,8 @@
 require_relative './backend_base'
 require_relative '../../environment.rb'
 
+require 'zlib'
+
 module Backend
   class PjwBackend < Backend::Base
     def run(opts = {})
@@ -59,8 +61,11 @@ module Backend
 
             logger.info "Task #{t.id} finishing on #{platform}:#{device}"
 
-            File.open(File.join(LOCUST_CONFIG['client']['storage_dir'], "tasks", "#{t.id.to_s}.ret"), 'w') { |f| f.write ret }
-
+            File.open(File.join(LOCUST_CONFIG['client']['storage_dir'], "tasks", "#{t.id.to_s}.ret.gz"), 'w') do |f| 
+	      gz = Zlib::GzipWriter.new(f)
+	      gz.write ret
+              gz.close
+	    end
 
             t.update state: 6, backend: "Platform #{platform} device #{device}", time: time
           rescue Exception => e
