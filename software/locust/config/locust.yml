@@ -1,5 +1,5 @@
 server:
-  address: http://452407a2.ngrok.io
+  address: http://d33fc209.ngrok.io
   key: 9caa4cba174e6a90f6ae99d798e72b6c
 
 client:
@@ -8,7 +8,7 @@ client:
   platforms: all # unused for now
   store_tasks: 7
   use_opencl: true
-  heartbeat: 30
+  heartbeat: 3
   storage_dir: ./storage
   loader_location: ./../engths2013/soft/build/mtx_loader
 

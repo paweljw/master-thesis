@@ -206,7 +206,7 @@ begin
 
           response = RestClient.put(url.to_s,
             task: {
-              metafile: File.new(File.join(LOCUST_CONFIG['client']['storage_dir'], "tasks", "#{f.id.to_s}.ret"), 'rb'),
+              metafile: File.new(File.join(LOCUST_CONFIG['client']['storage_dir'], "tasks", "#{f.id.to_s}.ret.gz"), 'rb'),
               state: 'complete',
               completed: DateTime.now,
               time: f.time,
