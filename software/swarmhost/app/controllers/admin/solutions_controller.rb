@@ -20,6 +20,8 @@ class Admin::SolutionsController < Admin::ApplicationController
 
     description = File.open(description_path)
 
+    tasks = 0
+
     description.each_with_index do |f, i|
       f.strip!
       puts f
@@ -30,13 +32,14 @@ class Admin::SolutionsController < Admin::ApplicationController
       t.part_num = i
       t.metafile = File.open f
       t.save!
+      tasks += 1
 
       File.delete f
     end
 
     File.delete description_path
 
-    wave.update state: 1
+    wave.update state: 1, tasks_number: tasks
     @resource.update state: 1
   end
 
