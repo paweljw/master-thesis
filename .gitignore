@@ -62,3 +62,4 @@ $RECYCLE.BIN/
 *.msp
 
 software/splitter/build/*
+software/locust/vendor/bundle
