@@ -2,11 +2,13 @@ class ProcessWaveJob < ActiveJob::Base
   require 'zlib'
   queue_as :default
 
-  def partnum(v)
+  def partnum(v, ps)
+    v = v.to_i
+    ps = ps.to_i
     partnum = 0
 
-    while v > 1024
-      v -= 1024
+    while v > ps
+      v -= ps
       partnum += 1
     end
 
@@ -36,12 +38,31 @@ class ProcessWaveJob < ActiveJob::Base
 
     reduction_map = reduction_map.select { |v| v != nil && v.try(:size) > 1 }
 
-    reduction_map.each do |l|
-      flag = false
-      first = l.shift
-      l.each { |x| flag = true if partnum(x) != partnum(first) }
-      l = [first].concat(l)
-      puts "Not in same part: #{l}" if flag
+    # create an array of parts
+    parts = []
+
+    ps = wave.solution.part_size
+    fs = wave.solution.dim
+
+    num_parts = fs.to_i / ps.to_i
+
+    num_parts.times { |i| parts[i] = [] }
+
+    reduction_map.each do |r| # r is an array here
+      canonical = r.shift
+      origin_part_number = partnum(canonical, ps)
+      r.each do |rr|
+        remote_part_number = partnum(rr, ps)
+        parts[ origin_part_number ][ remote_part_number ] = [] if parts[ origin_part_number ][ remote_part_number ].nil?
+        parts[ origin_part_number ][ remote_part_number ] << { canonical: canonical, reduced: rr}
+      end
+    end
+
+    parts.each_with_index do |e, i|
+      p "Part #{i}"
+      e.each_with_index do |p, i|
+        p "+++ vs part #{i}: #{p}" unless p.blank?
+      end
     end
   end
 end
