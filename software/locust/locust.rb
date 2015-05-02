@@ -85,7 +85,7 @@ end
 logger.info "Connecting to swarm host @ #{URI.join(LOCUST_CONFIG['server']['address'])}..."
 logger.info "Joining the swarm..."
 
-Task.where(state: 5).update_all state: 4
+Task.where("state = 5 OR state = 4").update_all(state: 3)
 
 logger.info "Restarted crashed tasks"
 
@@ -101,8 +101,6 @@ begin
       logger.fatal "Server appears to be down (#{e}), delaying communication"
       heartbeat_delay = 60
     end
-
-    # logger.info 'Requisition step'
 
     # TASK REQUISITION
     if Task.undone.count < LOCUST_CONFIG['client']['store_tasks'].to_i
@@ -127,113 +125,10 @@ begin
       end
     end
 
-    # TASK PROVISIONING
-    
-    # logger.info 'provisioning step'
-
-# logger.info "Tasks for provisioning: #{Task.for_provisioning.count}"
-
-    Task.for_provisioning.each do |f|
-      begin
-        logger.info "Provisioning task #{f.id}"
-        remote_url = URI.join(LOCUST_CONFIG['server']['address'], f.remote_url)
-
-        response = RestClient.get remote_url.to_s
-        storage_path = File.join(LOCUST_CONFIG['client']['storage_dir'], "tasks", "#{f.id.to_s}.gz")
-        unzipped_path = File.join(LOCUST_CONFIG['client']['storage_dir'], "tasks", "#{f.id.to_s}.mcx")
-
-        mtx_path = File.join(LOCUST_CONFIG['client']['storage_dir'], "tasks", "#{f.id.to_s}.mtx")
-        rhs_path = File.join(LOCUST_CONFIG['client']['storage_dir'], "tasks", "#{f.id.to_s}.rhs")
-
-        File.open( storage_path, 'w' ) { |file| file.write response }
-
-        Zlib::GzipReader.open(storage_path) do |gz|
-          gz = gz.read
-          File.open( unzipped_path, 'w' ) { |file| file.write(gz) }
-        end
-
-        File.delete(storage_path)
-
-        mtx_file = File.open(mtx_path, 'w')
-        rhs_file = File.open(rhs_path, 'w')
-
-        lines = 0
-
-        ary = File.readlines(unzipped_path)
-        rhs_line = ary[0]
-
-        rhs_file.write("#{f.global_size} 1\n")
-
-        rhs_line.split(" ").each { |l| rhs_file.write("#{l}\n")}
-
-        rhs_file.close
-
-        nonzero = 0
-        counting = false
-
-        ary.each do |line|
-          nonzero += 1 if counting
-          counting = false and nonzero -= 1 if line.strip == "%" && counting
-          counting = true if line.strip == "%" && !counting
-        end
-
-        mtx_file.write("#{f.global_size} #{f.part_size} #{nonzero}\n")
-
-        counting = false
-
-	offset = f.offset
-
-        ary.each do |line|
-          if counting && line.strip != "%"
-	   arln = line.strip.split(" ")
-           arln[0] = (arln[0].to_i - offset.to_i).to_s
-           mtx_file.write("#{arln.join(" ")}\n")
-	  end
-
-          counting = false and nonzero -= 1 if line.strip == "%" && counting
-          counting = true if line.strip == "%" && !counting
-        end
-
-        mtx_file.close
-
-        f.update(state: 4) # task is provisioned and ready for operations
-      rescue Exception => e
-        logger.fatal "Server appears to be down (#{e}), delaying communication"
-	logger.info e.backtrace
-      end
-     end
-
-      # logger.info "Upload should happen here"
-
-      Task.for_upload.each do |f|
-        begin
-          logger.info "Uploading task #{f.id}"
-
-          url = URI.join(tasks_return_uri, "#{f.swarmhost_id}")
-
-          response = RestClient.put(url.to_s,
-            task: {
-              metafile: File.new(File.join(LOCUST_CONFIG['client']['storage_dir'], "tasks", "#{f.id.to_s}.ret.gz"), 'rb'),
-              state: 'complete',
-              completed: DateTime.now,
-              time: f.time,
-              backend: f.backend
-            },
-	    auth: server_key )
-
-            f.update(state: 7) # has been sent. Good bye, task!
-        rescue Exception => e
-          logger.fatal "Server appears to be down (#{e}), delaying communication"
-        end
-      end
-
     sleep heartbeat_delay
   end
 rescue SignalException => e
   logger.info "Graceful exit begin"
-
-  # ActiveRecord::Base.verify_active_connections!
-
   logger.info "Graceful exit end"
   exit
 end
