@@ -8,7 +8,14 @@
 
 <% model_class = Wave %>
 
-<table class="table table-striped datatable" id="waves">
+Completed:
+
+<div class="progress">
+  <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <%= @resource.percent_complete.to_f %>%;">
+  </div>
+</div>
+
+<table class="table table-striped dt-noord" id="waves">
   <thead>
   <tr>
     <th><%= model_class.human_attribute_name(:state) %></th>
@@ -22,7 +29,7 @@
   </tr>
   </thead>
   <tbody>
-  <% @resource.waves.order(seq: :asc).each do |s| %>
+  <% @resource.waves.order(seq: :desc).each do |s| %>
     <tr>
       <td><%= s.state %></td>
       <td><%=l s.created_at %></td>
@@ -46,7 +53,7 @@
     setTimeout(log, 3000);
   }
 
-  $(document).on('ready', function(){
+  $(document).on('change', '#autoupdate', function(){
     setTimeout(log, 3000);
   });
 </script>

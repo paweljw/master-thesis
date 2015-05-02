@@ -22,6 +22,10 @@ $(document).on('ready page:load', function() {
     $('.datatable').DataTable({
     });
 
+  $('.dt-noord').DataTable({
+    "ordering": false
+  });
+
     $('.table > tbody > tr.clickable').on('click', function() {
         window.location.href = $(this).data('link');
     });

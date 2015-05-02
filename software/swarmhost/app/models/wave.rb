@@ -1,6 +1,6 @@
 class Wave < ActiveRecord::Base
   belongs_to :solution
-  has_many :tasks
+  has_many :tasks, dependent: :delete_all
 
   enum state: [ :unpublished, :available, :complete, :broken ]
 

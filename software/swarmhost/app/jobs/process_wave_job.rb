@@ -113,9 +113,6 @@ class ProcessWaveJob < ActiveJob::Base
           command = "#{reducer_path} #{origin_path} #{offender_path} #{part_size_is} #{i} #{j} #{global_size_is} < #{command_path}"
           ret = `#{command}`
 
-          # p command
-
-          #p "overwriting file #{i}"
           new_pack = File.join(Rails.root, "tmp", "#{wave.id}_part_#{j}.mcx") # write to THE SAME file just in case
 
           File.open(new_pack, 'w') do |file|
@@ -135,11 +132,27 @@ class ProcessWaveJob < ActiveJob::Base
 
       tasks = 0
       Dir.glob(File.join(Rails.root, "tmp", "#{wave.id}_part_*.mcx")).sort.each do |f|
+
+        Zlib::GzipWriter.open(f + '.gztmp') do |gzfile|
+          File.open(f) do |partfile|
+            # process the file while rewriting to make sure no maps/timing info remains
+            percents = 0
+            partfile.each_line do |line|
+              percents += 1 if line.strip == '%'
+              gzfile.write(line) unless percents > 1
+              break if percents > 1
+            end
+          end
+          gzfile.close
+        end
+
+        FileUtils.mv(f + '.gztmp', f)
+
         t = new_wave.tasks.build
         t.name = File.basename f
         t.kind = 1
         t.state = 1
-        t.part_num = j
+        t.part_num = f.split('_part_').last.scan(/\d/).join.to_i
         t.metafile = File.open f
         t.save!
         tasks += 1
