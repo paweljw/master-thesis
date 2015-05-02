@@ -56,4 +56,9 @@ Completed:
   $(document).on('change', '#autoupdate', function(){
     setTimeout(log, 3000);
   });
+
+  <% if params[:au] == "true" %>
+  setTimeout(log, 3000);
+  <% end %>
+
 </script>
