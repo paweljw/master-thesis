@@ -20,8 +20,8 @@
   </thead>
   <tbody>
     <% @collection.each do |node| %>
-      <tr class="clickable" data-link="<%= admin_node_path(node) %>">
-        <td><%= node.name %></td>
+      <tr>
+        <td><%= link_to node.name, admin_node_path(node) %></td>
         <td><%= node.key %></td>
         <td><%= node.active_at.nil? ? 'never' : time_tag(node.active_at, distance_of_time_in_words(node.active_at, DateTime.now), title: l(node.active_at)) %></td>
         <td><%=l node.created_at %></td>

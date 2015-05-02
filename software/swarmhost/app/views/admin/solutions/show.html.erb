@@ -1,0 +1,52 @@
+<div class="page-header">
+  <h1><%= @resource.name %></h1>
+</div>
+
+<%= content_for :title_buttons do %>
+  Autoupdate the table? <input type="checkbox" id="autoupdate" <%= 'checked="checked"' if params[:au] == "true" %>/>
+<% end %>
+
+<% model_class = Wave %>
+
+<table class="table table-striped datatable" id="waves">
+  <thead>
+  <tr>
+    <th><%= model_class.human_attribute_name(:state) %></th>
+    <th><%= model_class.human_attribute_name(:created_at) %></th>
+    <th><%= model_class.human_attribute_name(:completed) %></th>
+    <th><%= model_class.human_attribute_name(:seq) %></th>
+    <th><%= model_class.human_attribute_name(:tasks_number) %></th>
+    <th><%= model_class.human_attribute_name(:tasks_in_field) %></th>
+    <th><%= model_class.human_attribute_name(:tasks_done) %></th>
+    <th><%= model_class.human_attribute_name(:reductions) %></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @resource.waves.order(seq: :asc).each do |s| %>
+    <tr>
+      <td><%= s.state %></td>
+      <td><%=l s.created_at %></td>
+      <td><%=l(s.completed) if s.completed.present? %></td>
+      <td><%= s.seq %></td>
+      <td><%= s.tasks_number %></td>
+      <td><%= s.tasks_in_field %></td>
+      <td><%= s.tasks_done %></td>
+      <td><%= s.reductions %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
+
+<script type="text/javascript">
+  function log()
+  {
+    if($("#autoupdate").is(':checked'))
+      Turbolinks.visit('<%= admin_solution_path(@resource, au: true) %>', { change: 'waves' });
+
+    setTimeout(log, 3000);
+  }
+
+  $(document).on('ready', function(){
+    setTimeout(log, 3000);
+  });
+</script>

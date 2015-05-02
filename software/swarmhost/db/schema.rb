@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150426104425) do
+ActiveRecord::Schema.define(version: 20150502071901) do
 
   create_table "nodes", force: :cascade do |t|
     t.string   "name"
@@ -81,9 +81,10 @@ ActiveRecord::Schema.define(version: 20150426104425) do
     t.integer  "seq"
     t.integer  "state"
     t.datetime "completed"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
     t.integer  "tasks_number"
+    t.integer  "reductions",   default: 0
   end
 
   add_index "waves", ["solution_id"], name: "index_waves_on_solution_id"

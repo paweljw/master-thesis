@@ -22,7 +22,7 @@
   <tbody>
     <% @collection.each do |s| %>
       <tr>
-        <td><%= s.name %></td>
+        <td><%= link_to s.name, admin_solution_path(s) %></td>
         <td><%= s.waves.count %></td>
         <td><%= s.tasks.count %></td>
         <td><%= s.state %></td>

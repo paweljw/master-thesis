@@ -5,7 +5,6 @@ class TasksController < ApplicationController
   def index
     requested_number = params[:num].to_i
     @collection = Task.to_send.limit(requested_number)
-    p "collection count: #{@collection.count}"
     respond_to do |format|
       format.json { render json: @collection }
     end
@@ -22,6 +21,7 @@ class TasksController < ApplicationController
     @resource.update( params.require(:task).permit! )
     @resource.reload
     if @resource.state == "complete"
+      @resource.update completed: DateTime.now
       @resource.wave.decrement_task_number
     end
     render text: 'OK'
