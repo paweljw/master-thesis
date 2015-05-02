@@ -20,6 +20,7 @@ class ProcessWaveJob < ActiveJob::Base
 
     part_size_is = 0
     global_size_is = wave.solution.dim.to_i
+    reductions = 0
 
     wave.tasks.each do |t|
       part_size_is = t.part_size.to_i if part_size_is == 0
@@ -45,10 +46,12 @@ class ProcessWaveJob < ActiveJob::Base
       that_line.strip.split(" ").each do |e|
         e = e.strip.split(":")
         reduction_map[ e[0].to_i ] = [] if reduction_map[ e[0].to_i ].blank?
-        reduction_map[ e[0].to_i ] << e[1].to_i # unless e[1].to_i == part_size_is
-        # p "redmap[#{e[0].to_i}]: #{reduction_map[ e[0].to_i ]}" if e[0].to_i < 1000
+        reduction_map[ e[0].to_i ] << e[1].to_i
+        reductions += 1
       end
     end
+
+    wave.update reductions: reductions
 
     new_reduction_map = []
 
@@ -127,6 +130,7 @@ class ProcessWaveJob < ActiveJob::Base
     if start_new_wave
       new_wave = wave.solution.waves.build
       new_wave.state = 0
+      new_wave.seq = wave.seq + 1
       new_wave.save!
 
       tasks = 0
@@ -144,8 +148,9 @@ class ProcessWaveJob < ActiveJob::Base
       end
 
       new_wave.update state: 1, tasks_number: tasks
+      wave.update completed: DateTime.now, state: 2
     else
-      wave.solution.update state: 2
+      wave.solution.update state: 2, completed: DateTime.now
     end
   end
 end

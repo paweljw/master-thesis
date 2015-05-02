@@ -11,4 +11,12 @@ class Wave < ActiveRecord::Base
       ProcessWaveJob.perform_later(self)
     end
   end
+
+  def tasks_in_field
+    self.tasks.in_field.count
+  end
+
+  def tasks_done
+    self.tasks.returned_done.count
+  end
 end

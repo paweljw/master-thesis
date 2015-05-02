@@ -6,6 +6,7 @@ class Admin::SolutionsController < Admin::ApplicationController
 
     wave = @resource.waves.build
     wave.state = :unpublished
+    wave.seq = 1
     wave.save!
 
     splitter_path = File.join( Rails.root, "bin", "splitter" )

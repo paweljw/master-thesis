@@ -12,10 +12,13 @@ Rails.application.routes.draw do
   resources :tasks, only: [ :index, :show, :update ]
 
   namespace :admin do
+    root to: 'solutions#index'
+
     resources :nodes do
       get :locust, on: :member
     end
-    resources :solutions, only: [ :index, :create, :new, :destroy ]
+
+    resources :solutions
     resources :tasks, only: [ :index ]
   end
 end

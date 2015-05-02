@@ -7,6 +7,8 @@ class Task < ActiveRecord::Base
 
   default_scope -> { order(created_at: :asc).order(state: :desc) }
   scope :to_send, -> { where("state = 1") }
+  scope :in_field, -> { where("state > 1 AND state < 7") }
+  scope :returned_done, -> { where("state >= 7") }
 
   mount_uploader :metafile, MetafileUploader
 
