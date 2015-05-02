@@ -39,6 +39,7 @@ has_opencl = true
 opencl_platforms = []
 
 begin
+  logger.info "Enumerating OpenCL platforms, this will take a while"
   platforms = OpenCL.platforms
 
   platforms.each_with_index do |p, i|
@@ -80,6 +81,13 @@ else
     Thread.new { Backend::FakeBackend.new.run(logger: logger, platform: 0, device: i) }
   end
 end
+
+logger.info "Connecting to swarm host @ #{URI.join(LOCUST_CONFIG['server']['address'])}..."
+logger.info "Joining the swarm..."
+
+Task.where(state: 5).update_all state: 4
+
+logger.info "Restarted crashed tasks"
 
 begin
   while true do
@@ -123,10 +131,9 @@ begin
     
     # logger.info 'provisioning step'
 
-    # logger.info "Tasks for provisioning: #{Task.for_provisioning.count}"
+# logger.info "Tasks for provisioning: #{Task.for_provisioning.count}"
 
     Task.for_provisioning.each do |f|
-      p "found task for provisioning: #{f}"
       begin
         logger.info "Provisioning task #{f.id}"
         remote_url = URI.join(LOCUST_CONFIG['server']['address'], f.remote_url)

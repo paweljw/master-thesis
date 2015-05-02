@@ -15,7 +15,7 @@ module Backend
       logger.info "A backend is starting on platform #{platform}, device #{device}"
 
       while true
-        sleep 1
+        sleep 3
 
         t = nil
 
@@ -49,7 +49,7 @@ module Backend
 
             cmd = "#{loc} #{mtx_path} #{rhs_path} 256 #{t.part_size} #{platform} #{device} #{offset}"
 
-            # logger.info "Cmd is #{cmd}"
+            logger.info "Cmd is #{cmd}"
             ret = `#{cmd}`
 
             rsplt = ret.split(/\r?\n/).select { |l| l.include? "TIME" }
