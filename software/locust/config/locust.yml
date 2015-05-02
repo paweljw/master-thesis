@@ -1,12 +1,10 @@
 server:
-  address: http://d33fc209.ngrok.io
-  key: 9caa4cba174e6a90f6ae99d798e72b6c
+  address: http://f81e57c4.ngrok.io
+  key: 1634abcb8d25c082c3ecbfd849c41065
 
 client:
   platforms: all
-  min_tasks: 7
-  platforms: all # unused for now
-  store_tasks: 7
+  store_tasks: 10
   use_opencl: true
   heartbeat: 3
   storage_dir: ./storage
