@@ -30,6 +30,7 @@ class Solution < ActiveRecord::Base
   end
 
   def percent_complete
+    return 0.0 if last_reduction_wave.nil?
     reverse = dim.to_f - last_reduction_wave.reductions.to_f
     reverse / ( dim.to_f / 100.0 )
   end

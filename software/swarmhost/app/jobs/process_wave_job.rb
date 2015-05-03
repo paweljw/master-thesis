@@ -36,7 +36,6 @@ class ProcessWaveJob < ActiveJob::Base
       end
 
       unzipped_path = File.join(Rails.root, "/tmp", "#{wave.id}_part_#{t.part_num}.mcx")
-      # p unzipped_path
 
       Zlib::GzipReader.open(t.metafile.path) do |gz|
         gz = gz.read
@@ -47,22 +46,20 @@ class ProcessWaveJob < ActiveJob::Base
         e = e.strip.split(":")
         reduction_map[ e[0].to_i ] = [] if reduction_map[ e[0].to_i ].blank?
         reduction_map[ e[0].to_i ] << e[1].to_i
+      end
+    end
+
+    new_reduction_map = []
+
+    (0..global_size_is).each do |i|
+      unless reduction_map[i].blank? || reduction_map[i].size == 1
         reductions += 1
+        new_reduction_map << reduction_map[i]
       end
     end
 
     wave.update reductions: reductions
 
-    new_reduction_map = []
-
-    (0..global_size_is).each do |i|
-      # p "redmap[i]: #{reduction_map[i]}" unless reduction_map[i].blank?
-      new_reduction_map << reduction_map[i] unless reduction_map[i].blank? || reduction_map[i].size == 1
-    end
-
-    # p new_reduction_map.inspect
-
-    # create an array of parts
     parts = []
 
     ps = wave.solution.part_size
@@ -124,6 +121,8 @@ class ProcessWaveJob < ActiveJob::Base
       end
     end
 
+    wave.update completed: DateTime.now, state: 2
+
     if start_new_wave
       new_wave = wave.solution.waves.build
       new_wave.state = 0
@@ -161,7 +160,6 @@ class ProcessWaveJob < ActiveJob::Base
       end
 
       new_wave.update state: 1, tasks_number: tasks
-      wave.update completed: DateTime.now, state: 2
     else
       wave.solution.update state: 2, completed: DateTime.now
     end

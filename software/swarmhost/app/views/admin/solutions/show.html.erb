@@ -45,20 +45,22 @@ Completed:
 </table>
 
 <script type="text/javascript">
+  var timeout;
+  var delay = 5000;
+
   function log()
   {
     if($("#autoupdate").is(':checked'))
       Turbolinks.visit('<%= admin_solution_path(@resource, au: true) %>', { change: 'waves' });
 
-    setTimeout(log, 3000);
+    timeout = setTimeout(log, delay);
   }
 
   $(document).on('change', '#autoupdate', function(){
-    setTimeout(log, 3000);
+    clearTimeout(timeout);
+    if($("#autoupdate").is(':checked'))
+    {
+      setTimeout(log, delay);
+    }
   });
-
-  <% if params[:au] == "true" %>
-  setTimeout(log, 3000);
-  <% end %>
-
 </script>
