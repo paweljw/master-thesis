@@ -1,0 +1,22 @@
+\beamer@endinputifotherversion {3.33pt}
+\select@language {polish}
+\beamer@sectionintoc {1}{Motywacja pracy}{2}{0}{1}
+\beamer@subsectionintoc {1}{1}{Oryginalny pomys\IeC {\l } - solwer multifrontalny na GPU}{2}{0}{1}
+\beamer@subsectionintoc {1}{2}{Oryginalny pomys\IeC {\l } - dekompozycja}{3}{0}{1}
+\beamer@subsectionintoc {1}{3}{Wady oryginalnego podej\IeC {\'s}cia}{4}{0}{1}
+\beamer@subsectionintoc {1}{4}{Nowy kierunek}{5}{0}{1}
+\beamer@sectionintoc {2}{Koncepcja}{6}{0}{2}
+\beamer@subsectionintoc {2}{1}{Za\IeC {\l }o\IeC {\.z}enia projektu}{6}{0}{2}
+\beamer@subsectionintoc {2}{2}{Za\IeC {\l }o\IeC {\.z}enia projektu}{7}{0}{2}
+\beamer@subsectionintoc {2}{3}{Inspiracja}{8}{0}{2}
+\beamer@subsectionintoc {2}{4}{Schemta rozwi\IeC {\k a}zania}{9}{0}{2}
+\beamer@subsectionintoc {2}{5}{Przewaga rozwi\IeC {\k a}zania}{10}{0}{2}
+\beamer@sectionintoc {3}{Realizacja}{11}{0}{3}
+\beamer@subsectionintoc {3}{1}{Architektura}{11}{0}{3}
+\beamer@subsectionintoc {3}{2}{Serwer}{12}{0}{3}
+\beamer@subsectionintoc {3}{3}{Serwer - interfejs u\IeC {\.z}ytkownika}{13}{0}{3}
+\beamer@subsectionintoc {3}{4}{Klient}{15}{0}{3}
+\beamer@subsectionintoc {3}{5}{Elementy obliczeniowe}{16}{0}{3}
+\beamer@subsectionintoc {3}{6}{Zysk z u\IeC {\.z}ytych technologii}{17}{0}{3}
+\beamer@sectionintoc {4}{Dalszy rozw\IeC {\'o}j}{18}{0}{4}
+\beamer@subsectionintoc {4}{1}{Realizacja}{18}{0}{4}
