@@ -21,8 +21,7 @@ class Solution < ActiveRecord::Base
   enum state: states
 
   def set_name
-    self.name = File.basename(mtx.identifier, ".*")
-    puts self.name
+    self.name = File.basename(mtx.identifier, ".*") 
   end
 
   def last_reduction_wave

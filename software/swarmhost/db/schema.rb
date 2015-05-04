@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150502071901) do
+ActiveRecord::Schema.define(version: 20150504164518) do
 
   create_table "nodes", force: :cascade do |t|
     t.string   "name"
@@ -34,6 +34,7 @@ ActiveRecord::Schema.define(version: 20150502071901) do
     t.string   "metafile"
     t.integer  "dim"
     t.integer  "full_size"
+    t.datetime "started"
   end
 
   create_table "tasks", force: :cascade do |t|

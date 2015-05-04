@@ -15,6 +15,10 @@ module CrudController
     redirect_to action: :index
   end
 
+  def edit
+    @resource = resource_class.find(params[:id])
+  end
+
   def create
     @resource = resource_class.create(safe_params)
     redirect_to action: :index

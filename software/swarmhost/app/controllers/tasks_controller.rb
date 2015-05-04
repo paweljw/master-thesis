@@ -5,6 +5,7 @@ class TasksController < ApplicationController
   def index
     requested_number = params[:num].to_i
     @collection = Task.to_send.limit(requested_number)
+    @collection.each { |t| t.wave.solution.update(started: DateTime.now) if t.wave.solution.started.nil? }
     respond_to do |format|
       format.json { render json: @collection }
     end
