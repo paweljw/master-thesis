@@ -18,6 +18,7 @@ structure}{parent=structure}
 \usepackage{graphicx}
 \usepackage{wrapfig}
 \usefonttheme{professionalfonts}
+\usepackage{pgfplots}
 
 \newcommand\Fontvi{\fontsize{14pt}{7.2}\selectfont}
 
@@ -114,15 +115,8 @@ structure}{parent=structure}
 		\item Rodzaj i jakość połączenia (filtrowane, komórkowe)
 		\item Czas i wydajność pracy	
 	\end{itemize}
-\end{itemize}
-\end{frame}
-
-\subsection{Założenia projektu}
-\begin{frame}{Założenia projektu}
-\begin{itemize}
-	\item Rozwiązywanie wielu problemów na raz
-	\item Rozwiązywanie problemów uprzednio praktycznie nierozwiązalnych
-	\item Odporność na błędy - od drobnych do katastrofalnych
+	\item Wiele problemów na raz, niezależnie od wielkości
+	\item Odporność na błędy
 \end{itemize}
 \end{frame}
 
@@ -175,25 +169,31 @@ structure}{parent=structure}
 \end{itemize}
 \end{frame}
 
-\subsection{Serwer}
-\begin{frame}{Serwer}
+\subsection{Oprogramowanie}
+\begin{frame}{Oprogramowanie}
 \begin{itemize}
-	\item Ruby on Rails
+	\item Serwer: Ruby on Rails
 	\begin{itemize}
 		\item Jednolite, standardowe API (REST)
 		\item Bezstanowość
-		\begin{itemize}
-		\item Rozwiązanie wielu problemów na raz
-		\item Odporność na awarie nagle zatrzymujące serwer
-		\end{itemize}
 		\item Ta sama usługa dostarcza punkt wejścia dla klientów i dla użytkowników (interfejs graficzny)
 	\end{itemize}
-	\item Interfejs użytkownika
+	\item Klient: Ruby
 	\begin{itemize}
-		\item Nowoczesne technologie webowe
-		\item Łatwość obsługi - nawet dla laika
-		\item W praktyce: kolejna redukcja kosztów (specjaliści, szkolenia, ...)
+		\item Dynamiczny rozwój oprogramowania
 	\end{itemize}
+	\item Elementy obliczeniowe: C/C++
+\end{itemize}
+\end{frame}
+
+\subsection{Przede wszystkim łatwość}
+\begin{frame}{Przede wszystkim łatwość}
+\begin{itemize}
+	\item Łatwość rozszerzania serwera - prosty język,\\ jasna struktura danych
+	\item Łatwość modyfikacji klienta
+	\item Łatwość stworzenia zupełnie nowego klienta
+	\item Łatwość dostosowania do aktualnie postawionego celu przez specjalistę
+	\item Łatwość użycia jako gotowego rozwiązania przez specjalistę w innej dziedzinie
 \end{itemize}
 \end{frame}
 
@@ -204,71 +204,19 @@ structure}{parent=structure}
 \end{center}
 \end{frame}
 
-\begin{frame}{Serwer - interfejs użytkownika}
+\section{Wyniki pracy}
+
+\subsection{Wyniki dotychczasowych badań}
+\begin{frame}{Wyniki dotychczasowych badań}
 \begin{center}
-	\includegraphics[scale=0.3]{swarmhost2}
+	\includegraphics[scale=0.45]{proof}
+	\newline
+	\tiny Jack: 4x nVidia Tesla M2090, 1x Intel Xeon X5650. Jennah: 1x nVidia GeForce GT630.\\Serwer: 1x Intel Core i7-4710HQ, 16 GB RAM.
 \end{center}
 \end{frame}
 
-\subsection{Klient}
-\begin{frame}{Klient}
-\begin{itemize}
-	\item Ruby
-	\begin{itemize}
-		\item Łatwość prototypowania
-		\item Dynamiczny rozwój oprogramowania
-	\end{itemize}
-	\item Usługa rezydentna
-	\begin{itemize}
-		\item Pracuje tylko wtedy kiedy serwer podaje zadania
-		\item Niewielki narzut ze strony samego klienta
-	\end{itemize}
-	\item Pełna asynchroniczność
-\end{itemize}
-\end{frame}
 
-\subsection{Elementy obliczeniowe}
-\begin{frame}{Elementy obliczeniowe}
-
-\begin{columns}[T]
-    \begin{column}{.7\textwidth}
-\begin{itemize}
-\item Trudno przebić C/C++
-\begin{itemize}
-	\item Szybkość
-	\item Obsługa pamięci
-	\item Dostępność bibliotek numerycznych (np. Boost C++ uBLAS)
-\end{itemize}
-\item Rozwiązanie: \\Ruby Native Extensions
-\begin{itemize}
-	\item Uruchomienie kodu natywnego w kontekście Ruby
-	\item Rozwiązanie hybrydowe
-\end{itemize}
-\end{itemize}
-    
- \end{column}
-    \begin{column}{.3\textwidth}
-    \begin{center}
-\includegraphics[scale=0.3]{ruby_c}
-\end{center}
- \end{column}
- \end{columns}
-\end{frame}
-
-\subsection{Zysk z użytych technologii}
-\begin{frame}{Zysk z użytych technologii}
-\begin{itemize}
-	\item Łatwość rozszerzania serwera - prosty język,\\ jasna struktura danych
-	\item Łatwość modyfikacji klienta
-	\item Łatwość stworzenia zupełnie nowego klienta
-	\item Cały dynamizm Ruby, cała szybkość C++, cała moc OpenCL i GPU
-	\item Łatwość dostosowania do aktualnie postawionego celu przez specjalistę
-	\item Łatwość użycia jako gotowego rozwiązania przez specjalistę w innej dziedzinie
-\end{itemize}
-\end{frame}
-
-\section{Dalszy rozwój}
-\subsection{Realizacja}
+\subsection{Dalszy rozwój}
 \begin{frame}{Dalszy rozwój}
 \begin{itemize}
 	\item Rozwiązanie jest nadal w rozwoju

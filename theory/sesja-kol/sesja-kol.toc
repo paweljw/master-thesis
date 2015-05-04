@@ -7,16 +7,14 @@
 \beamer@subsectionintoc {1}{4}{Nowy kierunek}{5}{0}{1}
 \beamer@sectionintoc {2}{Koncepcja}{6}{0}{2}
 \beamer@subsectionintoc {2}{1}{Za\IeC {\l }o\IeC {\.z}enia projektu}{6}{0}{2}
-\beamer@subsectionintoc {2}{2}{Za\IeC {\l }o\IeC {\.z}enia projektu}{7}{0}{2}
-\beamer@subsectionintoc {2}{3}{Inspiracja}{8}{0}{2}
-\beamer@subsectionintoc {2}{4}{Schemta rozwi\IeC {\k a}zania}{9}{0}{2}
-\beamer@subsectionintoc {2}{5}{Przewaga rozwi\IeC {\k a}zania}{10}{0}{2}
-\beamer@sectionintoc {3}{Realizacja}{11}{0}{3}
-\beamer@subsectionintoc {3}{1}{Architektura}{11}{0}{3}
-\beamer@subsectionintoc {3}{2}{Serwer}{12}{0}{3}
-\beamer@subsectionintoc {3}{3}{Serwer - interfejs u\IeC {\.z}ytkownika}{13}{0}{3}
-\beamer@subsectionintoc {3}{4}{Klient}{15}{0}{3}
-\beamer@subsectionintoc {3}{5}{Elementy obliczeniowe}{16}{0}{3}
-\beamer@subsectionintoc {3}{6}{Zysk z u\IeC {\.z}ytych technologii}{17}{0}{3}
-\beamer@sectionintoc {4}{Dalszy rozw\IeC {\'o}j}{18}{0}{4}
-\beamer@subsectionintoc {4}{1}{Realizacja}{18}{0}{4}
+\beamer@subsectionintoc {2}{2}{Inspiracja}{7}{0}{2}
+\beamer@subsectionintoc {2}{3}{Schemta rozwi\IeC {\k a}zania}{8}{0}{2}
+\beamer@subsectionintoc {2}{4}{Przewaga rozwi\IeC {\k a}zania}{9}{0}{2}
+\beamer@sectionintoc {3}{Realizacja}{10}{0}{3}
+\beamer@subsectionintoc {3}{1}{Architektura}{10}{0}{3}
+\beamer@subsectionintoc {3}{2}{Oprogramowanie}{11}{0}{3}
+\beamer@subsectionintoc {3}{3}{Przede wszystkim \IeC {\l }atwo\IeC {\'s}\IeC {\'c}}{12}{0}{3}
+\beamer@subsectionintoc {3}{4}{Serwer - interfejs u\IeC {\.z}ytkownika}{13}{0}{3}
+\beamer@sectionintoc {4}{Wyniki pracy}{14}{0}{4}
+\beamer@subsectionintoc {4}{1}{Wyniki dotychczasowych bada\IeC {\'n}}{14}{0}{4}
+\beamer@subsectionintoc {4}{2}{Dalszy rozw\IeC {\'o}j}{15}{0}{4}

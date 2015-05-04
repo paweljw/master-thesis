@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2015.4.29)  3 MAY 2015 13:36
+This is pdfTeX, Version 3.14159265-2.6-1.40.15 (TeX Live 2015/dev/Debian) (preloaded format=pdflatex 2015.4.29)  4 MAY 2015 20:49
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1020,33 +1020,211 @@ essionalfonts.sty
 Package: beamerfontthemeprofessionalfonts 2010/06/17  (rcs-revision d02a7cf4d8a
 e)
 )
+(/usr/share/texlive/texmf-dist/tex/latex/pgfplots/pgfplots.sty
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/pgfplots.revision.tex)
+Package: pgfplots 2014/08/04 v1.11 Data Visualization (1.11-3-g4c99d7a)
+
+(/usr/share/texlive/texmf-dist/tex/latex/pgf/frontendlayer/tikz.sty
+(/usr/share/texlive/texmf-dist/tex/latex/pgf/basiclayer/pgf.sty
+Package: pgf 2013/12/18 v3.0.0 (rcs-revision 1.14)
+
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/modules/pgfmoduleshapes.code.tex
+File: pgfmoduleshapes.code.tex 2013/10/31  (rcs-revision 1.34)
+\pgfnodeparttextbox=\box54
+) (/usr/share/texlive/texmf-dist/tex/generic/pgf/modules/pgfmoduleplot.code.tex
+File: pgfmoduleplot.code.tex 2013/07/31  (rcs-revision 1.12)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-65
+.sty
+Package: pgfcomp-version-0-65 2007/07/03 v3.0.0 (rcs-revision 1.7)
+\pgf@nodesepstart=\dimen195
+\pgf@nodesepend=\dimen196
+)
+(/usr/share/texlive/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-18
+.sty
+Package: pgfcomp-version-1-18 2007/07/23 v3.0.0 (rcs-revision 1.1)
+)) (/usr/share/texlive/texmf-dist/tex/latex/pgf/utilities/pgffor.sty
+(/usr/share/texlive/texmf-dist/tex/latex/pgf/utilities/pgfkeys.sty
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfkeys.code.tex))
+(/usr/share/texlive/texmf-dist/tex/latex/pgf/math/pgfmath.sty
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex))
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgffor.code.tex
+Package: pgffor 2013/12/13 v3.0.0 (rcs-revision 1.25)
+
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex)
+\pgffor@iter=\dimen197
+\pgffor@skip=\dimen198
+\pgffor@stack=\toks46
+\pgffor@toks=\toks47
+))
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/tikz.code.tex
+Package: tikz 2013/12/13 v3.0.0 (rcs-revision 1.142)
+
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/libraries/pgflibraryplothandlers
+.code.tex
+File: pgflibraryplothandlers.code.tex 2013/08/31 v3.0.0 (rcs-revision 1.20)
+\pgf@plot@mark@count=\count155
+\pgfplotmarksize=\dimen199
+)
+\tikz@lastx=\dimen200
+\tikz@lasty=\dimen201
+\tikz@lastxsaved=\dimen202
+\tikz@lastysaved=\dimen203
+\tikzleveldistance=\dimen204
+\tikzsiblingdistance=\dimen205
+\tikz@figbox=\box55
+\tikz@figbox@bg=\box56
+\tikz@tempbox=\box57
+\tikz@tempbox@bg=\box58
+\tikztreelevel=\count156
+\tikznumberofchildren=\count157
+\tikznumberofcurrentchild=\count158
+\tikz@fig@count=\count159
+
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/modules/pgfmodulematrix.code.tex
+File: pgfmodulematrix.code.tex 2013/09/17  (rcs-revision 1.8)
+\pgfmatrixcurrentrow=\count160
+\pgfmatrixcurrentcolumn=\count161
+\pgf@matrix@numberofcolumns=\count162
+)
+\tikz@expandcount=\count163
+
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tik
+zlibrarytopaths.code.tex
+File: tikzlibrarytopaths.code.tex 2008/06/17 v3.0.0 (rcs-revision 1.2)
+)))
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/pgfplots.code.tex
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/pgfplotscore.code.tex
+\t@pgfplots@toka=\toks48
+\t@pgfplots@tokb=\toks49
+\t@pgfplots@tokc=\toks50
+\pgfplots@tmpa=\dimen206
+\c@pgfplots@coordindex=\count164
+\c@pgfplots@scanlineindex=\count165
+
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/sys/pgfplotssysgeneric.code
+.tex))
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/libs/pgfplotslibrary.code.t
+ex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/oldpgfcompatib/pgfplotsoldp
+gfsupp_loader.code.tex
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/libraries/pgflibraryfpu.code.tex
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/oldpgfcompatib/pgfplotsoldp
+gfsupp_trig_format.code.tex))
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/util/pgfplotsutil.code.tex
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/liststructure/pgfplotslists
+tructure.code.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/liststructure/pgfplotslists
+tructureext.code.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/liststructure/pgfplotsarray
+.code.tex
+\c@pgfplotsarray@tmp=\count166
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/liststructure/pgfplotsmatri
+x.code.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/numtable/pgfplotstableshare
+d.code.tex
+\c@pgfplotstable@counta=\count167
+\t@pgfplotstable@a=\toks51
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/liststructure/pgfplotsdeque
+.code.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/util/pgfplotsbinary.code.te
+x
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/util/pgfplotsbinary.data.co
+de.tex))
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/util/pgfplotsutil.verb.code
+.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/libs/pgflibrarypgfplots.sur
+fshading.code.tex
+\c@pgfplotslibrarysurf@no=\count168
+
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/sys/pgflibrarypgfplots.surf
+shading.pgfsys-pdftex.def)))
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/util/pgfplotscolormap.code.
+tex
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/util/pgfplotscolor.code.tex
+))
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/pgfplotsstackedplots.code.t
+ex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/pgfplotsplothandlers.code.t
+ex
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/pgfplotsmeshplothandler.cod
+e.tex))
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/pgfplots.scaling.code.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/pgfplotscoordprocessing.cod
+e.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/pgfplots.errorbars.code.tex
+) (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/pgfplots.markers.code.tex
+) (/usr/share/texlive/texmf-dist/tex/generic/pgfplots/pgfplotsticks.code.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgfplots/pgfplots.paths.code.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tik
+zlibrarydecorations.code.tex
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/modules/pgfmoduledecorations.cod
+e.tex
+\pgfdecoratedcompleteddistance=\dimen207
+\pgfdecoratedremainingdistance=\dimen208
+\pgfdecoratedinputsegmentcompleteddistance=\dimen209
+\pgfdecoratedinputsegmentremainingdistance=\dimen210
+\pgf@decorate@distancetomove=\dimen211
+\pgf@decorate@repeatstate=\count169
+\pgfdecorationsegmentamplitude=\dimen212
+\pgfdecorationsegmentlength=\dimen213
+)
+\tikz@lib@dec@box=\box59
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tik
+zlibrarydecorations.pathmorphing.code.tex
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/libraries/decorations/pgflibrary
+decorations.pathmorphing.code.tex))
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tik
+zlibrarydecorations.pathreplacing.code.tex
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/libraries/decorations/pgflibrary
+decorations.pathreplacing.code.tex))
+\pgfplots@numplots=\count170
+\pgfplots@xmin@reg=\dimen214
+\pgfplots@xmax@reg=\dimen215
+\pgfplots@ymin@reg=\dimen216
+\pgfplots@ymax@reg=\dimen217
+\pgfplots@zmin@reg=\dimen218
+\pgfplots@zmax@reg=\dimen219
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tik
+zlibraryplotmarks.code.tex
+File: tikzlibraryplotmarks.code.tex 2008/01/09 v3.0.0 (rcs-revision 1.1)
+
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/libraries/pgflibraryplotmarks.co
+de.tex
+File: pgflibraryplotmarks.code.tex 2013/07/20 v3.0.0 (rcs-revision 1.13)
+)))
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\\' on input line 24.
+(hyperref)                removing `\\' on input line 25.
 
 (./sesja-kol.aux)
 \openout1 = `sesja-kol.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 36.
-LaTeX Font Info:    ... okay on input line 36.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 36.
-LaTeX Font Info:    ... okay on input line 36.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 36.
-LaTeX Font Info:    ... okay on input line 36.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 36.
-LaTeX Font Info:    ... okay on input line 36.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 36.
-LaTeX Font Info:    ... okay on input line 36.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 36.
-LaTeX Font Info:    ... okay on input line 36.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 36.
-LaTeX Font Info:    ... okay on input line 36.
-LaTeX Font Info:    Checking defaults for OT4/cmr/m/n on input line 36.
-LaTeX Font Info:    Try loading font information for OT4+cmr on input line 36.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 37.
+LaTeX Font Info:    ... okay on input line 37.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 37.
+LaTeX Font Info:    ... okay on input line 37.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 37.
+LaTeX Font Info:    ... okay on input line 37.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 37.
+LaTeX Font Info:    ... okay on input line 37.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 37.
+LaTeX Font Info:    ... okay on input line 37.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 37.
+LaTeX Font Info:    ... okay on input line 37.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 37.
+LaTeX Font Info:    ... okay on input line 37.
+LaTeX Font Info:    Checking defaults for OT4/cmr/m/n on input line 37.
+LaTeX Font Info:    Try loading font information for OT4+cmr on input line 37.
  (/usr/share/texlive/texmf-dist/tex/latex/polski/ot4cmr.fd
 File: ot4cmr.fd 2008/02/24 v1.2.1 Font defs for fonts PL (MW)
 )
-LaTeX Font Info:    ... okay on input line 36.
+LaTeX Font Info:    ... okay on input line 37.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -1084,17 +1262,17 @@ LaTeX Font Info:    ... okay on input line 36.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count155
-\scratchdimen=\dimen195
-\scratchbox=\box54
-\nofMPsegments=\count156
-\nofMParguments=\count157
-\everyMPshowfont=\toks46
-\MPscratchCnt=\count158
-\MPscratchDim=\dimen196
-\MPnumerator=\count159
-\makeMPintoPDFobject=\count160
-\everyMPtoPDFconversion=\toks47
+\scratchcounter=\count171
+\scratchdimen=\dimen220
+\scratchbox=\box60
+\nofMPsegments=\count172
+\nofMParguments=\count173
+\everyMPshowfont=\toks52
+\MPscratchCnt=\count174
+\MPscratchDim=\dimen221
+\MPnumerator=\count175
+\makeMPintoPDFobject=\count176
+\everyMPtoPDFconversion=\toks53
 ) (/usr/share/texlive/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
 
@@ -1111,8 +1289,8 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
 ABD: EveryShipout initializing macros
-\AtBeginShipoutBox=\box55
-Package hyperref Info: Link coloring OFF on input line 36.
+\AtBeginShipoutBox=\box61
+Package hyperref Info: Link coloring OFF on input line 37.
 
 (/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
@@ -1120,11 +1298,11 @@ Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
 (/usr/share/texlive/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
-\c@section@level=\count161
+\c@section@level=\count177
 )
-LaTeX Info: Redefining \ref on input line 36.
-LaTeX Info: Redefining \pageref on input line 36.
-LaTeX Info: Redefining \nameref on input line 36.
+LaTeX Info: Redefining \ref on input line 37.
+LaTeX Info: Redefining \pageref on input line 37.
+LaTeX Info: Redefining \nameref on input line 37.
 
 (./sesja-kol.out) (./sesja-kol.out)
 \@outlinefile=\write5
@@ -1155,25 +1333,31 @@ Dictionary: translator-numbers-dictionary, Language: English
 orem-dictionary/translator-theorem-dictionary-English.dict
 Dictionary: translator-theorem-dictionary, Language: English 
 )
-LaTeX Info: Redefining \includegraphics on input line 36.
- (./sesja-kol.nav)
-<logo_ms.png, id=126, 605.26125pt x 173.64874pt>
+LaTeX Info: Redefining \includegraphics on input line 37.
+
+
+Package pgfplots Warning: running in backwards compatibility mode (unsuitable t
+ick labels; missing features). Consider writing \pgfplotsset{compat=1.11} into 
+your preamble.
+ on input line 37.
+
+(./sesja-kol.nav) <logo_ms.png, id=115, 605.26125pt x 173.64874pt>
 File: logo_ms.png Graphic file (type png)
- <use logo_ms.png>
-Package pdftex.def Info: logo_ms.png used on input line 42.
+
+<use logo_ms.png>
+Package pdftex.def Info: logo_ms.png used on input line 43.
 (pdftex.def)             Requested size: 121.0501pt x 34.72913pt.
  [1{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}
 
  <./logo_ms.png (PNG copy)>] [2
 
-]
-<dekompozycja.png, id=205, 545.03625pt x 454.69875pt>
+] <dekompozycja.png, id=184, 545.03625pt x 454.69875pt>
 File: dekompozycja.png Graphic file (type png)
- <use dekompozycja.png>
-Package pdftex.def Info: dekompozycja.png used on input line 73.
-(pdftex.def)             Requested size: 218.01064pt x 181.87627pt.
 
-[3
+<use dekompozycja.png>
+Package pdftex.def Info: dekompozycja.png used on input line 74.
+(pdftex.def)             Requested size: 218.01064pt x 181.87627pt.
+ [3
 
  <./dekompozycja.png>] [4
 
@@ -1181,50 +1365,50 @@ Package pdftex.def Info: dekompozycja.png used on input line 73.
 
 ] [6
 
-] [7
-
 ]
-<sah_logo.jpg, id=335, 477.7047pt x 145.7445pt>
+<sah_logo.jpg, id=276, 477.7047pt x 145.7445pt>
 File: sah_logo.jpg Graphic file (type jpg)
  <use sah_logo.jpg>
-Package pdftex.def Info: sah_logo.jpg used on input line 136.
+Package pdftex.def Info: sah_logo.jpg used on input line 130.
 (pdftex.def)             Requested size: 143.3125pt x 43.72368pt.
 
-<boinc_logo.png, id=336, 657.95813pt x 290.58563pt>
+<boinc_logo.png, id=277, 657.95813pt x 290.58563pt>
 File: boinc_logo.png Graphic file (type png)
  <use boinc_logo.png>
-Package pdftex.def Info: boinc_logo.png used on input line 136.
+Package pdftex.def Info: boinc_logo.png used on input line 130.
 (pdftex.def)             Requested size: 131.5893pt x 58.11609pt.
 
-<folding_logo.jpg, id=337, 562.1pt x 110.4125pt>
+<folding_logo.jpg, id=278, 562.1pt x 110.4125pt>
 File: folding_logo.jpg Graphic file (type jpg)
  <use folding_logo.jpg>
-Package pdftex.def Info: folding_logo.jpg used on input line 136.
+Package pdftex.def Info: folding_logo.jpg used on input line 130.
 (pdftex.def)             Requested size: 224.83601pt x 44.1642pt.
 
-[8
+[7
 
  <./sah_logo.jpg> <./boinc_logo.png> <./folding_logo.jpg>]
-<schemta.png, id=364, 513.92pt x 193.72375pt>
+<schemta.png, id=304, 513.92pt x 193.72375pt>
 File: schemta.png Graphic file (type png)
  <use schemta.png>
-Package pdftex.def Info: schemta.png used on input line 143.
+Package pdftex.def Info: schemta.png used on input line 137.
 (pdftex.def)             Requested size: 308.35437pt x 116.23514pt.
 
-Overfull \hbox (1.0645pt too wide) in paragraph at lines 143--143
+Overfull \hbox (1.0645pt too wide) in paragraph at lines 137--137
  [] 
  []
 
-[9
+[8
 
- <./schemta.png>] [10
+ <./schemta.png>] [9
+
+] [10
 
 ] [11
 
 ] [12
 
 ]
-<swarmhost.png, id=466, 1046.91125pt x 669.50125pt>
+<swarmhost.png, id=416, 1046.91125pt x 669.50125pt>
 File: swarmhost.png Graphic file (type png)
  <use swarmhost.png>
 Package pdftex.def Info: swarmhost.png used on input line 205.
@@ -1240,36 +1424,19 @@ Overfull \vbox (3.476pt too high) detected at line 205
 
 [13
 
- <./swarmhost.png>] <swarmhost2.png, id=493, 1046.91125pt x 669.50125pt>
-File: swarmhost2.png Graphic file (type png)
+ <./swarmhost.png>] <proof.png, id=440, 650.43pt x 444.91219pt>
+File: proof.png Graphic file (type png)
 
-<use swarmhost2.png>
-Package pdftex.def Info: swarmhost2.png used on input line 211.
-(pdftex.def)             Requested size: 314.0758pt x 200.85191pt.
+<use proof.png>
+Package pdftex.def Info: proof.png used on input line 216.
+(pdftex.def)             Requested size: 292.6908pt x 200.20862pt.
 
-Overfull \hbox (6.78593pt too wide) in paragraph at lines 211--211
- [] 
- []
-
-
-Overfull \vbox (3.476pt too high) detected at line 211
+Overfull \vbox (3.10353pt too high) detected at line 216
  []
 
 [14
 
- <./swarmhost2.png>] [15
-
-] <ruby_c.png, id=545, 175.65625pt x 175.65625pt>
-File: ruby_c.png Graphic file (type png)
-
-<use ruby_c.png>
-Package pdftex.def Info: ruby_c.png used on input line 256.
-(pdftex.def)             Requested size: 52.69727pt x 52.69727pt.
- [16
-
- <./ruby_c.png>] [17
-
-] [18
+ <./proof.png (PNG copy)>] [15
 
 ]
 \tf@nav=\write6
@@ -1281,32 +1448,32 @@ Package pdftex.def Info: ruby_c.png used on input line 256.
 \tf@snm=\write8
 \openout8 = `sesja-kol.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 288.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 288.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 236.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 236.
  (./sesja-kol.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 288.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 288.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 236.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 236.
 Package rerunfilecheck Info: File `sesja-kol.out' has not changed.
-(rerunfilecheck)             Checksum: C5043D8FCE7847338516D51EA4721F02;1321.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 288.
+(rerunfilecheck)             Checksum: 0459E289181639982CA7C71E653BF0C4;1210.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 236.
  ) 
 Here is how much of TeX's memory you used:
- 17734 strings out of 494944
- 333623 string characters out of 6179433
- 415658 words of memory out of 5000000
- 20467 multiletter control sequences out of 15000+600000
- 7649 words of font info for 23 fonts, out of 8000000 for 9000
+ 29193 strings out of 494944
+ 688599 string characters out of 6179433
+ 891934 words of memory out of 5000000
+ 31753 multiletter control sequences out of 15000+600000
+ 7161 words of font info for 22 fonts, out of 8000000 for 9000
  56 hyphenation exceptions out of 8191
- 56i,20n,58p,408b,764s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 58i,20n,78p,705b,763s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/pl/plrm.enc}</usr/share/texliv
 e/texmf-dist/fonts/type1/public/pl/plss10.pfb></usr/share/texlive/texmf-dist/fo
 nts/type1/public/pl/plss12.pfb></usr/share/texlive/texmf-dist/fonts/type1/publi
 c/pl/plss17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/pl/plss8.pfb>
 
-Output written on sesja-kol.pdf (18 pages, 481751 bytes).
+Output written on sesja-kol.pdf (15 pages, 420192 bytes).
 PDF statistics:
- 654 PDF objects out of 1000 (max. 8388607)
- 577 compressed objects within 6 object streams
- 57 named destinations out of 1000 (max. 500000)
- 296 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 516 PDF objects out of 1000 (max. 8388607)
+ 448 compressed objects within 5 object streams
+ 49 named destinations out of 1000 (max. 500000)
+ 275 words of extra memory for PDF output out of 10000 (max. 10000000)
 
