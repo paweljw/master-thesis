@@ -14,7 +14,6 @@ module Backend
 
       logger.info "OpenCL backend starting @ #{platform}:#{device}"
 
-      tasks_requisition_uri = URI.join(LOCUST_CONFIG['server']['address'], '/tasks.json')
       tasks_return_uri = URI.join(LOCUST_CONFIG['server']['address'], '/tasks/')
       server_key = LOCUST_CONFIG['server']['key']
 
@@ -58,8 +57,6 @@ module Backend
             mtx_file = File.open(mtx_path, 'w')
             rhs_file = File.open(rhs_path, 'w')
 
-            lines = 0
-
             ary = File.readlines(unzipped_path)
             rhs_line = ary[0]
 
@@ -89,7 +86,7 @@ module Backend
     	           arln = line.strip.split(" ")
                  arln[0] = (arln[0].to_i - offset.to_i).to_s
                  mtx_file.write("#{arln.join(" ")}\n")
-  	          end
+              end
 
               counting = false and nonzero -= 1 if line.strip == "%" && counting
               counting = true if line.strip == "%" && !counting
@@ -106,7 +103,7 @@ module Backend
 
             offset = t.offset
 
-            cmd = "#{loc} #{mtx_path} #{rhs_path} 256 #{t.part_size} #{platform} #{device} #{offset}"
+            cmd = "#{loc} #{mtx_path} #{rhs_path} #{t.local_size} #{t.part_size} #{platform} #{device} #{offset}"
 
             t.update(state: 5)
 

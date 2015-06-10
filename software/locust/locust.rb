@@ -114,7 +114,8 @@ begin
 
         remote_tasks.each do |t|
           t_attrs = { swarmhost_id: t[:id], kind: t[:kind], state: 3, name: t[:name],
-            remote_url: t[:metafile][:url], part_size: t[:part_size], global_size: t[:global_size], part_num: t[:part_num] }
+            remote_url: t[:metafile][:url], part_size: t[:part_size], global_size: t[:global_size],
+            part_num: t[:part_num], local_size: t[:local_size] }
           task = Task.create(t_attrs)
           logger.info "Created task with id #{task.id} from Swarmhost task #{t[:id]}"
         end

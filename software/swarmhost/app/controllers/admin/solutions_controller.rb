@@ -13,7 +13,7 @@ class Admin::SolutionsController < Admin::ApplicationController
     storage_dir = File.join( Rails.root, Solution::STORAGE_DIR )
     tmp_dir = File.join( Rails.root, Solution::TMP_DIR )
 
-    description_file = "solution_descr_#{@resource.name}"
+    description_file = "solution_descr_#{File.basename(@resource.mtx.identifier, ".*") }"
     description_path = File.join( Rails.root, Solution::STORAGE_DIR, description_file)
 
     cmd = "#{splitter_path} #{@resource.mtx.path} #{@resource.rhs.path} #{@resource.part_size.to_i} #{storage_dir}/ #{tmp_dir}/"

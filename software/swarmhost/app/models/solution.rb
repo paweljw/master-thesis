@@ -21,7 +21,7 @@ class Solution < ActiveRecord::Base
   enum state: states
 
   def set_name
-    self.name = File.basename(mtx.identifier, ".*") 
+    self.name ||= File.basename(mtx.identifier, ".*") 
   end
 
   def last_reduction_wave
@@ -32,5 +32,14 @@ class Solution < ActiveRecord::Base
     return 0.0 if last_reduction_wave.nil?
     reverse = dim.to_f - last_reduction_wave.reductions.to_f
     reverse / ( dim.to_f / 100.0 )
+  end
+
+  def elapsed
+    start = self.tasks.all.order(started_at: :desc).first
+    stop = self.tasks.all.order(started_at: :desc).last
+
+    return (stop.completed - start.started_at).round(4) if start.started_at.present? && stop.completed.present?
+    return (self.completed - self.started).round(4) if self.completed.present? && self.started.present?
+    "---"
   end
 end

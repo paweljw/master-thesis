@@ -30,7 +30,7 @@
         <td><%= s.state %></td>
         <td><%=l s.started.present? ? s.started : s.created_at %></td>
         <td><%=l(s.completed) if s.completed.present? %></td>
-        <td class="text-right"><%= (s.completed - s.started).round(4) if s.completed.present? && s.started.present? %></td>
+        <td class="text-right"><%= s.elapsed %></td>
         <td>
           <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
                       admin_solution_path(s),

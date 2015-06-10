@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150504164518) do
+ActiveRecord::Schema.define(version: 20150610171305) do
 
   create_table "nodes", force: :cascade do |t|
     t.string   "name"
@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(version: 20150504164518) do
     t.integer  "dim"
     t.integer  "full_size"
     t.datetime "started"
+    t.integer  "local_size"
   end
 
   create_table "tasks", force: :cascade do |t|
@@ -53,6 +54,8 @@ ActiveRecord::Schema.define(version: 20150504164518) do
     t.string   "backend"
     t.integer  "part_size"
     t.integer  "global_size"
+    t.integer  "local_size"
+    t.datetime "started_at"
   end
 
   add_index "tasks", ["node_id"], name: "index_tasks_on_node_id"

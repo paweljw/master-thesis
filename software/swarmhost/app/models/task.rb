@@ -19,4 +19,8 @@ class Task < ActiveRecord::Base
   def global_size
     self.wave.solution.dim
   end
+
+  def local_size
+    self.wave.solution.local_size
+  end
 end

@@ -17,12 +17,18 @@
 
   <div class="form-horizontal">
   <div class="form-group">
+  <%= f.label :name, :class => 'col-sm-2 control-label', multipart: true %>
+    <div class="col-sm-10">
+      <%= f.text_field :name, :class => 'form-control' %>
+    </div>
+  </div>
+
+  <div class="form-group">
     <%= f.label :mtx, :class => 'col-sm-2 control-label', multipart: true %>
     <div class="col-sm-10">
       <%= f.file_field :mtx, :class => 'form-control' %>
     </div>
   </div>
-
 
   <div class="form-group">
     <%= f.label :rhs, :class => 'col-sm-2 control-label', multipart: true %>
@@ -44,6 +50,14 @@
         <%= f.text_field :dim, :class => 'form-control' %>
       </div>
     </div>
+
+    <div class="form-group">
+    <%= f.label :local_size, :class => 'col-sm-2 control-label', multipart: true %>
+      <div class="col-sm-10">
+        <%= f.text_field :local_size, :class => 'form-control' %>
+      </div>
+    </div>
+
   </div>
   <div class="col-sm-10 col-sm-offset-2">
     <%= f.submit nil, :class => 'btn btn-primary' %>
