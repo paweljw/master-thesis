@@ -8,13 +8,12 @@ class TasksController < ApplicationController
     
     @collection.each do |t| 
       t.wave.solution.update(started: DateTime.now) if t.wave.solution.started.nil?
-      t.started_at = DateTime.now
     end
 
     respond_to do |format|
       format.json { render json: @collection }
     end
-    @collection.update_all(state: 2, node_id: @node.id)
+    @collection.update_all(state: 2, node_id: @node.id, started_at: DateTime.now)
   end
 
   def show

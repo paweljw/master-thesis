@@ -112,34 +112,40 @@ Podpis dyplomanta  . . . . . . . . . . . . . . .
 Ilość dostępnych zasobów - takich jak moc obliczeniowa, pamięć dyskowa i operacyjna oraz przepustowość łączy - stale się zwiększa. Dzięki temu ciągłemu wzrostowi możliwości problemy które wydawały się zbyt duże by dało się je rozwiązać w rozsądnym czasie stają się możliwe do rozwiązania. Naturalnym jest jednak, że kiedy nierozwiązalne problemy stają się banalne, pojawiają się nowe problemy - jeszcze bardziej złożone, wynikające z próby odpowiedzi na jeszcze bardziej ambitne pytania.
 
 
-Rozsądek nakazuje sądzić, iż wzrost wydajności pojedynczych urządzeń nie może trwać w nieskończoność. Prędzej czy później wzrost złożoności urządzeń zostanie zahamowany, choćby przez wzgląd na niemożność pomieszczenia większej ilości tranzystorów na pojedynczej płytce. 
+Rozsądek nakazuje sądzić, iż wzrost wydajności pojedynczych urządzeń nie może trwać w nieskończoność. Prędzej czy później wzrost złożoności urządzeń zostanie zahamowany, choćby przez wzgląd na niemożność pomieszczenia większej ilości tranzystorów na pojedynczej płytce. W przypadku CPU zahamowanie tego procesu nie daje się jeszcze zauważyć. W roku 2014 firma Intel wypuściła procesory Broadwell oparte o proces technologiczny 14nm \cite{intel14nm}. Na początku roku 2015 firma Taiwan Semiconductors zapowiedziała ambitne plany wprowadzenia na rynek procesorów w technologii 10nm w roku 2016 i 7nm w 2017 \cite{tsmc}.
 
-W przypadku CPU zahamowanie tego procesu nie daje się jeszcze zauważyć. W roku 2014 firma Intel wypuściła procesory Broadwell oparte o proces technologiczny 14nm \cite{intel14nm}. Na początku roku 2015 firma Taiwan Semiconductors zapowiedziała ambitne plany wprowadzenia na rynek procesorów w technologii 10nm w roku 2016 i 7nm w 2017 \cite{tsmc}.
+W przypadku GPU producenci mają jednak większy problem z miniaturyzacją elementów składowych swoich urządzeń. Wystarczy spojrzeć na to, jaką miniaturyzację planowała przeprowadzić NVIDIA. W 2009 roku na temat planów firmy w tej kwestii mówił na 46th Design Automation Conference William J Dally, wówczas szef działu naukowego w NVIDIA \cite{nvidia2009}. Jego ambitne projekcje przewidywały, iż do 2015 roku NVIDIA wprowadzi na rynek urządzenia wykonane w technologii 11nm, zawierające 5,000 mikrordzeni obliczeniowych i taktowane zegarami o częstotliwości 3 GHz. Specyfikacja urządzenia NVIDIA GeForce GTX TITAN X \cite{nvidia2015}, jednej z najnowszych i najwydajniejszych kart graficznych  wyprodukowanych przez firmę, dowodzi iż projekcje Dally'ego były mocno przesadzone: urządzenie wykonane jest w technologii 28nm, ma 3072 mikrordzenie i jest taktowane zegarem o częstotliwości 1000 MHz (1089 MHz w trybie Boost).
 
-W przypadku GPU producenci mają jednak większy problem z miniaturyzacją elementów składowych swoich urządzeń. Wystarczy spojrzeć na to, jaką miniaturyzację planowała przeprowadzić NVIDIA. W 2009 roku na temat planów firmy w tej kwestii mówił na 46th Design Automation Conference William J Dally, wówczas szef działu naukowego w NVIDIA \cite{nvidia2009}. Jego ambitne projekcje przewidywały, iż do 2015 roku NVidia wprowadzi na rynek urządzenia wykonane w technologii 11nm, zawierające 5,000 mikrordzeni obliczeniowych i taktowane zegarami o częstotliwości 3 GHz. Specyfikacja urządzenia NVIDIA GeForce GTX TITAN X \cite{nvidia2015}, jednej z najnowszych i najwydajniejszych kart graficznych  wyprodukowanych przez firmę, dowodzi iż projekcje Dally'ego były mocno przesadzone: urządzenie wykonane jest w technologii 28nm, ma 3072 mikrordzenie i jest taktowane zegarem o częstotliwości 1000 MHz (1089 MHz w trybie Boost).
+Alternatywą dla stworzenia urządzeń o większej wydajności jest wykorzystanie większej ilości urządzeń obliczeniowych w jednej maszynie. Jednakże części pozwalające na zamontowanie więcej niż jednego GPU w danej obudowie, takie jak płyty główne, wciąż jeszcze są urządzeniami specjalnego zastosowania a nie standardem. Im bardziej specyficzne jest zastosowanie konkretnego rodzaju sprzętu, tym jego cena staje się wyższa od typowych części. Dobrym przykładem jest tutaj płyta główna ASUS Rampage IV Black Edition, pozwalająca na zamontowanie aż 4 GPU; w trakcie pisania niniejszej pracy jej cena wynosi ponad 2000 złotych.
 
-Alternatywą dla stworzenia urządzeń o większej wydajności jest wykorzystanie większej ilości urządzeń obliczeniowych w jednej maszynie. Jednakże części pozwalające na zamontowanie więcej niż jednego GPU w danej obudowie, takie jak płyty główne, wciąż jeszcze są urządzeniami specjalnego zastosowania a nie standardem. Wraz z tym jak sprzęt jest specyficzny rośnie oczywiście cena. Dobrym przykładem jest tutaj płyta główna ASUS Rampage IV Black Edition, pozwalająca na zamontowanie aż 4 GPU; w trakcie pisania niniejszej pracy jej cena wynosi ponad 2000 złotych.
+Oczywistym rozwiązaniem w tej sytuacji wydaje się przetwarzanie rozproszone. Dzięki jego zastosowaniu można uniknąć problemu coraz wolniej zwiększającej się wydajności pojedynczych urządzeń, gdyż do rozwiązania problemu można wykorzystać więcej urządzeń o mniejszej jednostkowej wydajności. Dzięki połączeniu odrębnych fizycznie maszyn w abstrakcyjny ,,klaster'' nie ma konieczności umieszczania wszystkich posiadanych urządzeń obliczeniowych w jednej maszynie. Ta abstrakcja jest bardzo istotną cechą nowoczesnych platform do przetwarzania rozproszonego \cite{gridservices}. Z punktu widzenia użytkownika końcowego - tj. tego, kto wykonuje obliczenia na platformie przetwarzania rozproszonego - całość powinna funkcjonować jak jeden spójny superkomputer o bardzo wysokiej mocy obliczeniowej. Abstrakcja musi też utrzymywać się niezależnie od tego że maszyny będą dołączać i opuszczać platformę, mając efektywnie stosunkowo niski średni czas do awarii. Przyjmuje się też że maszyny obliczeniowe nie muszą nawet być w jednej lokalizacji, dzięki połączeniu ich za pośrednictwem sieci Internet. Warto zauważyć, iż przetwarzanie rozproszone towarzyszy idei Internetu od samego jej zarania: możliwość stworzenia ogólnokrajowej sieci przetwarzania danych była jednym z argumentów za budową sieci ARPANET \cite{arpanet}. Rodzi to jednak oczywiście cały szereg nowych problemów, związanych z efektywnym wykorzystaniem łącz maszyny z dostępem do internetu oraz z utrzymaniem funkcjonowania całej platformy kiedy poszczególne elementy ten dostęp stracą.
 
-Oczywistym rozwiązaniem w tej sytuacji wydaje się przetwarzanie rozproszone. Dzięki jego zastosowaniu można uniknąć problemu coraz wolniej zwiększającej się wydajności pojedynczych urządzeń, gdyż do rozwiązania problemu można wykorzystać więcej urządzeń o mniejszej jednostkowej wydajności. Dzięki połączeniu odrębnych fizycznie maszyn w abstrakcyjny ,,klaster'' nie ma konieczności umieszczania wszystkich posiadanych urządzeń obliczeniowych w jednej maszynie. Maszyny obliczeniowe nie muszą nawet być w jednej lokalizacji dzięki połączeniu ich za pośrednictwem sieci Internet. Warto zauważyć, iż przetwarzanie rozproszone towarzyszy idei Internetu od samego jej zarania: możliwość stworzenia ogólnokrajowej sieci przetwarzania danych była jednym z argumentów za budową sieci ARPANET \cite{arpanet}.
+Należy zdać sobie sprawę, iż podstawowym plusem przetwarzania rozproszonego jest możliwość zwiększania ilości urządzeń pracujących nad danym problemem (bądź zestawem problemów). W konsekwencji - zamiast wykorzystywać nieliczne urządzenia o bardzo wysokiej wydajności, i co za tym zazwyczaj idzie, cenie - można wykorzystać znacznie więcej urządzeń klasy konsumenckiej, tańszych i o mniejszej jednostkowej wydajności. Oczywistym kierunkiem jest też skupienie się na architekturach heterogenicznych. Kompozycje składające się z urządzeń różnego typu, takich jak CPU i GPU, nie tylko osiągają coraz wyższą wydajność (drugie miejsce na liście TOP500 z listopada 2014 \cite{top500} zajmuje heterogeniczny superkomputer Titan), ale też stają się coraz popularniejsze wśród konsumentów. W istocie większość typowych komputerów osobistych i biurowych to maszyny heterogeniczne; trudno patrzyć na to inaczej w sytuacji gdy niemal każda karta graficzna nadaje się również do celów obliczeniowych.
 
-Należy zdać sobie sprawę, iż podstawowa siła w przetwarzaniu rozproszonym jest możliwość zwiększania ilości urządzeń pracujących nad danym problemem (bądź zestawem problemów). W konsekwencji - zamiast wykorzystywać nieliczne urządzenia o bardzo wysokiej wydajności - i co za tym zazwyczaj idzie, cenie - można wykorzystać znacznie więcej urządzeń klasy konsumenckiej, tańszych i o mniejszej jednostkowej wydajności. 
+W przypadku komputerów osobistych szczególnie często występuje zjawisko ,,marnowania cykli''. Oprogramowanie wykorzystujące cykle procesora niespożytkowane przez użytkownika i system operacyjny zostało opisane już w 1982 roku przez Schocha i Huppa \cite{worm}. Autorzy ci opisywali oprogramowanie które rozprzestrzenia się autonomicznie w sieci komputerowej i wykorzystuje maszyny - szczególnie te specjalnego przeznaczenia, jak serwery systemów plików czy sekwencji rozruchowych - jako dostawców mocy obliczeniowej. Naturalnie, w czasach nieustannego zagrożenia różnego rodzaju złośliwym oprogramowaniem, system rozproszony który sam rozprzestrzenia się w sieciach komputerowych brzmi co najmniej źle. Ponadto trzydzieści lat temu Schoch i Hupp pisali tylko o wykorzystywaniu mocy obliczeniowej procesorów. Obecnie jednak - z punktu widzenia architektur heterogenicznych - to nie CPU jest najbardziej interesującym urządzeniem. W typowym komputerze biurowym karta graficzna jest zawsze zasilana. Nie dotyczy to jedynie architektur hybrydowych, takich jak NVidia Optimus \cite{optimus}, w których proste funkcje spełnia zintegrowana karta graficzna (często firmy Intel), a akcelerator graficzny NVidia pozostaje w uśpieniu dopóki nie zostanie uruchomiona wymagająca aplikacja. Jeżeli jednak akcelerator jest zasilany a użytkownik korzysta jedynie z przeglądarki internetowej lub pakietu biurowego, nie jest on w pełni wykorzystywany - i pojawiają się zmarnowane cykle. W sytuacji, w której efektywność energetyczna urządzeń zaczyna być coraz istotniejsza (czego dowodem może być powstawanie takich list jak GREEN500 \cite{green500}, klasyfikujących urządzenia według wskaźnika FLOP/wat), takie marnowanie cykli jest trudne do przyjęcia.
 
-Oczywistym kierunkiem jest też skupienie się na architekturach heterogenicznych. Kompozycje składające się z urządzeń różnego typu, takich jak CPU i GPU, nie tylko osiągają coraz wyższą wydajność (drugie miejsce na liście TOP500 z listopada 2014 \cite{top500} zajmuje heterogeniczny superkomputer Titan), ale też stają się coraz popularniejsze wśród konsumentów. W istocie większość typowych komputerów osobistych i biurowych to maszyny heterogeniczne; trudno patrzyć na to inaczej w sytuacji gdy niemal każda karta graficzna nadaje się również do celów obliczeniowych.
 
-W przypadku komputerów osobistych szczególnie często występuje zjawisko marnowania cykli. Z jednej strony karta graficzna jest zasilana. Z drugiej strony, wyświetlanie przeglądarki internetowej czy pakietu biurowego nie wykorzystuje pełni jej możliwości. W sytuacji gdzie efektywność energetyczna urządzeń zaczyna być coraz istotniejsza (czego dowodem może być powstawanie takich list jak GREEN500, klasyfikujących urządzenia według wskaźnika FLOP/wat), takie marnowanie cykli jest trudne do przyjęcia.
+\Huge{TUTAJ IDZIE CO ROBIĆ Z CYKLAMI. NIE, NIE Z MENSTRUACYJNYMI. WYJDŹ Z MENTALNEGO GIMNAZJUM.}
 
-Między innymi w tym należy zapewne dopatrywać się popularności platform przetwarzania rozproszonego przy użyciu komputerów wolontariuszy. Platformy takie szerzej omawiane są w następnych rozdziałach. Charakteryzuje je nastawienie na heterogeniczny sprzęt oraz odporność na dużą rotację hostów. Trudno przecenić ich funkcje: wykorzystują zmarnowany potencjał urządzeń klasy konsumenckiej i zarazem służą popularyzacji konkretnych projektów naukowych. 
+\normalsize 
 
-Jednakże nie do każdego rodzaju zastosowań takie platformy się nadają. Trudno wyobrazić sobie firmę z branży przemysłowej która prowadzi badania nad swoimi produktami w publicznie otwartym środowisku. Ze względu na tą otwartość publiczne projekty przetwarzania rozproszonego muszą rozwiązywać też takie problemy jak złośliwi użytkownicy próbujący ,,zatruć'' bazy danych. Ponadto by wykorzystać większość z takich platform należy utrzymywać własną infrastrukturę i stworzyć komplet oprogramowania działającego wewnątrz platformy, co oczywiście angażuje zasoby - tyleż ludzkie co finansowe.
 
-Na przeciwnym biegunie w stosunku do przetwarzania na komputerach wolontariuszy stoją architektury gridowe. Zazwyczaj jest to własność instytucji, takich jak duże firmy czy uczelnie. Instytucje te zapewniają zasoby niezbędne, by grid mógł funkcjonować, oraz konieczną obsługę. Wykorzystanie zasobów gridowych należących do instytucji pozwala pozbyć się wielu problemów które dotyczą platform opartych na wolontariacie (nie do pomyślenia jest na przykład sytuacja zatruwania wyników badań). Nie ma też konieczności utrzymywania infrastruktury. Nadal jednak pozostaje problem stworzenia oprogramowania działającego w ramach architektury gridowej. Nie rozwiązuje to również sytuacji w której instytucja chcąca prowadzić badania nie posiada własnej infrastruktury, a umieszczenie danych dotyczących badań na komputerach będących pod kontrolą innego podmiotu nie wchodzi w grę.
 
-W niniejszej pracy zostanie zaproponowane rozwiązanie pośrednie między tymi dwoma kierunkami. Z jednej strony stworzone w podobnym duchu co oprogramowanie do przetwarzania na zasobach wolontariuszy: odporne na rotację i awarie hostów, nie przyjmujące zbędnych założeń w stosunku do hostów, ich mocy obliczeniowej, położenia geograficznego czy dostępności w ciągu doby. Z drugiej strony jest to rozwiązanie nakierowane bardziej na rozwiązanie problemu przetwarzania dużych zadań w małych i średnich organizacjach, nie posiadających własnych architektur gridowych. Jego instalacja, utrzymanie i wykorzystanie mają być możliwie uproszczone, tak by nie było konieczne tworzenie własnego oprogramowania bądź korzystanie z usług specjalistów. Rozwiązanie ponadto ma się dobrze skalować, tak by wykorzystanie wszystkich dostępnych w danym momencie urządzeń obliczeniowych dawało realne przełożenie na czas uzyskania wyniku.
+Zapewne między innymi w tym należy dopatrywać się popularności platform przetwarzania rozproszonego przy użyciu komputerów wolontariuszy. Platformy takie są obecnie wykorzystywane w badaniach dotyczących fizyki wysokich energii, biologii molekularnej, astrofizyki, badaniach klimatu i innych dziedzin \cite{computational}. Dzięki wykorzystaniu zmarnowanego potencjału maszyn wolontariuszy (większość tego typu oprogramowania pracuje tylko kiedy maszyna-klient nie jest używana) osiągają one ogromne wydajności. Jeden z najlepiej znanych programów tego typu - SETI@home - w czerwcu 2015 miał średnią prędkość ponad 679 teraFLOP/s \cite{boincstats}.
+
+Platformy takie charakteryzuje nastawienie na heterogeniczny sprzęt oraz odporność na dużą rotację hostów. Zazwyczaj są stworzone tak, by być odporne na działania hostów kontrolowane przez złośliwych lub nieuczciwych użytkowników, które to hosty zwracają niepoprawne wyniki. Błędne wyniki mogą też zwracać komputery które uległy awarii. Zazwyczaj stosowanym rozwiązaniem tego problemu jest wielokrotne przetwarzanie tego samego zadania przez wiele maszyn niezależnie od siebie i konfrontowanie wyników \cite{boinc,computational}. By wykorzystać większość z takich platform należy utrzymywać własną infrastrukturę i stworzyć komplet oprogramowania działającego wewnątrz platformy, co oczywiście angażuje zasoby - tyleż ludzkie, co finansowe. Trudno również wyobrazić sobie wykorzystanie takiej otwartej architektury przez firmę prowadzącą badania nad własną technologią.
+
+Na przeciwnym biegunie w stosunku do przetwarzania na komputerach wolontariuszy stoją architektury gridowe. %%%%% CZY MOGĘ PISAĆ 'GRIDOWE'?
+Zazwyczaj jest to własność instytucji, takich jak duże firmy czy uczelnie. Instytucje te zapewniają zasoby niezbędne, by grid mógł funkcjonować, oraz konieczną obsługę. Wykorzystanie zasobów gridowych należących do instytucji pozwala pozbyć się wielu problemów które dotyczą platform opartych na wolontariacie (nie do pomyślenia jest na przykład sytuacja zatruwania wyników badań). Nie ma też konieczności utrzymywania infrastruktury. Nadal jednak pozostaje problem stworzenia oprogramowania działającego w ramach architektury gridowej. Nie rozwiązuje to również sytuacji w której instytucja chcąca prowadzić badania nie posiada własnej infrastruktury, a umieszczenie danych dotyczących badań na komputerach będących pod kontrolą innego podmiotu nie wchodzi w grę.
+
+W niniejszej pracy zostanie zaproponowane rozwiązanie pośrednie między tymi dwoma kierunkami. Z jednej strony stworzone w podobnym duchu co oprogramowanie do przetwarzania na zasobach wolontariuszy: odporne na rotację i awarie hostów, nie przyjmujące zbędnych założeń w stosunku do hostów, ich mocy obliczeniowej, położenia geograficznego czy dostępności w ciągu doby. Z drugiej strony jest to rozwiązanie nakierowane bardziej na rozwiązanie problemu przetwarzania dużych zadań w małych i średnich organizacjach, nie posiadających własnych architektur gridowych. Jego instalacja, utrzymanie i wykorzystanie mają być możliwie uproszczone, tak by nie było konieczne tworzenie własnego oprogramowania, bądź korzystanie z usług specjalistów. Rozwiązanie ponadto ma się dobrze skalować, tak by wykorzystanie wszystkich dostępnych w danym momencie urządzeń obliczeniowych dawało realne przełożenie na czas uzyskania wyniku.
 
 W dalszych sekcjach niniejszej pracy przeprowadzona zostanie analiza dostępnych rozwiązań, w tym ich mocnych oraz słabych stron z punktu widzenia rozpatrywanego przypadku. Zostaną również przedstawione założenia projektowe rozwiązania własnego, jego implementacja oraz wyniki przeprowadzonych na stworzonym oprogramowaniu badań wydajności.
 
 
 \section{PRZEGLĄD ISTNIEJĄCYCH ROZWIĄZAŃ}
+
+W niniejszej sekcji rozważone zostaną istniejące oraz historyczne rozwiązania dotyczące przetwarzania na komputerach wolontariuszy oraz tworzenia niewielkich, wewnątrzorganizacyjnych sieci przetwarzania rozproszonego. Wskazane zostaną ich najistotniejsze, charakterystyczne cechy oraz przyjęte założenia projektowe. Zaznaczone zostaną też mocne i słabe strony wybranych przez ich autorów rozwiązań,
 
 % 1996 - 1997
 \subsection{ENTROPIA}
@@ -180,7 +186,7 @@ Oryginalny projekt GIMPS, stworzony w 1996 przez George'a Woltmana, wykorzystywa
 
 Scott Kurowski - założyciel Entropia, Inc. - stworzył w oparciu o oprogramowanie tworzone w swojej firmie PrimeNet, co pozwoliło zautomatyzować wszystkie zadania dotyczące rozsyłania zadań i odbierania ich wyników. Umożliwiło to łatwiejsze zarządzanie siecią tysięcy wolontariuszy oraz bazą milionów zadań. Mimo zamknięcia Entropia, Inc., PrimeNet działa nadal; ostatnie odkrycie w ramach projektu nastąpiło 25 stycznia 2013, kiedy to zidentyfikowano 48 liczbę Mersenne'a \cite{gimps_48}.
 
-\subsection{SETI@HOME i BOINC}
+\subsection{SETI@HOME}
 
 SETI@home zostało oryginalnie stworzone w celu przetwarzania danych z projektu SERENDIP \cite{seti_serendip}. W ramach tego projektu zbierane były sygnały radiowe odbierane przez radioteleskop w Arecibo, w Puerto Rico. Następnie w tych danych wyszukiwane były charakterystyczne struktury, których pojawienie się mogło świadczyć o odebraniu sygnału radiowego powstałego sztucznie - potencjalnie pochodzącego od pozaziemskiej cywilizacji. Stąd pierwszy człon nazwy projektu - SETI, czyli Search For Extraterrestial Intelligence.
 
@@ -190,7 +196,7 @@ Projekt SETI@home został stworzony do rozwiązania problemu którego nie dało 
 
 \subsubsection{Obróbka danych wejściowych}
 
-Architektura projektu była stosunkowo skomplikowana, a jego utrzymanie wymagało serii skomplikowanych operacji. Przede wszystkim, kiedy projekt zaczynał pracę - w 1997 roku - nie istniała techniczna możliwość przesłania takiej ilości danych przez internet z Puerto Rico do USA. W związku z tym dane były przesyłane w formie taśm magnetyczych, przesyłką kurierską. 
+Architektura projektu była stosunkowo złożona, a jego utrzymanie wymagało serii skomplikowanych operacji. Przede wszystkim, kiedy projekt zaczynał pracę - w 1997 roku - nie istniała techniczna możliwość przesłania takiej ilości danych przez internet z Puerto Rico do USA. W związku z tym dane były przesyłane w formie taśm magnetyczych, przesyłką kurierską. 
 
 Na miejscu taśmy oczywiście należało zgrać przy użyciu odpowiednich urządzeń, oraz dodać do zapisanych na nich informacji metadane - takie jak punkt na niebie z którego zostały zebrane czy czas kiedy były nagrane. Był to czasochłonny, w dużej mierze ręczny proces wymagający odpowiedniej wiedzy technicznej od osób odpowiedzialnych za badania.
 
@@ -198,21 +204,117 @@ Na miejscu taśmy oczywiście należało zgrać przy użyciu odpowiednich urząd
 
 Dane z teleskopu opatrzone metadanymi były następnie dzielone na niewielkie paczki - o rozmiarze 250 kB. Tak mały rozmiar był konieczny po pierwsze dlatego, by czas pobierania na połączeniu modemowym był akceptowalny (według wyliczeń autorów projektu, na modemie o przepustowości 14400 baudów zajmowało to 2.3 minuty), a po drugie by czas przetwarzania zadania na komputerze klasy konsumenckiej był do zaakceptowania przez obie strony. Na typowych procesorach w 1997 roku było to zazwyczaj kilka dni. 
 
-Warto zauważyć, że ze względu na publiczną naturę projektu, dane do przetwarzania musiały być redundantne, to znaczy ten sam pakiet danych musiał być przetworzony przez dwie lub więcej niezależnych maszyn. Pozwalało to uniknąć przypadkowych przekłamań w wynikach (powstałych na przykład w skutek niepoprawnego działania komputera wolontariusza) lub celowego zatruwania danych przez złośliwych użytkowników. Kopie danego zadania były więc przetwarzane aż do uzyskania kworum wyników zgadzających się ze sobą (z dopuszczalnymi pewnymi różnicami wynikającymi na przykład z różnych architektur procesorów w maszynach). 
+Warto zauważyć, że ze względu na publiczną naturę projektu, dane do przetwarzania musiały być redundantne, to znaczy ten sam pakiet danych musiał być przetworzony przez dwie lub więcej niezależnych maszyn \cite{seti}. Pozwalało to uniknąć przypadkowych przekłamań w wynikach (powstałych na przykład w skutek niepoprawnego działania komputera wolontariusza) lub celowego zatruwania danych przez złośliwych użytkowników. Kopie danego zadania były więc przetwarzane aż do uzyskania kworum wyników zgadzających się ze sobą (z dopuszczalnymi pewnymi różnicami wynikającymi na przykład z różnych architektur procesorów w maszynach). 
 
 Wynikiem przetwarzania danego zadania była krótka wiadomość zawierająca położenie i częstotliwości sygnałów-kandydatów w danym wycinku danych radiowych. Informacja taka była prezentowana użytkownikowi, oraz wysyłana z powrotem do serwera, gdzie oczekiwała na kworum. Ostatecznie rezultat był zapisywany w bazie danych do późniejszych dokładniejszych badań.
 
-\subsubsection{Podsumowanie}
+\subsubsection{Oprogramowanie klienckie}
 
 W przeciwieństwie do oprogramowania Entropia, nie został wykorzystany żaden rodzaj wirtualizacji ani zabezpieczania systemu operacyjnego klienta przed działaniami klienta SETI@home. Jest to zrozumiałe - ostatecznie odpowiedzialni za jego stworzenie byli też odpowiedzialni za jego dystrybucję. Można zatem uznać, że mieli kontrolę nad jego funkcjonowaniem i mogli zapewnić wolontariuszy o tym, iż jego uruchomienie jest bezpieczne.
 
 Warto zauważyć, że dla wolontariusza wykorzystanie klienta było maksymalnie uproszczone. Wystarczyło, że pobierze on pakiet oprogramowania odpowiedni dla jego systemu operacyjnego i go uruchomi. SETI@home automatycznie wykrywało momenty kiedy użytkownik nie korzystał z komputera i uruchamiało swoje przetwarzanie; wolontariusz więc nie miał ani potrzeby, ani możliwości ingerencji w jego działanie. Z drugiej strony, wytworzenie zadań oraz zarządzanie serwerową częścią projektu było trudnym zadaniem, wymagającym głębokiej technicznej wiedzy. Równie trudna była interpretacja wyników pochodzących ze zautomatyzowanego oprogramowania.
 
-\subsubsection{BOINC}
+\subsubsection{Podsumowanie}
+
+W krótkim czasie SETI@home zgromadziło wokół siebie wielu wolontariuszy; w 2002 roku były to już miliony komputerów \cite{seti}. Niewątpliwie miało to związek z łatwością zainstalowania oprogramowania klienckiego, a dodatkowym czynnikiem był coraz powszechniejszy dostęp do internetu. W pracy \cite{computational} Anderson - jeden z autorów SETI@home - i Fedak zauważają jednak również korelację dużych wzrostów ilości aktywnych hostów z wydarzeniami medialnymi.
+
+Z punktu widzenia proponowanego rozwiązania aspekt medialny nie jest interesujący, gdyż sieci tworzone przy jego pomocy z założenia nie mają służyć do publicznych badań. Istotną kwestią jest jednak łatwość instalacji oprogramowania. Sprawia to, że użytkownik każdej indywidualnej maszyny może wyposażyć ją w odpowiednie oprogramowanie samodzielnie, bez dodatkowego przeszkolenia. W ten sposób we wdrożenie rozwiązania nie jest angażowana dodatkowa osoba (np. administrator systemu).
+
+Projekt został przeniesiony na platformę BOINC.
+
+\subsection{BOINC}
+
+BOINC to spadkobierca SETI@home, stworzony przez jednego z jego autorów - Davida Andersona. SETI@home udowodniło iż w komputerach wolontariuszy drzemią ogromne zasoby. W pracy \cite{boinc} Anderson odnotowuje iż mimo tego ogromu pojawiło się stosunkowo niewiele projektów które mogły by je wykorzystać.
+
+Z tego spostrzeżenia narodził się BOINC. W założeniu miała to być otwarta, rozszerzalna platforma, stanowiąca swoiste środowisko pośrednie do tworzenia projektów rozproszonych. Oprogramowanie to jest skierowane głównie do środowisk naukowych, stanowiąc uogólnienie rozwiązania problemu który został rozwiązany przez zespół SETI@home. 
+
+Mianowicie BOINC skierowany jest do zespołów naukowych, które potrzebują dużej mocy obliczeniowej i są w stanie wyrazić swoją aplikację jako zautomatyzowane narzędzie, wykonujące wielokrotnie te same operacje na różnych zestawach danych. Zwalnia zespół naukowy z konieczności zagłębiania się w zagadnienia przetwarzania rozproszonego, choć nie ze zbudowania środowiska serwerowego w którym BOINC może pracować. Środowisko takie jest zresztą stosunkowo nieskomplikowane i składa się z typowych technologii sieciowych o otwartym źródle.
+
+\subsubsection{Narzędzia społecznościowe w BOINC}
+
+BOINC dostarcza też szereg narzędzi które mają za zadanie ułatwić przyciągnięcie wolontariuszy do projektu. Najistotniejszymi z nich jest system przypisywania użytkownikom punktów w zamian za wykorzystane przez aplikacje BOINC zasoby. Następnie na podstawie tych punktów tworzone są rankingi indywidualnych maszyn, użytkowników, czy też krajów. Wprowadza to do projektów element współzawodnictwa, który może napędzać przypływ nowych uczestników do projektu, oraz zwiększenie poświęcanego projektowi udziału w zasobach wśród już istniejących. Za pośrednictwem stron internetowych projektu użytkownicy mogą przeglądać swoje profile, formować zespoły czy wymieniać się wiadomościami na forach. Można więc powiedzieć, że BOINC jako standard wprowadza swoisty element społecznościowy do projektów o niego opartych.
+
+\subsubsection{Współdzielenie zasobów między projektami}
+
+W przypadku BOINC najważniejszym zadaniem było zapewnienie możliwości koegzystencji wielu projektów w obrębie jednej luźno zdefiniowanej platformy. W tym celu klient BOINC - następca klienta SETI@home - pozwala jednemu użytkownikowi na przyłączenie się do więcej niż jednego projektu i określenie jaki udział we wszystkich zasobach poświęconych na przetwarzanie przez BOINC ma otrzymać każdy z nich. Te preferencje uwzględniane są również przy zgłaszaniu się do serwerów projektów z informacją o tym, że klient jest aktywny i potencjalnie - żądaniem większej ilości zadań. W stosunku do klienta SETI@home użytkownicy BOINC otrzymują zresztą znacznie więcej możliwości wyboru kiedy BOINC ma korzystać z ich maszyny, w tym na przykład określenie w jakich godzinach może pracować, czy też jak może rozporządzać przydzieloną mu przestrzenią dyskową.
+
+\subsubsection{Wieloplatformowość}
+
+W przetwarzaniu na maszynach wolontariuszy naturalnym jest, iż zgłaszające się maszyny mogą pracować pod kontrolą różnych systemów operacyjnych. Mogą też korzystać z różnych procesorów w różnych architekturach. Już w SETI@home wprowadzono częściowe rozwiązanie tego problemu. Zestaw plików binarnych skompilowanych dla większości popularnych platform był umieszczony na serwerze. Kiedy klient zgłaszał zapotrzebowanie na pliki wykonywalne projektu, raportował rodzaj procesora, architekturę i system operacyjny. Według tego serwer projektu dobierał odpowiednie pliki binarne.
+
+W BOINC wprowadzono ponadto mechanizm platformy anonimowej. Został on stworzony dla użytkowników wykorzystujących niepopularne procesory, takich którzy ze względów bezpieczeństwa nie mogą uruchomić oprogramowania które nie zostało skompilowane bezpośrednio na ich maszynach, oraz takich którzy chcą ręcznie zoptymalizować parametry kompilacji dla danej maszyny. Użytkownik który sam skompilował pliki wykonywalne projektu musi dodatkowo opisać je w konfiguracyjnym pliku XML. Jest to oczywiście dodatkowa czynność dla użytkownika i dodatkowe założenie co do jego wiedzy. Warto jednakże zwrócić uwagę iż użytkownik który wie jak skompilować oprogramowanie na swoją platformę zazwyczaj daje sobie również radę z plikami XML.
+
+\subsubsection{Podsumowanie}
+
+BOINC jest krokiem we właściwym kierunku. Przede wszystkim zdejmuje większość pracy w zakresie rozproszenia obliczeń z oryginalnego zespołu naukowego. Ułatwia też znalezienie wolontariuszy dla projektu oraz utrzymanie ich zainteresowania. Wzajemna promocja projektów opartych na BOINC i samej platformy leży w interesie wszystkich ośrodków ją wykorzystujących, a jak zauważyli Anderson i Fedak w \cite{computational}, promocja zwiększa ilość dostępnych hostów w sposób niebagatelny, nawet jeśli chwilowy.
+
+Jednakże nawet z użyciem BOINC odpowiedzialność za stworzenie oprogramowania do konkretnych zastosowań spoczywa na naukowcach tworzących projekt. Ze względu na jego otwartość dotyczą go też problemy z redundantnymi obliczeniami oraz z upublicznianiem dużych ilości danych dotyczących projektów.
+
+Platforma nadal jest aktywna. Pojawiają się na niej nowe projekty.
 
 \subsection{XTREMWEB}
 
+XtremWeb był projektem który odznaczał się na tle tych wskazanych powyżej. Miał być bowiem platformą nie tylko do konkretnego zastosowania, ale również do generalnych eksperymentów w zakresie globalnego przetwarzania \cite{xtremweb}. Projekt skupiał się na odporności na błędy, bezpieczeństwie uczestników oraz prostocie wdrożenia i użycia. Istotna była też heterogeniczność, rozumiana jako wiele różnych rodzajów sprzętu, systemów operacyjnych i podstawowego oprogramowania.
+
+\subsubsection{Tryby działania}
+
+Członkowie XtremWeb dzielili się na dwa rodzaje. 
+
+Pierwszym z tych rodzajów był wolontariusz. Wolontariusz łączył się z serwerem administracyjnym, pobierał oprogramowanie kliencie i instalował je na pojedynczej maszynie. Oprogramowanie wykorzystywało zasoby maszyny kiedy użytkownik jej nie używał.
+
+Do XtremWeb można było też dołączyć jako współpracownik. Współpracownicy pobierali cały zestaw oprogramowania XtremWeb. W oparciu o niego mogli stworzyć swoją własną, opartą o architekturę XtremWeb grupę obliczeniową i uruchamiać w jej obrębie swoją aplikację. XtremWeb prosiło jednak współpracowników o zgodę na podzielenie się mocą obliczeniową ich wolontariuszy: kiedy projekt współpracownika nie mógł dostarczyć więcej pracy zebranym przez niego wolontariuszom, otrzymywali oni zadania pochodzące bezpośrednio z głównej instancji XtremWeb.
+
+Istniał też osobny tryb działania: intranetowy XtremWeb, dedykowany dla przedsiębiorstw. Przy pomocy tego oprogramowania można było stworzyć wewnątrzorganizacyjną sieć do przetwarzania rozproszonego, która nie miała żadnych połączeń ze światem zewnętrznym.
+
+\subsubsection{Bezpieczeństwo aplikacji obliczeniowych}
+
+W XtremWeb aplikacje uruchamiane na komputerach klienckich - mimo tego że mogły pochodzić ze źródeł trzecich - nie przechodziły żadnego formalnego procesu weryfikacji. Była na nich przeprowadzana jedynie pobieżna, ręczna analiza. Oczywiście nie mogła ona wyczerpywać wszystkich przypadków użycia oprogramowania na wszystkich możliwych platformach. Niewiele więc mówiła właścicielom projektu o stabilności wykorzystywanego oprogramowania.
+
+\subsubsection{Komunikacja między klientem a serwerem}
+
+W XtremWeb, podobnie jak w pozostałych rozważanych aplikacjach, wszelką komunikację rozpoczyna klient. Dzięki temu oprogramowanie może funkcjonować w sieciach za NAT lub na filtrowanych połączeniach. Co ciekawe, autorzy zrezygnowali z wykorzystania protokołu HTTP, uznając go za powolny. Z drugiej strony nie narzucili żadnego konkretnego protokołu komunikacji między klientem a serwerem. W oryginalnej pracy dotyczącej XtremWeb wspomniane są za równo połączenia ogólne - po gniazdach sieciowych z wykorzystaniem TCP lub UDP - jak i protokoły wyższego poziomu, jak CORBA czy RMI.
+
+Protokół komunikacji wyspecyfikowany w pracy Fedaka i współpracowników opisuje kilka podstawowych żądań które klient może wystosować w stosunku do serwera. Są to:
+
+\begin{itemize}
+\item żądanie \textit{hostRegister} które rejestruje klienta na serwerze. Klient otrzymuje w odpowiedzi tzw. wektor komunikacji, czyli zbiór serwerów które może odpytywać o zadania.
+\item żądanie \textit{workRequest} które stanowi prośbę o przydzielenie zadań. Klient identyfikuje swój system operacyjny i architekturę; na podstawie tych danych serwer wybiera zadanie i wysyła je do klienta.
+\item żądanie \textit{workAlive} które jest swoistym sygnałem bicia serca; informuje ono serwer że klient pracuje.
+\item żądanie \textit{workResult} które sygnalizuje zakończenie pracy. Towarzyszy mu wysłanie wyników na serwer.
+\end{itemize}
+
+\subsubsection{Implementacja}
+
+Oprogramowanie klienckie we wcześniej opisanych projektach było napisane w językach kompilowanych. Dostarczane było tylko dla jednej platformy (Entropia) lub jako prekompilowane pakiety dla typowych platform (SETI@home i BOINC). Autorzy XtremWeb zdecydowali się na wykorzystanie do napisania klienta języka Java. Ponadto odwołania do niektórych konkretnych funkcji systemu operacyjnego realizował kod w C, zintegrowany z Javą za pośrednictwem Java Native Interface. W aplikacji która ma osiągać wysoką wydajność, wybór języka który uruchamiany jest za pośrednictwem wirtualnej maszyny może zastanawiać. Autorzy XtremWeb racjonalizują swój wybór kwestiami przenośności pomiędzy systemami operacyjnymi.
+
+Aplikacja w języku Java spełnia jedynie funkcję zarządczą. Sprawdza czy użytkownik jest obecny przy maszynie oraz odpowiada za komunikację z serwerem. Kiedy maszyna staje się dostępna (czyli dostatecznie długo nie wykryto aktywności użytkownika), uruchamiane są nowe wątki. Pierwszym z nich jest wątek monitorujący; jeżeli wykryje on obciążenie maszyny pochodzące z innych źródeł niż obliczenia XtremWeb, zakończy działanie tychże. Drugi to wątek obliczeniowy, który uruchamia natywny kod obliczeniowy. Ostatni to wątek obserwacji czasu życia, wykonujący żądania \textit{workAlive} do serwera.
+
+Serwer składa się z kilku baz danych i modułów. Przede wszystkim przechowuje informacje o wszystkich aplikacjach. Oprócz tego przechowuje dane dotyczące zadań, w tym na jakich maszynach zostały przetworzone i w jakim czasie. Ponadto odpowiada za wybieranie zadań - dbając o to by każda z aplikacji otrzymała określony udział w dostępie do hostów w projekcie - oraz ich rozmieszczanie na komunikujących się z nim klientach.
+
+Wdrożenie w sieci komputerowej oprogramowania XtremWeb wspierane jest przez zestaw skryptów dostarczanych wraz z oprogramowaniem. W szczególności jest to narzędzie xwLan, które pozwala administratorom sieci oprogramowanie klienckie w całej sieci jednocześnie.
+
+\subsubsection{Podsumowanie}
+
+W architekturze XtremWeb istniała możliwość tworzenia wewnątrzorganizacyjnych sieci służących do obliczeń rozproszonych, co z punktu widzenia niniejszej pracy było jedną z jego najważniejszych cech. Nie rozwiązywał on jednak konieczności tworzenia własnych aplikacji obliczeniowych. Ponadto wymuszał na autorach oprogramowania dostosowanie się do jego standardu komunikacyjnego.
+
+Na moment pisania niniejszej pracy projekt wydaje się być zarzucony. Mimo tego że strona internetowa dotycząca projektu nadal jest aktywna, najnowszą opublikowaną wersją oprogramowania klienckiego jest 2.0.0, wydana w maju 2008 roku \cite{xtremwebforge}.
+
+\subsection{PORÓWNANIE KLUCZOWYCH ELEMENTÓW WYBRANYCH ROZWIĄZAŃ}
+
+Między zaprezentowanymi projektami można wskazać szereg wspólnych cech i założeń.
+
+\noindent \textbf{Architektura}. Jedną z najbardziej rzucających się w oczy jest architektura klient-serwer, wspólna dla wszystkich bez wyjątku projektów. Autorzy systemów BOINC i XtremWeb sugerują \cite{boinc,xtremweb}, iż jednym z przyszłych kierunków ich badań może być wprowadzenie elementów sieci peer-to-peer (klient-klient) do swoich architektur, lecz w żadnym z projektów to rozwiązanie nie zostało jeszcze wdrożone. \\
+\textbf{Dystrybucja oprogramowania obliczeniowego}. Wspólna dla prezentowanych projektów jest również metoda dystrybucji aplikacji obliczeniowych. Skompilowane dla różnych platform wersje aplikacji składowane są na serwerze i wysyłane klientowi który zgłasza na nie zapotrzebowanie. Jedynie BOINC dopuszcza wykorzystanie tzw. platformy anonimowej, gdzie w ramach projektu uruchamiany jest plik binarny dostarczony przez klienta.\\
+\textbf{Ogólny zarys klienta}. Wyznaczyć można szereg cech oprogramowania klienckiego wspólnych dla rozważanych projektów. Klient musi być przede wszystkim automatyczny: konieczność ingerencji użytkownika powinna być ograniczona do minimum. Wszystkie prezentowane klienty są też skonstruowane tak, by respektować użytkownika - zawieszają swoje działanie kiedy wykryją aktywność użytkownika.\\
+\textbf{,,Niestabilność'' zasobów}. Kondo i współpracownicy wskazują \cite{evaluating} dużą rotację dostępnych maszyn jako cechę charakterystyczną architektur rozproszonych opartych o komputery osobiste. W istocie, w \cite{computational} Anderson i Fedak odnotowują iż średni czas życia danego hosta (od pierwszego do ostatniego kontaktu) wynosi około 91 dni. Ponadto na uruchomionych maszynach klienckich, według ich danych, klient BOINC był uruchomiony tylko przez około 81\% czasu, z czego aktywny (tj. wykonujący obliczenia) przez średnio 84\%. Nietrudno wyliczyć z tego, iż przeciętny host biorący udział w projektach opartych o BOINC jest obliczeniowo aktywny przez nieco ponad 68\% doby. Co interesujące, odporność na rotację hostów to cecha charakteryzująca nie tylko projekty przetwarzania na zasobach wolontariuszy, takie jak BOINC, ale też Entropię czy XtremWeb, których można używać jako platformy wewnątrzorganizacyjne.
+
+Między projektami nietrudno znaleźć też głęboko położone różnice. Niemal w ogóle nie pokrywa się podejście do zaufania tyleż oprogramowaniu, co użytkownikom.\\
+\textbf{Zaufanie oprogramowaniu}. W przypadku projektu SETI@home oraz platformy BOINC, oprogramowanie obliczeniowe jest rozprowadzane jako zaufane. Źródłem zaufania jest autorytet autorów i popularność danego projektu. W XtremWeb istnieje tylko ręczny, nieformalny proces weryfikacji zgłoszonych aplikacji klienckich; autorzy przyznają \cite{xtremweb} iż może on być niewystarczający. W projekcie Entropia z kolei zaufanie do oprogramowania jest ograniczone. Jednakże dzięki wirtualizacji klienta zakres szkód który może ono wyrządzić w systemie jest ograniczony. \\
+\textbf{Zaufanie użytkownikowi}. SETI@home i BOINC proponują model redundantnych obliczeń, w którym każde zadanie jest przetwarzane przez co najmniej dwa hosty, do uzyskania zbieżności wyników. Jest to model ograniczonego zaufania użytkownikowi. Z kolei XtremWeb oraz Entropia w wersjach zaprezentowanych w pracach \cite{entropia} oraz \cite{xtremweb} nie wprowadzają dodatkowej weryfikacji wyników uzyskanych od klientów, ufając im w ten sposób całkowicie.
+
 \section{PROJEKT ROZWIĄZANIA WŁASNEGO}
+
+\subsection{PODSTAWOWE ZAŁOŻENIA}
 
 \subsection{PODZIAŁ PROBLEMU NA PODPROBLEMY}
 
@@ -291,9 +393,19 @@ Skalowalność rozwiązania w aspekcie zmiennej ilości urządzeń obliczeniowyc
 
 \bibitem{seti} Anderson, D.P., Cobb, J., Korpela, E., Lebofsky, M., Werthimer, D.: SETI@home: An Experiment in Public-Resource Computing. \textit{Communications of the ACM}. 2002 Vol. 45, No. 11, pp. 56-61
 
+\bibitem{computational} Anderson, D.P., Fedak, G.: The Computational and Storage Potential of Volunteer Computing \textit{Cluster Computing and the Grid. Sixth IEEE International Symposium on}. 2006 Vol. 1, pp. 73-80
+
 \bibitem{entropia} Chien, A., Calder, B., Elbert, S., Bhatia, K.: Entropia: architecture and performance of an enterprise desktop grid system. \textit{Journal of Parallel and Distributed Computing}. 2003 Vol. 63, pp. 597–610
 
+\bibitem{xtremweb} Fedak, G., Germain, C., Neri, V., Cappello, F.: \textit{Cluster Computing and the Grid. Proceedings. First IEEE/ACM International Symposium on}. 2001 pp. 582-587
+
+\bibitem{gridservices} Foster, I., Kesselman, C., Nick, J. M., Tuecke, S.:. Grid services for distributed system integration. \textit{Computer}. 2002 Vol. 35, No. 6, pp. 37-46
+
 \bibitem{arpanet} Heart, F., McKenzie, A., McQuillian, J., Walden, D.: ARPANET completion report, Technical Report 4799. \textit{BBN}. 1978
+
+\bibitem{evaluating} Kondo, D., Taufer, M., Brooks, C., Casanova, H., Chien, A.: Characterizing and evaluating desktop grids: an empirical study. \textit{Parallel and Distributed Processing Symposium. Proceedings. 18th International}. 2004
+
+\bibitem{worm} Shoch, J.F., Hupp, J.A.: The "Worm" Programs - Early Experience with a Distributed Computation. \textit{Communications of the ACM}. 1982 Vol. 25, No. 3, pp. 172-180  
 
 \bibitem{seti_serendip} Sullivan, III, W. T., Werthimer, D., Bowyer, S., Cobb, J., Gedye, D., Anderson, D.: A new major SETI project based on Project Serendip data and 100,000 personal computers. \textit{Astronomical and Biochemical Origins and the Search for Life in the Universe, IAU Colloquium 161}. 1997 p. 729  
 
@@ -303,6 +415,8 @@ Skalowalność rozwiązania w aspekcie zmiennej ilości urządzeń obliczeniowyc
 
 \bibitem{gimps} GIMPS History - PrimeNet [online].\textit{ Great Internet Mersenne Prime Search}. [dostęp: 2015-06-01], Dostępny w Internecie: <http://www.mersenne.org/various/history.php>
 
+\bibitem{green500} The Green Lists [online]. \textit{The Green500}. [dostęp: 2015-06-14], Dostępny w Internecie, <http://www.green500.org/greenlists>
+
 \bibitem{intel14nm} Intel launches first Broadwell processors [online]. \textit{CPU World}. [dostęp: 2015-06-01], Dostępny w Internecie: <http://www.cpu-world.com/news\_2014/2014090701\_Intel\_launches\_first\_Broadwell\_processors.html>
 
 \bibitem{top500} November 2014 [online]. \textit{TOP500 Supercomputer Sites}. [dostęp: 2015-06-01], Dostępny w Internecie: <http://www.top500.org/lists/2014/11/>
@@ -311,7 +425,13 @@ Skalowalność rozwiązania w aspekcie zmiennej ilości urządzeń obliczeniowyc
 
 \bibitem{nvidia2009} Nvidia SVP Predicts Rapid GPU Performance Growth [online]. \textit{Nikkei Technology}. [dostep: 2015-06-01], Dostępny w Internecie: <http://techon.nikkeibp.co.jp/english/NEWS\_EN/20090731/173702/>
 
+\bibitem{optimus} Optimus Technology [online]. \textit{NVIDIA}. [dostęp: 2015-06-14], Dostępny w Internecie: <http://www.nvidia.com/object/optimus\_technology.html>
+
+\bibitem{boincstats} SETI@Home Project [online]. \textit{BOINC Stats}. [dostęp: 2015-06-13], Dostępny w Internecie: <http://boincstats.com/en/stats/0/project/detail>
+
 \bibitem{tsmc} TSMC Promises 10nm Production In 2016, 7nm in 2017 [online]. \textit{WCCF Tech}. [dostęp: 2015-06-01], Dostępny w Internecie: <http://wccftech.com/tsmc-promises-10nm-production-2016-7nm-2017/>
+
+\bibitem{xtremwebforge} InriaForge: XtremWeb: Project Home [online]. \textit{InriaForge}. [dostęp: 2015-06-13], Dostępny w Internecie: <http://gforge.inria.fr/projects/xtremweb/>
 
 \end{thebibliography}
 \endgroup
