@@ -125,15 +125,9 @@ Należy zdać sobie sprawę, iż podstawowym plusem przetwarzania rozproszonego 
 W przypadku komputerów osobistych szczególnie często występuje zjawisko ,,marnowania cykli''. Oprogramowanie wykorzystujące cykle procesora niespożytkowane przez użytkownika i system operacyjny zostało opisane już w 1982 roku przez Schocha i Huppa \cite{worm}. Autorzy ci opisywali oprogramowanie które rozprzestrzenia się autonomicznie w sieci komputerowej i wykorzystuje maszyny - szczególnie te specjalnego przeznaczenia, jak serwery systemów plików czy sekwencji rozruchowych - jako dostawców mocy obliczeniowej. Naturalnie, w czasach nieustannego zagrożenia różnego rodzaju złośliwym oprogramowaniem, system rozproszony który sam rozprzestrzenia się w sieciach komputerowych brzmi co najmniej źle. Ponadto trzydzieści lat temu Schoch i Hupp pisali tylko o wykorzystywaniu mocy obliczeniowej procesorów. Obecnie jednak - z punktu widzenia architektur heterogenicznych - to nie CPU jest najbardziej interesującym urządzeniem. W typowym komputerze biurowym karta graficzna jest zawsze zasilana. Nie dotyczy to jedynie architektur hybrydowych, takich jak NVidia Optimus \cite{optimus}, w których proste funkcje spełnia zintegrowana karta graficzna (często firmy Intel), a akcelerator graficzny NVidia pozostaje w uśpieniu dopóki nie zostanie uruchomiona wymagająca aplikacja. Jeżeli jednak akcelerator jest zasilany a użytkownik korzysta jedynie z przeglądarki internetowej lub pakietu biurowego, nie jest on w pełni wykorzystywany - i pojawiają się zmarnowane cykle. W sytuacji, w której efektywność energetyczna urządzeń zaczyna być coraz istotniejsza (czego dowodem może być powstawanie takich list jak GREEN500 \cite{green500}, klasyfikujących urządzenia według wskaźnika FLOP/wat), takie marnowanie cykli jest trudne do przyjęcia.
 
 
-\Huge{TUTAJ IDZIE CO ROBIĆ Z CYKLAMI. NIE, NIE Z MENSTRUACYJNYMI. WYJDŹ Z MENTALNEGO GIMNAZJUM.}
+Takie zmarnowane cykle można wykorzystać - choćby do obliczeń naukowych czy inżynierskich. Na takiej zasadzie działają platformy przetwarzania rozproszonego na komputerach wolontariuszy. Platformy takie są obecnie wykorzystywane w badaniach dotyczących fizyki wysokich energii, biologii molekularnej, astrofizyki, badaniach klimatu i innych dziedzin \cite{computational}. Większość tego typu oprogramowania pracuje tylko kiedy maszyna-klient nie jest używana, a mimo to platformy te osiągają ogromne wydajności. Jeden z pierwszych i zarazem najlepiej znanych programów tego typu - SETI@home - w czerwcu 2015 miał średnią prędkość ponad 679 teraFLOP/s \cite{boincstats}.
 
-\normalsize 
-
-
-
-Zapewne między innymi w tym należy dopatrywać się popularności platform przetwarzania rozproszonego przy użyciu komputerów wolontariuszy. Platformy takie są obecnie wykorzystywane w badaniach dotyczących fizyki wysokich energii, biologii molekularnej, astrofizyki, badaniach klimatu i innych dziedzin \cite{computational}. Dzięki wykorzystaniu zmarnowanego potencjału maszyn wolontariuszy (większość tego typu oprogramowania pracuje tylko kiedy maszyna-klient nie jest używana) osiągają one ogromne wydajności. Jeden z najlepiej znanych programów tego typu - SETI@home - w czerwcu 2015 miał średnią prędkość ponad 679 teraFLOP/s \cite{boincstats}.
-
-Platformy takie charakteryzuje nastawienie na heterogeniczny sprzęt oraz odporność na dużą rotację hostów. Zazwyczaj są stworzone tak, by być odporne na działania hostów kontrolowane przez złośliwych lub nieuczciwych użytkowników, które to hosty zwracają niepoprawne wyniki. Błędne wyniki mogą też zwracać komputery które uległy awarii. Zazwyczaj stosowanym rozwiązaniem tego problemu jest wielokrotne przetwarzanie tego samego zadania przez wiele maszyn niezależnie od siebie i konfrontowanie wyników \cite{boinc,computational}. By wykorzystać większość z takich platform należy utrzymywać własną infrastrukturę i stworzyć komplet oprogramowania działającego wewnątrz platformy, co oczywiście angażuje zasoby - tyleż ludzkie, co finansowe. Trudno również wyobrazić sobie wykorzystanie takiej otwartej architektury przez firmę prowadzącą badania nad własną technologią.
+Platformy przetwarzania na podarowanych zasobach charakteryzuje nastawienie na heterogeniczny sprzęt oraz odporność na dużą rotację hostów. Zazwyczaj są stworzone tak, by być odporne na działania hostów kontrolowane przez złośliwych lub nieuczciwych użytkowników, które to hosty zwracają niepoprawne wyniki. Błędne wyniki mogą też zwracać komputery które uległy awarii. Zazwyczaj stosowanym rozwiązaniem tego problemu jest wielokrotne przetwarzanie tego samego zadania przez wiele maszyn niezależnie od siebie i konfrontowanie wyników \cite{boinc,computational}. By wykorzystać większość z takich platform należy utrzymywać własną infrastrukturę i stworzyć komplet oprogramowania działającego wewnątrz platformy, co oczywiście angażuje zasoby - tyleż ludzkie, co finansowe. Trudno również wyobrazić sobie wykorzystanie takiej otwartej architektury przez firmę prowadzącą badania nad własną technologią.
 
 Na przeciwnym biegunie w stosunku do przetwarzania na komputerach wolontariuszy stoją architektury gridowe. %%%%% CZY MOGĘ PISAĆ 'GRIDOWE'?
 Zazwyczaj jest to własność instytucji, takich jak duże firmy czy uczelnie. Instytucje te zapewniają zasoby niezbędne, by grid mógł funkcjonować, oraz konieczną obsługę. Wykorzystanie zasobów gridowych należących do instytucji pozwala pozbyć się wielu problemów które dotyczą platform opartych na wolontariacie (nie do pomyślenia jest na przykład sytuacja zatruwania wyników badań). Nie ma też konieczności utrzymywania infrastruktury. Nadal jednak pozostaje problem stworzenia oprogramowania działającego w ramach architektury gridowej. Nie rozwiązuje to również sytuacji w której instytucja chcąca prowadzić badania nie posiada własnej infrastruktury, a umieszczenie danych dotyczących badań na komputerach będących pod kontrolą innego podmiotu nie wchodzi w grę.
@@ -244,6 +238,10 @@ W przetwarzaniu na maszynach wolontariuszy naturalnym jest, iż zgłaszające si
 
 W BOINC wprowadzono ponadto mechanizm platformy anonimowej. Został on stworzony dla użytkowników wykorzystujących niepopularne procesory, takich którzy ze względów bezpieczeństwa nie mogą uruchomić oprogramowania które nie zostało skompilowane bezpośrednio na ich maszynach, oraz takich którzy chcą ręcznie zoptymalizować parametry kompilacji dla danej maszyny. Użytkownik który sam skompilował pliki wykonywalne projektu musi dodatkowo opisać je w konfiguracyjnym pliku XML. Jest to oczywiście dodatkowa czynność dla użytkownika i dodatkowe założenie co do jego wiedzy. Warto jednakże zwrócić uwagę iż użytkownik który wie jak skompilować oprogramowanie na swoją platformę zazwyczaj daje sobie również radę z plikami XML.
 
+\subsubsection{Wykorzystanie GPU}
+
+Od pozostałych analizowanych projektów BOINC odróżnia się zdolnością do wykorzystania GPU. Od wersji 6 oprogramowania klient jest w stanie raportować obecność GPU wraz z jego typem (NVIDIA lub ATI/AMD) serwerom projektu \cite{boincgpu}. Jeżeli jest dostępne w projekcie oprogramowanie wykorzystujące GPU, klient pobierze je i będzie używał go do przetwarzania zadań. Podobnie jak w przypadku ogólnym (CPU) wymaga to stworzenia i udostępnienia przez właścicieli projektu aplikacji wykorzystujących możliwości dostępnych urządzeń.
+
 \subsubsection{Podsumowanie}
 
 BOINC jest krokiem we właściwym kierunku. Przede wszystkim zdejmuje większość pracy w zakresie rozproszenia obliczeń z oryginalnego zespołu naukowego. Ułatwia też znalezienie wolontariuszy dla projektu oraz utrzymanie ich zainteresowania. Wzajemna promocja projektów opartych na BOINC i samej platformy leży w interesie wszystkich ośrodków ją wykorzystujących, a jak zauważyli Anderson i Fedak w \cite{computational}, promocja zwiększa ilość dostępnych hostów w sposób niebagatelny, nawet jeśli chwilowy.
@@ -301,20 +299,61 @@ Na moment pisania niniejszej pracy projekt wydaje się być zarzucony. Mimo tego
 
 \subsection{PORÓWNANIE KLUCZOWYCH ELEMENTÓW WYBRANYCH ROZWIĄZAŃ}
 
-Między zaprezentowanymi projektami można wskazać szereg wspólnych cech i założeń.
+Między zaprezentowanymi projektami można wskazać szereg wspólnych cech i założeń, istnieją też jednak fundamentalne różnice.
 
-\noindent \textbf{Architektura}. Jedną z najbardziej rzucających się w oczy jest architektura klient-serwer, wspólna dla wszystkich bez wyjątku projektów. Autorzy systemów BOINC i XtremWeb sugerują \cite{boinc,xtremweb}, iż jednym z przyszłych kierunków ich badań może być wprowadzenie elementów sieci peer-to-peer (klient-klient) do swoich architektur, lecz w żadnym z projektów to rozwiązanie nie zostało jeszcze wdrożone. \\
-\textbf{Dystrybucja oprogramowania obliczeniowego}. Wspólna dla prezentowanych projektów jest również metoda dystrybucji aplikacji obliczeniowych. Skompilowane dla różnych platform wersje aplikacji składowane są na serwerze i wysyłane klientowi który zgłasza na nie zapotrzebowanie. Jedynie BOINC dopuszcza wykorzystanie tzw. platformy anonimowej, gdzie w ramach projektu uruchamiany jest plik binarny dostarczony przez klienta.\\
-\textbf{Ogólny zarys klienta}. Wyznaczyć można szereg cech oprogramowania klienckiego wspólnych dla rozważanych projektów. Klient musi być przede wszystkim automatyczny: konieczność ingerencji użytkownika powinna być ograniczona do minimum. Wszystkie prezentowane klienty są też skonstruowane tak, by respektować użytkownika - zawieszają swoje działanie kiedy wykryją aktywność użytkownika.\\
+\subsubsection{Cechy wspólne}
+
+\textbf{Architektura}. Jedną z najbardziej rzucających się w oczy jest architektura klient-serwer, wspólna dla wszystkich bez wyjątku projektów. Autorzy systemów BOINC i XtremWeb sugerują \cite{boinc,xtremweb}, iż jednym z przyszłych kierunków ich badań może być wprowadzenie elementów sieci peer-to-peer (klient-klient) do swoich architektur, lecz w żadnym z projektów to rozwiązanie nie zostało jeszcze wdrożone.
+
+\textbf{Dystrybucja oprogramowania obliczeniowego}. Wspólna dla prezentowanych projektów jest również metoda dystrybucji aplikacji obliczeniowych. Skompilowane dla różnych platform wersje aplikacji składowane są na serwerze i wysyłane klientowi który zgłasza na nie zapotrzebowanie. Jedynie BOINC dopuszcza wykorzystanie tzw. platformy anonimowej, gdzie w ramach projektu uruchamiany jest plik binarny dostarczony przez klienta.
+
+\textbf{Ogólny zarys klienta}. Wyznaczyć można szereg cech oprogramowania klienckiego wspólnych dla rozważanych projektów. Klient musi być przede wszystkim automatyczny: konieczność ingerencji użytkownika powinna być ograniczona do minimum. Wszystkie prezentowane klienty są też skonstruowane tak, by respektować użytkownika - zawieszają swoje działanie kiedy wykryją aktywność użytkownika.
+
 \textbf{,,Niestabilność'' zasobów}. Kondo i współpracownicy wskazują \cite{evaluating} dużą rotację dostępnych maszyn jako cechę charakterystyczną architektur rozproszonych opartych o komputery osobiste. W istocie, w \cite{computational} Anderson i Fedak odnotowują iż średni czas życia danego hosta (od pierwszego do ostatniego kontaktu) wynosi około 91 dni. Ponadto na uruchomionych maszynach klienckich, według ich danych, klient BOINC był uruchomiony tylko przez około 81\% czasu, z czego aktywny (tj. wykonujący obliczenia) przez średnio 84\%. Nietrudno wyliczyć z tego, iż przeciętny host biorący udział w projektach opartych o BOINC jest obliczeniowo aktywny przez nieco ponad 68\% doby. Co interesujące, odporność na rotację hostów to cecha charakteryzująca nie tylko projekty przetwarzania na zasobach wolontariuszy, takie jak BOINC, ale też Entropię czy XtremWeb, których można używać jako platformy wewnątrzorganizacyjne.
 
-Między projektami nietrudno znaleźć też głęboko położone różnice. Niemal w ogóle nie pokrywa się podejście do zaufania tyleż oprogramowaniu, co użytkownikom.\\
-\textbf{Zaufanie oprogramowaniu}. W przypadku projektu SETI@home oraz platformy BOINC, oprogramowanie obliczeniowe jest rozprowadzane jako zaufane. Źródłem zaufania jest autorytet autorów i popularność danego projektu. W XtremWeb istnieje tylko ręczny, nieformalny proces weryfikacji zgłoszonych aplikacji klienckich; autorzy przyznają \cite{xtremweb} iż może on być niewystarczający. W projekcie Entropia z kolei zaufanie do oprogramowania jest ograniczone. Jednakże dzięki wirtualizacji klienta zakres szkód który może ono wyrządzić w systemie jest ograniczony. \\
+\subsubsection{Najważniejsze różnice}
+
+\textbf{Zaufanie oprogramowaniu}. W przypadku projektu SETI@home oraz platformy BOINC, oprogramowanie obliczeniowe jest rozprowadzane jako zaufane. Źródłem zaufania jest autorytet autorów i popularność danego projektu. W XtremWeb istnieje tylko ręczny, nieformalny proces weryfikacji zgłoszonych aplikacji klienckich; autorzy przyznają \cite{xtremweb} iż może on być niewystarczający. W projekcie Entropia z kolei zaufanie do oprogramowania jest ograniczone. Jednakże dzięki wirtualizacji klienta zakres szkód który może ono wyrządzić w systemie jest ograniczony. 
+
 \textbf{Zaufanie użytkownikowi}. SETI@home i BOINC proponują model redundantnych obliczeń, w którym każde zadanie jest przetwarzane przez co najmniej dwa hosty, do uzyskania zbieżności wyników. Jest to model ograniczonego zaufania użytkownikowi. Z kolei XtremWeb oraz Entropia w wersjach zaprezentowanych w pracach \cite{entropia} oraz \cite{xtremweb} nie wprowadzają dodatkowej weryfikacji wyników uzyskanych od klientów, ufając im w ten sposób całkowicie.
+
+\textbf{Wsparcie GPU}. Tylko BOINC potrafi wykorzystywać GPU na maszynach klienckich.
 
 \section{PROJEKT ROZWIĄZANIA WŁASNEGO}
 
-\subsection{PODSTAWOWE ZAŁOŻENIA}
+\subsection{ZAŁOŻENIA}
+
+W niniejszej sekcji zostaną omówione założenia podjęte w stosunku do tworzonego oprogramowania oraz fundamentalne decyzje projektowe podjęte w trakcie jego tworzenia.
+
+\subsubsection{Cechy sprzętu}
+
+Najistotniejszą cechą prezentowanego oprogramowania jest współpraca klienta z jak najszerszą gamą urządzeń obliczeniowych oraz niewielkie wymagania w stosunku do sprzętu na którym uruchomiony będzie serwer. Konieczna była zatem identyfikacja istotnych cech charakterystycznych sprzętu oraz ich ewentualnych dopuszczalnych zakresów. Oprogramowanie następnie było tworzone tak, by funkcjonować poprawnie przy spełnieniu minimalnych wymagań. Poniżej przedstawiono wybrane do budowy założeń projektowych cechy charakterystyczne maszyn i urządzeń oraz ich konsekwencje.
+
+\textbf{Lokalizacja}. Maszyny mogą znajdować się w różnych lokalizacjach geograficznych. W konsekwencji należy spodziewać się, iż będą znajdowały się w rozłącznych (w stosunku do serwera oraz względem siebie) sieciach lokalnych. Ich połączenie z Internetem może też mieć małą przepustowość lub być filtrowane. Ponadto pakiety przesyłane do i z danej maszyny mogą podlegać NAT (Network Address Translation, tłumaczeniu adresów sieciowych) \cite{nat}, który wiąże się z modyfikacją źródłówych bądź docelowych adresów IP połączeń. Z tego założenia wysnuć można dwa wnioski. Po pierwsze, niedopuszczalna jest konieczność stworzenia połączenia z serwera do klienta (gdyż uniemożliwia to NAT). Wszelka komunikacja musi być inicjowana przez klienta, serwer zaś musi pozostawać pasywny. Ponadto rozmiar danych przesyłanych między serwerem a klientem musi być możliwie jak najmniejszy. Konieczne jest zatem zastosowanie algorytmów kompresji.
+
+\textbf{Parametry urządzeń obliczeniowych}. Istotnymi parametrami dla urządzenia są czas aktywności, rozpatrywany jako ułamek czasu w którym urządzenie jest zasilane, oraz wydajność. Należy oczekiwać, iż urządzenie będzie dostępne przez krótkie okresy czasu w ciągu doby, oraz że urządzenie będzie miało niską wydajność. Urządzenie może też być wykorzystywane przez inne oprogramowanie podczas obliczeń, co jeszcze bardziej obniży jego wydajność postrzeganą przez oprogramowanie. Problem zatem należy dzielić na niewielkie zadania, których wykonanie na najsłabszym badanym sprzęcie nie zajmie więcej niż godzinę czasu rzeczywistego, a najlepiej krótszy czas. Rozmiar i charakter zadań powinien być dobrany do charakterystyki urządzenia, przekazanej serwerowi przez klienta. Konkretne informacje wchodzące w skład tej charakterystyki opisane są - jako detal implementacyjny - w podsekcji \ref{sec:negotiation}. Należy również wziąć pod uwagę sytuację, w której klient zostanie wyłączony - na przykład w wyniku wyłączenia maszyny - podczas przetwarzania zadania. Konieczny jest zatem mechanizm limitu czasu przetwarzania. Jeżeli po upływie określonego czasu od wysłania zadania nie zostanie otrzymany rezultat, zadanie powinno zostać przesłane ponownie jednemu z aktualnie dostępnych hostów.
+
+\textbf{Parametry maszyn}. Parametry samej maszyny istotne z punktu rozważanego rozwiązania to ilość urządzeń obliczeniowych w jednej maszynie, rozmiar pamięci operacyjnej oraz dostępna przestrzeń dyskowa. Z jednej strony należy przyjąć założenie, że w maszynie jest jedno urządzenie obliczeniowe; jest to absolutne minimum konieczne by uruchomienie klienta miało jakikolwiek sens. Z drugiej strony aby optymalnie wykorzystać maszyny mające więcej urządzeń obliczeniowych, wartość ta powinna być raportowana serwerowi. Z punktu widzenia serwera ilość urządzeń obliczeniowych powinna wpływać na maksymalną liczbę zadań która może zostać przydzielona danemu klientowi. Co do pamięci operacyjnej - należy przyjąć iż dla samego klienta nie będzie jej wiele. Prowadzi to do wniosku, iż po pierwsze - nie należy bez potrzeby ładować danych dotyczących zadań - w tym przypadku części macierzy - do pamięci, a w miarę możliwości należy je przechowywać poza nią. Podczas przechowywania danych w pamięci absolutną koniecznością jest wykorzystanie formatów i narzędzi pozwalających na efektywne przechowywanie macierzy rzadkich. Ponieważ przestrzeń dyskowa jest ograniczona, dane powinny być przechowywane na dysku w postaci skompresowanej, oraz nie dłużej niż są istotnie potrzebne. Oznacza to, iż dane dotyczące danego zadania powinny zostać przez klienta skasowane kiedy tylko serwer potwierdzi poprawny odbiór wyniku.
+
+\subsubsection{Łatwość wykorzystania}
+
+We wprowadzeniu do niniejszej pracy oraz podczas analizy istniejących rozwiązań kilkukrotnie został podniesiony problem wymagań kadrowych wiążących się z wdrożeniem systemu przetwarzania rozproszonego. Do wdrożenia opisanych systemów zazwyczaj konieczny jest administrator systemów bazodanowych. Potrzebny jest też programista, lub realistycznie - zespół programistów, którzy stworzą aplikacje na odpowiednio szeroki zestaw platform. Co więcej, to dotyczy nawet najbardziej ogólnego, prostego przypadku i nie dotyczy specyficznych wymagań danego projektu - jak na przykład wymaganej w SETI@home umiejętności obsługi urządzeń do odczytu taśm magnetycznych.
+
+Fundamentalnym założeniem dla systemu który z łatwością można wdrożyć w firmie są niewielkie wymagania co do systemu operacyjnego oraz monolityczność z punktu widzenia instalacji. Zarówno serwer jak i klient muszą być stworzone w technologii którą łatwo przenieść między systemami operacyjnymi oraz platformami sprzętowymi bez modyfikacji kodu źródłowego. Rozsądnym wydaje się przyjęcie, iż oprogramowanie musi zostać stworzone albo w języku skryptowym (interpretowanym), takim jak Python czy Ruby, albo w języku uruchamianym w maszynie wirtualnej i w ten sposób uniezależnionym od systemu operacyjnego, takim jak Java. Dobór języków programowania i innych narzędzi zostanie szerzej przedyskutowany w sekcji \ref{sec:tools}. 
+
+Dzięki wybraniu odpowiednich narzędzi wdrożenie systemu będzie możliwe na już istniejących maszynach, bez budowania maszyny-serwera dedykowanej dla niniejszego oprogramowania. Konieczne jest również uwzględnienie brzegowego przypadku w którym za serwer służy jedna z maszyn klienckich. Serwer sam w sobie nie powinien więc używać urządzeń obliczeniowych. Oprogramowanie musi też cechować posunięty tak daleko jak to możliwe brak zależności zewnętrznych. Nie można na przykład przyjąć założenia, iż wraz z oprogramowaniem będacym przedmiotem niniejszej pracy na maszynie klienckiej zostanie zainstalowany serwer baz danych. W tej sytuacji jakikolwiek komponent bazodanowy który zostanie zastosowany, musi być dostarczany w postaci wyłącznie sterownika (a nie klienta i serwera). Ponadto powinien jako miejsce składowania danych wykorzystywać tylko lokalny system plików.
+
+\subsubsection{Łatwość modyfikacji}
+
+W swoistej opozycji do poprzedniego założenia - możliwości wdrożenia oprogramowania przez specjalistów w innej dziedzinie niż programowanie - stoi łatwość modyfikacji oprogramowania. Oprócz możliwości wdrożenia w proponowanej postaci, oprogramowanie powinno być łatwo dostosować do nowego problemu. Z jednej strony oprogramowanie musi więc być monolityczne. Zgodnie z zasadą ,,czarnej skrzynki'' musi dawać spodziewane wyniki dla określonego zestawu danych wejściowych. Z drugiej strony jednak wewnętrznie musi być na tyle modularne, by elementy dotyczące na przykład komunikacji między serwerem a klientem można było z łatwością wykorzystać ponownie. Dzięki temu proponowane oprogramowanie będzie można dostosować do rozwiązywania innego problemu wymieniając logikę dotyczącą tworzenia zadań i ewentualnie definicję samego zadania. Można też będzie wykorzystać komponenty jako część zupełnie innego systemu.
+
+\subsubsection{Wydajność komponentów obliczeniowych}
+
+Pewien problem stanowi, w świetle wymienionych uprzednio założeń co do oprogramowania, wydajność komponentów obliczeniowych. Z jednej strony zasugerowany został wybór języków interpretowanych lub prekompilkowanych. Z drugiej strony narzut czy to interpretera, czy to maszyny wirtualnej jest problematyczny w przypadku oprogramowania realizującego obliczenia wysokiej wydajności. Wynika z tego, iż o ile możliwie jak najwięcej oprogramowania dotyczącego zarządzania systemem oraz komunikacji powinna być stworzona w języku wysokiego poziomu, lecz samo oprogramowanie obliczeniowe poiwinno być stworzone w języku niskiego poziomu i zoptymalizowane.
+
+W przypadku prezentowanych uprzednio platform przetwarzania rozproszonego problemem jest to iż są to rozwiązania ogólne, a nie służące do rozwiązywania konkretnego problemu. W przypadku proponowanego rozwiązania zachowana jest pełna kontrola nad oprogramowaniem obliczeniowym. Nic nie stoi więc na przeszkodzie by razem z pakietem oprogramowania dla klienta i serwera rozprowadzać skompilowane dla najpopularniejszych platform, przy rozsądnych domyślnych ustawieniach kompilatora, pliki binarne. Oprócz tego rozprowadzany będzie oczywiście kod źródłowy. Dzięki temu dla zaawansowanego użytkownika możliwa będzie dodatkowa optymalizacja, czy to na drodze manualnej optymalizacji kodu źródłowego, czy przez dobranie parametrów kompilatora. Możliwe też będzie uruchomienie zarówno serwera jak i klienta na mniej popularnych platformach.
+
+\subsubsection{Wykorzystanie możliwie szerokiej gamy urządzeń}
 
 \subsection{PODZIAŁ PROBLEMU NA PODPROBLEMY}
 
@@ -335,6 +374,7 @@ Rozwiązanie zależności między falami. Jeśli zaszła konieczność ich rozwi
 \section{IMPLEMENTACJA}
 
 \subsection{WYBÓR NARZĘDZI}
+\label{sec:tools}
 
 Tu wstaw dlaczego Railsy. Dlaczego Ruby. Dlaczego C++. Dlaczego OpenCL.
 
@@ -356,6 +396,7 @@ Tu wstaw boleśnie dokładny opis splittera.
 \subsubsection{Instancje oprogramowania obliczeniowego}
 
 \subsubsection{Negocjacja ilości przydzielonych zadań}
+\label{sec:negotiation}
 
 Na pewno mechanizm z ilością urządzeń i max GWS; może benchmark
 
@@ -417,7 +458,11 @@ Skalowalność rozwiązania w aspekcie zmiennej ilości urządzeń obliczeniowyc
 
 \bibitem{green500} The Green Lists [online]. \textit{The Green500}. [dostęp: 2015-06-14], Dostępny w Internecie, <http://www.green500.org/greenlists>
 
+\bibitem{boincgpu} GPU Computing [online]. \textit{BOINC}. [dostęp: 2015-06-18], Dostępny w Internecie: <http://boinc.berkeley.edu/wiki/GPU\_computing>
+
 \bibitem{intel14nm} Intel launches first Broadwell processors [online]. \textit{CPU World}. [dostęp: 2015-06-01], Dostępny w Internecie: <http://www.cpu-world.com/news\_2014/2014090701\_Intel\_launches\_first\_Broadwell\_processors.html>
+
+\bibitem{nat} The IP Network Address Translator (NAT). \textit{IETF}. [dostęp: 2015-06-18], Dostępny w Internecie: <https://www.ietf.org/rfc/rfc1631.txt>
 
 \bibitem{top500} November 2014 [online]. \textit{TOP500 Supercomputer Sites}. [dostęp: 2015-06-01], Dostępny w Internecie: <http://www.top500.org/lists/2014/11/>
 

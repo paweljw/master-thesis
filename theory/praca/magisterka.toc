@@ -6,15 +6,16 @@
 \contentsline {subsubsection}{\numberline {2.1.2}Oprogramowanie klienckie}{9}
 \contentsline {subsubsection}{\numberline {2.1.3}Great Internet Mersenne Prime Search}{10}
 \contentsline {subsection}{\numberline {2.2}SETI@HOME}{10}
-\contentsline {subsubsection}{\numberline {2.2.1}Obr\IeC {\'o}bka danych wej\IeC {\'s}ciowych}{11}
+\contentsline {subsubsection}{\numberline {2.2.1}Obr\IeC {\'o}bka danych wej\IeC {\'s}ciowych}{10}
 \contentsline {subsubsection}{\numberline {2.2.2}Tworzenie i wysy\IeC {\l }ka zada\IeC {\'n}}{11}
 \contentsline {subsubsection}{\numberline {2.2.3}Oprogramowanie klienckie}{11}
 \contentsline {subsubsection}{\numberline {2.2.4}Podsumowanie}{12}
 \contentsline {subsection}{\numberline {2.3}BOINC}{12}
-\contentsline {subsubsection}{\numberline {2.3.1}Narz\IeC {\k e}dzia spo\IeC {\l }eczno\IeC {\'s}ciowe w BOINC}{13}
+\contentsline {subsubsection}{\numberline {2.3.1}Narz\IeC {\k e}dzia spo\IeC {\l }eczno\IeC {\'s}ciowe w BOINC}{12}
 \contentsline {subsubsection}{\numberline {2.3.2}Wsp\IeC {\'o}\IeC {\l }dzielenie zasob\IeC {\'o}w mi\IeC {\k e}dzy projektami}{13}
 \contentsline {subsubsection}{\numberline {2.3.3}Wieloplatformowo\IeC {\'s}\IeC {\'c}}{13}
-\contentsline {subsubsection}{\numberline {2.3.4}Podsumowanie}{14}
+\contentsline {subsubsection}{\numberline {2.3.4}Wykorzystanie GPU}{14}
+\contentsline {subsubsection}{\numberline {2.3.5}Podsumowanie}{14}
 \contentsline {subsection}{\numberline {2.4}XTREMWEB}{14}
 \contentsline {subsubsection}{\numberline {2.4.1}Tryby dzia\IeC {\l }ania}{14}
 \contentsline {subsubsection}{\numberline {2.4.2}Bezpiecze\IeC {\'n}stwo aplikacji obliczeniowych}{15}
@@ -22,28 +23,35 @@
 \contentsline {subsubsection}{\numberline {2.4.4}Implementacja}{15}
 \contentsline {subsubsection}{\numberline {2.4.5}Podsumowanie}{16}
 \contentsline {subsection}{\numberline {2.5}POR\IeC {\'O}WNANIE KLUCZOWYCH ELEMENT\IeC {\'O}W WYBRANYCH ROZWI\IeC {\k A}ZA\IeC {\'N}}{16}
-\contentsline {section}{\numberline {3}PROJEKT ROZWI\IeC {\k A}ZANIA W\IeC {\L }ASNEGO}{17}
-\contentsline {subsection}{\numberline {3.1}PODSTAWOWE ZA\IeC {\L }O\IeC {\.Z}ENIA}{17}
-\contentsline {subsection}{\numberline {3.2}PODZIA\IeC {\L } PROBLEMU NA PODPROBLEMY}{17}
-\contentsline {subsection}{\numberline {3.3}ROZWI\IeC {\k A}ZANIE PODPROBLEM\IeC {\'O}W}{17}
-\contentsline {subsection}{\numberline {3.4}ZEBRANIE WYNIK\IeC {\'O}W}{18}
-\contentsline {subsection}{\numberline {3.5}ROZWI\IeC {\k A}ZANIE UK\IeC {\L }ADU R\IeC {\'O}WNA\IeC {\'N}}{18}
-\contentsline {section}{\numberline {4}IMPLEMENTACJA}{18}
-\contentsline {subsection}{\numberline {4.1}WYB\IeC {\'O}R NARZ\IeC {\k E}DZI}{18}
-\contentsline {subsection}{\numberline {4.2}PODZIA\IeC {\L } MACIERZY}{18}
-\contentsline {subsection}{\numberline {4.3}SERWER ZADA\IeC {\'N}}{18}
-\contentsline {subsubsection}{\numberline {4.3.1}Struktura bazy danych}{18}
-\contentsline {subsubsection}{\numberline {4.3.2}Umieszczenie zadania w serwerze}{18}
-\contentsline {subsubsection}{\numberline {4.3.3}Autoryzacja klienta}{18}
-\contentsline {subsection}{\numberline {4.4}KLIENT}{18}
-\contentsline {subsubsection}{\numberline {4.4.1}Instancje oprogramowania obliczeniowego}{18}
-\contentsline {subsubsection}{\numberline {4.4.2}Negocjacja ilo\IeC {\'s}ci przydzielonych zada\IeC {\'n}}{18}
-\contentsline {subsubsection}{\numberline {4.4.3}Rozwi\IeC {\k a}zanie zada\IeC {\'n}}{18}
-\contentsline {subsubsection}{\numberline {4.4.4}Odes\IeC {\l }anie rozwi\IeC {\k a}zanych zada\IeC {\'n}}{18}
-\contentsline {subsection}{\numberline {4.5}OPROGRAMOWANIE OBLICZENIOWE}{18}
-\contentsline {subsubsection}{\numberline {4.5.1}Solwer po stronie klienta}{18}
-\contentsline {subsubsection}{\numberline {4.5.2}Negocjator zale\IeC {\.z}no\IeC {\'s}ci po stronie serwera}{18}
-\contentsline {section}{\numberline {5}WYNIKI}{18}
-\contentsline {subsection}{\numberline {5.1}CHARAKTERYSTYKA MASZYN}{18}
-\contentsline {section}{\numberline {6}PODSUMOWANIE}{19}
-\contentsline {section}{\numberline {7}BIBLIOGRAFIA}{20}
+\contentsline {subsubsection}{\numberline {2.5.1}Cechy wsp\IeC {\'o}lne}{17}
+\contentsline {subsubsection}{\numberline {2.5.2}Najwa\IeC {\.z}niejsze r\IeC {\'o}\IeC {\.z}nice}{17}
+\contentsline {section}{\numberline {3}PROJEKT ROZWI\IeC {\k A}ZANIA W\IeC {\L }ASNEGO}{18}
+\contentsline {subsection}{\numberline {3.1}ZA\IeC {\L }O\IeC {\.Z}ENIA}{18}
+\contentsline {subsubsection}{\numberline {3.1.1}Cechy sprz\IeC {\k e}tu}{18}
+\contentsline {subsubsection}{\numberline {3.1.2}\IeC {\L }atwo\IeC {\'s}\IeC {\'c} wykorzystania}{19}
+\contentsline {subsubsection}{\numberline {3.1.3}\IeC {\L }atwo\IeC {\'s}\IeC {\'c} modyfikacji}{20}
+\contentsline {subsubsection}{\numberline {3.1.4}Wydajno\IeC {\'s}\IeC {\'c} komponent\IeC {\'o}w obliczeniowych}{20}
+\contentsline {subsubsection}{\numberline {3.1.5}Wykorzystanie mo\IeC {\.z}liwie szerokiej gamy urz\IeC {\k a}dze\IeC {\'n}}{21}
+\contentsline {subsection}{\numberline {3.2}PODZIA\IeC {\L } PROBLEMU NA PODPROBLEMY}{21}
+\contentsline {subsection}{\numberline {3.3}ROZWI\IeC {\k A}ZANIE PODPROBLEM\IeC {\'O}W}{21}
+\contentsline {subsection}{\numberline {3.4}ZEBRANIE WYNIK\IeC {\'O}W}{21}
+\contentsline {subsection}{\numberline {3.5}ROZWI\IeC {\k A}ZANIE UK\IeC {\L }ADU R\IeC {\'O}WNA\IeC {\'N}}{21}
+\contentsline {section}{\numberline {4}IMPLEMENTACJA}{21}
+\contentsline {subsection}{\numberline {4.1}WYB\IeC {\'O}R NARZ\IeC {\k E}DZI}{21}
+\contentsline {subsection}{\numberline {4.2}PODZIA\IeC {\L } MACIERZY}{21}
+\contentsline {subsection}{\numberline {4.3}SERWER ZADA\IeC {\'N}}{21}
+\contentsline {subsubsection}{\numberline {4.3.1}Struktura bazy danych}{21}
+\contentsline {subsubsection}{\numberline {4.3.2}Umieszczenie zadania w serwerze}{21}
+\contentsline {subsubsection}{\numberline {4.3.3}Autoryzacja klienta}{21}
+\contentsline {subsection}{\numberline {4.4}KLIENT}{21}
+\contentsline {subsubsection}{\numberline {4.4.1}Instancje oprogramowania obliczeniowego}{21}
+\contentsline {subsubsection}{\numberline {4.4.2}Negocjacja ilo\IeC {\'s}ci przydzielonych zada\IeC {\'n}}{21}
+\contentsline {subsubsection}{\numberline {4.4.3}Rozwi\IeC {\k a}zanie zada\IeC {\'n}}{22}
+\contentsline {subsubsection}{\numberline {4.4.4}Odes\IeC {\l }anie rozwi\IeC {\k a}zanych zada\IeC {\'n}}{22}
+\contentsline {subsection}{\numberline {4.5}OPROGRAMOWANIE OBLICZENIOWE}{22}
+\contentsline {subsubsection}{\numberline {4.5.1}Solwer po stronie klienta}{22}
+\contentsline {subsubsection}{\numberline {4.5.2}Negocjator zale\IeC {\.z}no\IeC {\'s}ci po stronie serwera}{22}
+\contentsline {section}{\numberline {5}WYNIKI}{22}
+\contentsline {subsection}{\numberline {5.1}CHARAKTERYSTYKA MASZYN}{22}
+\contentsline {section}{\numberline {6}PODSUMOWANIE}{22}
+\contentsline {section}{\numberline {7}BIBLIOGRAFIA}{23}
