@@ -132,7 +132,7 @@ Platformy przetwarzania na podarowanych zasobach charakteryzuje nastawienie na h
 Na przeciwnym biegunie w stosunku do przetwarzania na komputerach wolontariuszy stoją architektury gridowe. %%%%% CZY MOGĘ PISAĆ 'GRIDOWE'?
 Zazwyczaj jest to własność instytucji, takich jak duże firmy czy uczelnie. Instytucje te zapewniają zasoby niezbędne, by grid mógł funkcjonować, oraz konieczną obsługę. Wykorzystanie zasobów gridowych należących do instytucji pozwala pozbyć się wielu problemów które dotyczą platform opartych na wolontariacie (nie do pomyślenia jest na przykład sytuacja zatruwania wyników badań). Nie ma też konieczności utrzymywania infrastruktury. Nadal jednak pozostaje problem stworzenia oprogramowania działającego w ramach architektury gridowej. Nie rozwiązuje to również sytuacji w której instytucja chcąca prowadzić badania nie posiada własnej infrastruktury, a umieszczenie danych dotyczących badań na komputerach będących pod kontrolą innego podmiotu nie wchodzi w grę.
 
-W niniejszej pracy zostanie zaproponowane rozwiązanie pośrednie między tymi dwoma kierunkami. Z jednej strony stworzone w podobnym duchu co oprogramowanie do przetwarzania na zasobach wolontariuszy: odporne na rotację i awarie hostów, nie przyjmujące zbędnych założeń w stosunku do hostów, ich mocy obliczeniowej, położenia geograficznego czy dostępności w ciągu doby. Z drugiej strony jest to rozwiązanie nakierowane bardziej na rozwiązanie problemu przetwarzania dużych zadań w małych i średnich organizacjach, nie posiadających własnych architektur gridowych. Jego instalacja, utrzymanie i wykorzystanie mają być możliwie uproszczone, tak by nie było konieczne tworzenie własnego oprogramowania, bądź korzystanie z usług specjalistów. Rozwiązanie ponadto ma się dobrze skalować, tak by wykorzystanie wszystkich dostępnych w danym momencie urządzeń obliczeniowych dawało realne przełożenie na czas uzyskania wyniku.
+W niniejszej pracy zostanie zaproponowane rozproszone oprogramowanie służące do rozwiązywania układów równań w postaci macierzy rzadkich. Opisane rozwiązanie stanowi punkt pośredni pomiędzy dwoma opisanymi wcześniej rodzajami oprogramowania rozproszonego. Z jednej strony jest stworzone w podobnym duchu co oprogramowanie do przetwarzania na zasobach wolontariuszy: odporne na rotację i awarie hostów, nie przyjmujące zbędnych założeń w stosunku do udostępnionych maszyn, mocy obliczeniowej urządzeń, fizycznej lokalizacji komputerów wykorzystywanych do obliczeń, czy czasu dostępności zasobów danej w ciągu doby. Z drugiej strony jest to rozwiązanie nakierowane bardziej na rozwiązanie problemu przetwarzania dużych zadań - dużych układów równań - w małych i średnich organizacjach, nie posiadających własnych architektur gridowych. Jego instalacja, utrzymanie i wykorzystanie mają być możliwie uproszczone, tak by nie było konieczne tworzenie własnego oprogramowania, bądź korzystanie z usług specjalistów. Rozwiązanie ponadto ma się dobrze skalować, tak by wykorzystanie wszystkich dostępnych w danym momencie urządzeń obliczeniowych dawało realne przełożenie na czas uzyskania wyniku.
 
 W dalszych sekcjach niniejszej pracy przeprowadzona zostanie analiza dostępnych rozwiązań, w tym ich mocnych oraz słabych stron z punktu widzenia rozpatrywanego przypadku. Zostaną również przedstawione założenia projektowe rozwiązania własnego, jego implementacja oraz wyniki przeprowadzonych na stworzonym oprogramowaniu badań wydajności.
 
@@ -326,6 +326,7 @@ Między zaprezentowanymi projektami można wskazać szereg wspólnych cech i za�
 W niniejszej sekcji zostaną omówione założenia podjęte w stosunku do tworzonego oprogramowania oraz fundamentalne decyzje projektowe podjęte w trakcie jego tworzenia.
 
 \subsubsection{Cechy sprzętu}
+\label{sec:hardware}
 
 Najistotniejszą cechą prezentowanego oprogramowania jest współpraca klienta z jak najszerszą gamą urządzeń obliczeniowych oraz niewielkie wymagania w stosunku do sprzętu na którym uruchomiony będzie serwer. Konieczna była zatem identyfikacja istotnych cech charakterystycznych sprzętu oraz ich ewentualnych dopuszczalnych zakresów. Oprogramowanie następnie było tworzone tak, by funkcjonować poprawnie przy spełnieniu minimalnych wymagań. Poniżej przedstawiono wybrane do budowy założeń projektowych cechy charakterystyczne maszyn i urządzeń oraz ich konsekwencje.
 
@@ -353,23 +354,55 @@ Pewien problem stanowi, w świetle wymienionych uprzednio założeń co do oprog
 
 W przypadku prezentowanych uprzednio platform przetwarzania rozproszonego problemem jest to iż są to rozwiązania ogólne, a nie służące do rozwiązywania konkretnego problemu. W przypadku proponowanego rozwiązania zachowana jest pełna kontrola nad oprogramowaniem obliczeniowym. Nic nie stoi więc na przeszkodzie by razem z pakietem oprogramowania dla klienta i serwera rozprowadzać skompilowane dla najpopularniejszych platform, przy rozsądnych domyślnych ustawieniach kompilatora, pliki binarne. Oprócz tego rozprowadzany będzie oczywiście kod źródłowy. Dzięki temu dla zaawansowanego użytkownika możliwa będzie dodatkowa optymalizacja, czy to na drodze manualnej optymalizacji kodu źródłowego, czy przez dobranie parametrów kompilatora. Możliwe też będzie uruchomienie zarówno serwera jak i klienta na mniej popularnych platformach.
 
-\subsubsection{Wykorzystanie możliwie szerokiej gamy urządzeń}
+\subsubsection{Wykorzystanie szerokiej gamy urządzeń}
 
-\subsection{PODZIAŁ PROBLEMU NA PODPROBLEMY}
+System rozproszony mający w założeniu nadawać się do wykorzystania z niemal dowolnymi urządzeniami musi być w stanie efektywnie wykonywać obliczenia na wielu różnych urządzeniach. Z jednej strony możliwe jest stworzenie oprogramowania pod każdy rodzaj urządzenia z osobna. W istocie nie ma wielu rodzajów urządzeń które należałoby rozważyć. 
 
-Dzielenie na części celem składowania. 
+Jedną z klas urządzeń do wykorzystania są oczywiście CPU. Dla nich należałoby stworzyć odpowiedni moduł obliczeniowy, naturalnie odpowiednio zrównoleglony dla maszyn z więcej niż jednym procesorem. Ponadto konieczna jest obsługa kart graficznych. Jednym z najważniejszych, z punktu widzenia rozpowszechnienia urządzeń, dostawców takich kart jest NVIDIA. Firma ta stworzyła i wspiera swój własny zestaw bibliotek do tworzenia oprogramowania dla kart graficznych o nazwie NVIDIA CUDA \cite{cuda}. Konkurentem NVIDIA jest AMD, która rozpoczęła produkcję kart graficznych po przejęciu ATI. Historycznie, AMD posiadało własny zestaw bibliotek do obsługi swoich procesorów i kart graficznych, nazwany AMD Stream SDK i podobny w założeniach i możliwościach do CUDA. Obecnie jako platforma rozwojowa dla urządzeń AMD proponowany jest AMD APP SDK \cite{appsdk}, zbudowany w oparciu o standard OpenCL.
 
-Umieszczanie ich w jednym katalogu/repozytorium (na serwerze).
+Tworzenie co najmniej trzech rozłącznych obszarów kodu dla trzech platform jest, nawet rozważając problem czysto intuicyjnie, nieoptymalne. Wprowadzenie jakiejkolwiek poprawki będzie wymagało wprowadzenia jej w co najmniej trzech miejscach. Ponadto każda z implementacji - by być optymalna - byłaby specyficzna dla platformy dla której została stworzona. Z tego powodu wprowadzona poprawka mogłaby funkcjonować inaczej w każdym z rodzajów oprogramowania, bądź nie być możliwa do wprowadzenia. Odpowiedni dobór narzędzi rozwiązujący ten problem jest szerzej omówiony w sekcji \ref{sec:tools}.
 
-\subsection{ROZWIĄZANIE PODPROBLEMÓW}
+\subsection{CYKL ŻYCIA ROZWIĄZANIA}
 
-Proces przez który przechodzi każde zadanie: wydzielenie, zapis, przesył, rozwiązanie, przesył.
+Rozwiązanie jest w niniejszym oprogramowaniu uznawane za obiekt nadrzędny. Mimo tego przechowuje on jedynie informację o tym, jak rozwiązywany problem się nazywa.
 
-\subsection{ZEBRANIE WYNIKÓW}
+Każde rozwiązanie ma co najmniej jedną falę. W większości przypadków fal może być więcej niż jedna. Falą nazywany jest zbiór zadań który opisuje dany krok w przetwarzaniu macierzy. Pierwsza fala rozwiązania to bezpośredni wynik dekompozycji macierzy, szerzej opisanej w sekcji \ref{sec:decomposition}. Nowa fala nie może zostać utworzona zanim wszystkie zadania w danej fali nie zostaną przetworzone. Każde z zadań delegowane jest do jednego klienta na raz. Szczegóły procesu żądania zadań oraz ich zwrotu opisane są w sekcji \ref{sec:communication}. Zadanie przetwarzane jest przez jedno urządzenie obliczeniowe (szczegóły tego procesu można znaleźć w sekcji \ref{sec:singletask}), a następnie rezultat jest zwracany do serwera. Kiedy wszystkie zadania w danej fali zostaną przetworzone i zwrócone, uruchamiany jest na nich proces rozwiązywania zależności. Został on szczegółowo opisany w sekcji \ref{sec:dependencies}. W zależności od jego wyników może zostać wygenerowana kolejna fala rozwiązania jeżeli macierz nie jest jeszcze w stanie gotowym do rozwiązania. Może też zostać wykonane ostateczne rozwiązanie układu równań, opisane szerzej w sekcji \ref{sec:solution}.
 
-Rozwiązanie zależności między falami. Jeśli zaszła konieczność ich rozwiązania, stworzenie kolejnej fali rozwiązania.
+\subsection{DEKOMPOZYCJA MACIERZY}
+\label{sec:decomposition}
+
+\subsubsection{Założenia podstawowe}
+
+Celem rozwiązania problemu nierozwiązalnego (lub trudnego do rozwiązania) klasycznymi metodami, konieczne jest wprowadzenie metody podziału go na mniejsze problemy które można rozwiązać osobno od siebie. Jako rozwiązanie ,,osobno od siebie'' rozumiane jest tu rozwiązanie nie wymagające komunikacji w trakcie przetwarzania części. Dopuszczalna jest komunikacja po przetworzeniu wszystkich części. Kolejnym z istotnych z punktu widzenia założeń jest unikanie próby umieszczenia całej macierzy w pamięci.
+
+Omawiane oprogramowanie dedykowane jest do rozwiązywania układów równań danych w postaci macierzy rzadkich, z pewną preferencją w kierunku macierzy pasmowych. Macierze te charakteryzuje niewielka ilość elementów niezerowych i grupowanie tych elementów wokół przekątnej macierzy. Macierze tego rodzaju często powstają podczas rozwiązywania problemów metodą elementów skończonych. Warto zauważyć iż w takich układach równań ilość zmiennych jest bezpośrednio powiązana z ilością elementów siatki oraz liczbą stopni swobody przypisanych elementom \cite{mes}. Podczas modelowania danego obiektu pokrycie go gęstszą siatką elementów skończonych powoduje dokładniejsze modelowanie, ale zwiększa też rozmiar macierzy. Łatwo można więc spostrzec iż w tym przypadku możliwość rozwiązywania większych układów równań przekłada się bezpośrednio na dokładność obliczeń inżynierskich.
+
+\subsubsection{Zasady podziału macierzy}
+
+Koncepcja podziału macierzy na części jest przedstawiona na rysunku \ref{fig:dekompozycja}. 
+\begin{figure}
+  \centering
+    \includegraphics[width=0.90\textwidth]{dekompozycja}
+  \caption{Koncepcja dekompozycji macierzy}
+  \label{fig:dekompozycja}
+\end{figure}
+Z oryginalnej macierzy wycinane są części o predefiniowanej wysokości jeżeli to możliwe. Każda część odpowiada jednemu zadaniu, wszystkie zadania zaś przypisane są do jednej fali. Jeżeli jako wysokość części nie zostanie wybrana wartość która jest dzielnikiem rozmiaru macierzy, ostatnia część będzie krótsza (niższa). Nie powinno to mieć wpływu na funkcjonowanie pozostałych części systemu.
+
+Na rysunku \ref{fig:dekompozycja} pasmo zostało zaznaczone kolorem zielonym. Jak widać na każdy wycięty z macierzy obszar zawiera stosunkowo niewiele elementów. Ponieważ każdy taki obszar odpowiada jednemu zadaniu, można zauważyć że dla macierzy o preferowanej charakterystyce liczba danych do przesłania będzie stosunkowo niewielka. Nie wyklucza to oczywiście przetwarzania nawet macierzy gęstych. Wtedy jednakże zarówno czas przesyłu jak i przetwarzania części będzie dłuższy. Tylko jedna część macierzy powinna być ładowana na raz do pamięci dla każdego wykorzystywanego urządzenia obliczeniowego.
+
+\subsection{PRZETWARZANIE ZADANIA}
+\label{sec:singletask}
+
+
+
+\subsection{ROZWIĄZANIE ZALEŻNOŚCI MIĘDZY CZĘŚCIAMI MACIERZY}
+\label{sec:dependencies}
+
+\subsection{KOMUNIKACJA KLIENT-SERWER}
+\label{sec:communication}
 
 \subsection{ROZWIĄZANIE UKŁADU RÓWNAŃ}
+\label{sec:solution}
 
 \section{IMPLEMENTACJA}
 
@@ -408,6 +441,7 @@ Na pewno mechanizm z ilością urządzeń i max GWS; może benchmark
 \subsection{OPROGRAMOWANIE OBLICZENIOWE}
 
 \subsubsection{Solwer po stronie klienta}
+\label{sec:solver}
 
 \subsubsection{Negocjator zależności po stronie serwera}
 
@@ -438,6 +472,8 @@ Skalowalność rozwiązania w aspekcie zmiennej ilości urządzeń obliczeniowyc
 
 \bibitem{entropia} Chien, A., Calder, B., Elbert, S., Bhatia, K.: Entropia: architecture and performance of an enterprise desktop grid system. \textit{Journal of Parallel and Distributed Computing}. 2003 Vol. 63, pp. 597–610
 
+\bibitem{cuda} Cook, S.: CUDA Programming. A Developer’s Guide to Parallel Computing with GPUs. \textit{Waltham: Elsevier}. 2013.
+
 \bibitem{xtremweb} Fedak, G., Germain, C., Neri, V., Cappello, F.: \textit{Cluster Computing and the Grid. Proceedings. First IEEE/ACM International Symposium on}. 2001 pp. 582-587
 
 \bibitem{gridservices} Foster, I., Kesselman, C., Nick, J. M., Tuecke, S.:. Grid services for distributed system integration. \textit{Computer}. 2002 Vol. 35, No. 6, pp. 37-46
@@ -446,11 +482,17 @@ Skalowalność rozwiązania w aspekcie zmiennej ilości urządzeń obliczeniowyc
 
 \bibitem{evaluating} Kondo, D., Taufer, M., Brooks, C., Casanova, H., Chien, A.: Characterizing and evaluating desktop grids: an empirical study. \textit{Parallel and Distributed Processing Symposium. Proceedings. 18th International}. 2004
 
+\bibitem{mes} Milenin, A.: Podstawy MES. Zagadnienia termomechaniczne. \textit{AGH}. 2010
+
 \bibitem{worm} Shoch, J.F., Hupp, J.A.: The "Worm" Programs - Early Experience with a Distributed Computation. \textit{Communications of the ACM}. 1982 Vol. 25, No. 3, pp. 172-180  
+
+\bibitem{opencl} Stone, J.E., Gohara, D., Guochun S.: OpenCL: A Parallel Programming Standard for Heterogeneous Computing Systems. \textit{Computing in Science \& Engineering}. 2010 Vol. 12, No. 3, pp. 66-73
 
 \bibitem{seti_serendip} Sullivan, III, W. T., Werthimer, D., Bowyer, S., Cobb, J., Gedye, D., Anderson, D.: A new major SETI project based on Project Serendip data and 100,000 personal computers. \textit{Astronomical and Biochemical Origins and the Search for Life in the Universe, IAU Colloquium 161}. 1997 p. 729  
 
 % ----------- LINKI
+
+\bibitem{appsdk} APP SDK - A Complete Development Platform [online]. \textit{AMD}. [dostęp: 2015-06-20], Dostępny w Internecie: <http://developer.amd.com/tools-and-sdks/opencl-zone/amd-accelerated-parallel-processing-app-sdk/>
 
 \bibitem{gimps_48} GIMPS Discovers 48th Mersenne Prime, $2^{57,885,161}-1$ is now the Largest Known Prime [online].\textit{ Great Internet Mersenne Prime Search}. [dostęp: 2015-06-01], Dostępny w Internecie: <http://www.mersenne.org/primes/?press=M57885161>
 
